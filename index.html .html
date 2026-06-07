@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Aurora">
+<meta name="theme-color" content="#C9A96E">
+<title>Aurora — Il Mondo di Marco</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap');
+:root{
+  --gold:#C9A96E;--gold-l:#E8D5B0;
+  --dark:#0E0E0F;--dark2:#161618;--dark3:#1E1E21;--dark4:#2A2A2E;
+  --text:#F0EDE8;--muted:#7A7870;--soft:#B8B4AC;
+  --ok:#6EC9A9;--ch:#A8C5DA;--red:#C96E6E;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:var(--text);font-family:'DM Sans',sans-serif;}
+
+.app{display:flex;flex-direction:column;height:100%;height:100dvh;}
+
+/* HEADER */
+.hdr{
+  flex-shrink:0;
+  background:var(--dark2);
+  border-bottom:1px solid rgba(201,169,110,0.15);
+  padding:50px 16px 12px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.hdr-l{display:flex;align-items:center;gap:10px;}
+.av{
+  width:38px;height:38px;border-radius:50%;
+  background:linear-gradient(135deg,#C9A96E,#E8D5B0);
+  display:flex;align-items:center;justify-content:center;font-size:17px;
+  animation:glow 3s ease-in-out infinite;flex-shrink:0;
+}
+@keyframes glow{0%,100%{box-shadow:0 0 0 0 rgba(201,169,110,0.5)}50%{box-shadow:0 0 0 6px rgba(201,169,110,0)}}
+.hdr-name{font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--gold);}
+.hdr-sub{font-size:9px;color:var(--muted);letter-spacing:.12em;}
+.hdr-r{display:flex;align-items:center;gap:8px;}
+.sw{display:flex;background:var(--dark3);border-radius:8px;padding:3px;border:1px solid rgba(255,255,255,0.05);}
+.swb{padding:5px 11px;border-radius:6px;font-size:12px;cursor:pointer;color:var(--muted);transition:all .2s;}
+.swb.it{background:rgba(201,169,110,0.15);color:var(--gold);}
+.swb.ch{background:rgba(168,197,218,0.15);color:var(--ch);}
+.nbt{width:34px;height:34px;background:var(--dark3);border:1px solid rgba(255,255,255,0.07);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;position:relative;cursor:pointer;}
+.nd{position:absolute;top:5px;right:5px;width:7px;height:7px;background:var(--gold);border-radius:50%;border:1.5px solid var(--dark2);}
+
+/* PAGES */
+.pages{flex:1;overflow:hidden;position:relative;}
+.pg{
+  position:absolute;inset:0;
+  overflow-y:auto;-webkit-overflow-scrolling:touch;
+  padding:16px 14px 20px;
+  display:flex;flex-direction:column;gap:14px;
+  opacity:0;pointer-events:none;transform:translateY(12px);
+  transition:opacity .25s,transform .25s;
+}
+.pg.active{opacity:1;pointer-events:all;transform:translateY(0);}
+
+/* aurora page è flex colonna piena altezza */
+.pg.aurora-pg{padding:0;gap:0;}
+
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.kc{background:var(--dark2);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:14px;position:relative;overflow:hidden;}
+.kc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2.5px;background:var(--kcc,var(--gold));opacity:.5;}
+.kl{font-size:9px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;}
+.kv{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;line-height:1;margin:4px 0 3px;}
+.kd{font-size:10px;color:var(--ok);}
+.ki{position:absolute;top:10px;right:10px;font-size:20px;opacity:.18;}
+
+/* SEZIONE */
+.sh{display:flex;align-items:center;justify-content:space-between;}
+.st{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:400;}
+.sa{font-size:11px;color:var(--gold);cursor:pointer;}
+
+/* INTEGRAZIONI */
+.int-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.ic{background:var(--dark2);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:13px 12px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:background .2s;}
+.ic:active{background:var(--dark3);}
+.ic-icon{font-size:22px;flex-shrink:0;}
+.ic-name{font-size:12px;color:var(--soft);font-weight:500;}
+.ic-st{font-size:10px;color:var(--ok);margin-top:1px;}
+
+/* IMMOBILI */
+.ilist{display:flex;flex-direction:column;gap:8px;}
+.im{background:var(--dark2);border:1px solid rgba(255,255,255,0.06);border-radius:13px;padding:13px;display:flex;align-items:center;gap:11px;cursor:pointer;transition:background .2s;}
+.im:active{background:var(--dark3);}
+.im-th{width:46px;height:46px;border-radius:10px;background:var(--dark4);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.im-info{flex:1;min-width:0;}
+.im-nm{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.im-mt{font-size:11px;color:var(--muted);margin-top:2px;}
+.im-r{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0;}
+.im-pr{font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:600;color:var(--gold);}
+.tag{font-size:9px;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:20px;}
+.t-it{background:rgba(201,169,110,0.12);color:var(--gold);}
+.t-ch{background:rgba(168,197,218,0.12);color:var(--ch);}
+
+/* LEAD */
+.ll{display:flex;flex-direction:column;gap:8px;}
+.lc{background:var(--dark2);border:1px solid rgba(255,255,255,0.06);border-radius:13px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;}
+.lc:active{background:var(--dark3);}
+.lav{width:44px;height:44px;border-radius:50%;background:var(--dark4);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.li{flex:1;min-width:0;}
+.ln{font-size:13px;font-weight:500;}
+.ld{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.lh{font-size:18px;flex-shrink:0;}
+
+/* MESSAGGI */
+.mtabs{display:flex;gap:6px;margin-bottom:2px;}
+.mtab{padding:7px 14px;border-radius:8px;font-size:12px;cursor:pointer;background:var(--dark3);color:var(--muted);border:1px solid rgba(255,255,255,0.06);transition:all .2s;}
+.mtab.on{background:rgba(201,169,110,0.12);color:var(--gold);border-color:rgba(201,169,110,0.25);}
+.mlist{display:flex;flex-direction:column;gap:7px;}
+.mi{background:var(--dark2);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:13px;display:flex;align-items:flex-start;gap:11px;cursor:pointer;}
+.mi:active{background:var(--dark3);}
+.mav{width:40px;height:40px;border-radius:50%;background:var(--dark4);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.minfo{flex:1;min-width:0;}
+.mwho{font-size:13px;font-weight:500;}
+.mprev{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mmeta{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;}
+.mtime{font-size:10px;color:var(--muted);}
+.mbadge{background:var(--gold);color:var(--dark);font-size:9px;font-weight:600;padding:2px 6px;border-radius:20px;}
+
+/* IMPOSTAZIONI */
+.settings-list{display:flex;flex-direction:column;gap:8px;}
+.sgroup{background:var(--dark2);border:1px solid rgba(255,255,255,0.06);border-radius:14px;overflow:hidden;}
+.sgroup-title{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:12px 16px 6px;}
+.srow{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:13px 16px;border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer;
+  transition:background .2s;
+}
+.srow:last-child{border-bottom:none;}
+.srow:active{background:var(--dark3);}
+.srow-l{display:flex;align-items:center;gap:12px;}
+.srow-icon{font-size:20px;width:28px;text-align:center;}
+.srow-info{}
+.srow-name{font-size:13px;font-weight:500;}
+.srow-desc{font-size:11px;color:var(--muted);margin-top:1px;}
+.srow-r{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.sarrow{font-size:14px;color:var(--muted);}
+/* Toggle switch */
+.toggle{position:relative;width:44px;height:26px;flex-shrink:0;}
+.toggle input{opacity:0;width:0;height:0;}
+.tslider{
+  position:absolute;inset:0;border-radius:13px;
+  background:var(--dark4);transition:.3s;cursor:pointer;
+  border:1px solid rgba(255,255,255,0.1);
+}
+.tslider::before{
+  content:'';position:absolute;height:20px;width:20px;
+  left:2px;bottom:2px;border-radius:50%;background:var(--muted);
+  transition:.3s;
+}
+.toggle input:checked + .tslider{background:rgba(201,169,110,0.25);border-color:rgba(201,169,110,0.4);}
+.toggle input:checked + .tslider::before{transform:translateX(18px);background:var(--gold);}
+/* Color picker row */
+.color-opts{display:flex;gap:8px;padding:12px 16px;}
+.col-opt{width:28px;height:28px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .2s;flex-shrink:0;}
+.col-opt.sel{border-color:white;transform:scale(1.15);}
+/* Voice selector */
+.voice-opts{padding:10px 16px 14px;display:flex;flex-direction:column;gap:6px;}
+.vopt{
+  display:flex;align-items:center;gap:10px;padding:10px 12px;
+  background:var(--dark3);border-radius:10px;border:1px solid rgba(255,255,255,0.06);cursor:pointer;transition:all .2s;
+}
+.vopt.sel{background:rgba(201,169,110,0.1);border-color:rgba(201,169,110,0.3);}
+.vopt-icon{font-size:18px;}
+.vopt-name{font-size:13px;font-weight:500;}
+.vopt-desc{font-size:11px;color:var(--muted);}
+.vopt-check{margin-left:auto;font-size:16px;color:var(--gold);}
+
+/* AURORA CHAT */
+.aurora-pg{display:flex;flex-direction:column;}
+.aur-hdr{
+  flex-shrink:0;background:var(--dark2);
+  border-bottom:1px solid rgba(255,255,255,0.05);padding:14px 16px 10px;
+}
+.aur-row{display:flex;align-items:center;gap:12px;}
+.aur-big{
+  width:42px;height:42px;border-radius:50%;
+  background:linear-gradient(135deg,#B8860B,#C9A96E,#E8D5B0);
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+  box-shadow:0 0 16px rgba(201,169,110,0.3);flex-shrink:0;
+}
+.aur-nm{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--gold);}
+.aur-rl{font-size:9px;color:var(--muted);letter-spacing:.1em;}
+.vbars{display:flex;align-items:center;justify-content:center;gap:3px;height:30px;padding:6px 0;}
+.bar{width:3px;background:var(--gold);border-radius:2px;animation:wave 1.5s ease-in-out infinite;}
+@keyframes wave{0%,100%{height:4px;opacity:.3}50%{height:20px;opacity:.9}}
+.bar:nth-child(1){animation-delay:0s}.bar:nth-child(2){animation-delay:.1s}
+.bar:nth-child(3){animation-delay:.2s}.bar:nth-child(4){animation-delay:.3s}
+.bar:nth-child(5){animation-delay:.15s}.bar:nth-child(6){animation-delay:.05s}
+.bar:nth-child(7){animation-delay:.25s}.bar:nth-child(8){animation-delay:.1s}
+.chat-msgs{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px;display:flex;flex-direction:column;gap:10px;}
+.cm{display:flex;flex-direction:column;max-width:86%;}
+.cm.a{align-self:flex-start;}.cm.u{align-self:flex-end;}
+.bbl{padding:10px 13px;border-radius:13px;font-size:13.5px;line-height:1.5;}
+.cm.a .bbl{background:var(--dark3);border:1px solid rgba(255,255,255,0.06);border-bottom-left-radius:3px;color:var(--soft);}
+.cm.u .bbl{background:rgba(201,169,110,0.15);border:1px solid rgba(201,169,110,0.25);border-bottom-right-radius:3px;}
+.sndr{font-size:10px;color:var(--muted);margin-bottom:3px;}
+.cm.u .sndr{text-align:right;}
+.cts{font-size:9px;color:var(--muted);margin-top:3px;}
+.cm.u .cts{text-align:right;}
+.quickrow{padding:8px 14px;display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;flex-shrink:0;border-top:1px solid rgba(255,255,255,0.05);}
+.quickrow::-webkit-scrollbar{display:none;}
+.qb{white-space:nowrap;font-size:11px;padding:6px 12px;border-radius:20px;background:var(--dark3);border:1px solid rgba(255,255,255,0.08);color:var(--soft);cursor:pointer;flex-shrink:0;}
+.qb:active{border-color:rgba(201,169,110,0.4);color:var(--gold);}
+.chat-in{
+  padding:10px 12px;display:flex;gap:8px;align-items:flex-end;flex-shrink:0;
+  border-top:1px solid rgba(255,255,255,0.05);background:var(--dark2);
+  padding-bottom:max(10px,env(safe-area-inset-bottom));
+}
+.ci{
+  flex:1;background:var(--dark3);border:1px solid rgba(255,255,255,0.08);
+  border-radius:22px;padding:10px 14px;color:var(--text);
+  font-family:'DM Sans',sans-serif;font-size:15px;outline:none;resize:none;
+  height:44px;max-height:110px;-webkit-appearance:none;
+}
+.ci:focus{border-color:rgba(201,169,110,0.35);}
+.ci::placeholder{color:var(--muted);}
+.mic-b,.send-b{width:44px;height:44px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;}
+.mic-b{background:var(--dark3);border:1px solid rgba(255,255,255,0.08);color:var(--soft);}
+.mic-b.rec{background:rgba(201,169,110,0.2);border-color:var(--gold);color:var(--gold);}
+.send-b{background:linear-gradient(135deg,#C9A96E,#A8834A);color:var(--dark);}
+.typing-ind{display:flex;align-items:center;gap:3px;padding:10px 13px;background:var(--dark3);border:1px solid rgba(255,255,255,0.06);border-radius:13px;border-bottom-left-radius:3px;width:fit-content;}
+.td{width:5px;height:5px;background:var(--muted);border-radius:50%;animation:tb 1.2s ease-in-out infinite;}
+.td:nth-child(2){animation-delay:.2s}.td:nth-child(3){animation-delay:.4s}
+@keyframes tb{0%,80%,100%{transform:scale(.7);opacity:.4}40%{transform:scale(1);opacity:1}}
+
+/* BOTTOM NAV */
+.bnav{
+  flex-shrink:0;display:flex;background:var(--dark2);
+  border-top:1px solid rgba(201,169,110,0.12);
+  padding-bottom:max(8px,env(safe-area-inset-bottom));
+}
+.bn{flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 4px 4px;cursor:pointer;gap:2px;position:relative;}
+.bn-ic{font-size:23px;transition:transform .2s;}
+.bn-lb{font-size:9px;letter-spacing:.05em;color:var(--muted);transition:color .2s;}
+.bn.on .bn-ic{transform:scale(1.1);}
+.bn.on .bn-lb{color:var(--gold);}
+.bn-badge{position:absolute;top:4px;right:calc(50% - 18px);background:var(--gold);color:var(--dark);font-size:8px;font-weight:600;padding:1px 5px;border-radius:10px;}
+
+::-webkit-scrollbar{width:0;height:0;}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-l">
+    <div class="av">✦</div>
+    <div>
+      <div class="hdr-name">Aurora</div>
+      <div class="hdr-sub">IL MONDO DI MARCO</div>
+    </div>
+  </div>
+  <div class="hdr-r">
+    <div class="sw">
+      <div class="swb it" id="bIT" onclick="setSec('IT')">🇮🇹</div>
+      <div class="swb" id="bCH" onclick="setSec('CH')">🇨🇭</div>
+    </div>
+    <div class="nbt" onclick="setPage('aurora',document.querySelector('.bn:last-child'))">🔔<div class="nd"></div></div>
+  </div>
+</div>
+
+<!-- PAGES -->
+<div class="pages">
+
+  <!-- HOME -->
+  <div class="pg active" id="pg-home">
+    <div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:300;">Buongiorno, Marco</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:2px;">Domenica 7 giugno 2026 · Mercato attivo</div>
+    </div>
+    <div class="kpi-grid">
+      <div class="kc" style="--kcc:var(--gold)"><div class="ki">🏠</div><div class="kl">Portafoglio</div><div class="kv">47</div><div class="kd">↑ +3 questo mese</div></div>
+      <div class="kc" style="--kcc:var(--ok)"><div class="ki">🤝</div><div class="kl">Lead attivi</div><div class="kv">12</div><div class="kd">↑ 5 nuovi</div></div>
+      <div class="kc" style="--kcc:var(--ch)"><div class="ki">💶</div><div class="kl">Valore tot.</div><div class="kv">18M</div><div class="kd">↑ +2.3%</div></div>
+      <div class="kc" style="--kcc:#A8C5DA"><div class="ki">✅</div><div class="kl">Rogiti YTD</div><div class="kv">9</div><div class="kd">↑ 85% obiettivo</div></div>
+    </div>
+    <div>
+      <div class="sh" style="margin-bottom:10px;"><div class="st">Integrazioni</div></div>
+      <div class="int-grid">
+        <div class="ic"><div class="ic-icon">🏛️</div><div><div class="ic-name">Miogest</div><div class="ic-st">● Sincronizzato</div></div></div>
+        <div class="ic"><div class="ic-icon">💬</div><div><div class="ic-name">WhatsApp</div><div class="ic-st">● 5 non letti</div></div></div>
+        <div class="ic"><div class="ic-icon">✉️</div><div><div class="ic-name">Gmail</div><div class="ic-st">● 8 non letti</div></div></div>
+        <div class="ic"><div class="ic-icon">📁</div><div><div class="ic-name">Drive</div><div class="ic-st">● Collegato</div></div></div>
+      </div>
+    </div>
+    <div>
+      <div class="sh" style="margin-bottom:10px;"><div class="st">Immobili recenti</div><div class="sa" onclick="setPage('immobili',document.querySelectorAll('.bn')[1])">Vedi tutti →</div></div>
+      <div class="ilist">
+        <div class="im"><div class="im-th">🏙️</div><div class="im-info"><div class="im-nm">Attico Via Montenapoleone</div><div class="im-mt">280 m² · Milano · Piano 8</div></div><div class="im-r"><div class="im-pr">€2.8M</div><div class="tag t-it">🇮🇹 IT</div></div></div>
+        <div class="im"><div class="im-th">🏔️</div><div class="im-info"><div class="im-nm">Chalet Verbier</div><div class="im-mt">320 m² · Vista panoramica</div></div><div class="im-r"><div class="im-pr">CHF 4.2M</div><div class="tag t-ch">🇨🇭 CH</div></div></div>
+        <div class="im"><div class="im-th">🏡</div><div class="im-info"><div class="im-nm">Villa Lago di Como</div><div class="im-mt">550 m² · Cernobbio</div></div><div class="im-r"><div class="im-pr">€5.5M</div><div class="tag t-it">🇮🇹 IT</div></div></div>
+      </div>
+    </div>
+    <div style="height:6px;"></div>
+  </div>
+
+  <!-- IMMOBILI -->
+  <div class="pg" id="pg-immobili">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:300;">Immobili</div>
+    <div class="mtabs">
+      <div class="mtab on" onclick="filterImm(this,'all')">Tutti (47)</div>
+      <div class="mtab" onclick="filterImm(this,'it')">🇮🇹 Italia</div>
+      <div class="mtab" onclick="filterImm(this,'ch')">🇨🇭 Svizzera</div>
+    </div>
+    <div class="ilist" id="imm-list">
+      <div class="im" data-s="it"><div class="im-th">🏙️</div><div class="im-info"><div class="im-nm">Attico Via Montenapoleone</div><div class="im-mt">280 m² · Milano · 4 camere</div></div><div class="im-r"><div class="im-pr">€2.8M</div><div class="tag t-it">🇮🇹</div></div></div>
+      <div class="im" data-s="ch"><div class="im-th">🏔️</div><div class="im-info"><div class="im-nm">Chalet Verbier</div><div class="im-mt">320 m² · 5 camere · Vista</div></div><div class="im-r"><div class="im-pr">CHF 4.2M</div><div class="tag t-ch">🇨🇭</div></div></div>
+      <div class="im" data-s="it"><div class="im-th">🏡</div><div class="im-info"><div class="im-nm">Villa Lago di Como</div><div class="im-mt">550 m² · Cernobbio · 6 camere</div></div><div class="im-r"><div class="im-pr">€5.5M</div><div class="tag t-it">🇮🇹</div></div></div>
+      <div class="im" data-s="ch"><div class="im-th">🏢</div><div class="im-info"><div class="im-nm">App. Lugano Centro</div><div class="im-mt">150 m² · 3 camere · Terrazzo</div></div><div class="im-r"><div class="im-pr">CHF 1.75M</div><div class="tag t-ch">🇨🇭</div></div></div>
+      <div class="im" data-s="it"><div class="im-th">🏠</div><div class="im-info"><div class="im-nm">Villa Portofino</div><div class="im-mt">420 m² · Vista mare · 5 camere</div></div><div class="im-r"><div class="im-pr">€4.1M</div><div class="tag t-it">🇮🇹</div></div></div>
+      <div class="im" data-s="it"><div class="im-th">🌆</div><div class="im-info"><div class="im-nm">Loft Navigli Milano</div><div class="im-mt">180 m² · Open space · Design</div></div><div class="im-r"><div class="im-pr">€1.2M</div><div class="tag t-it">🇮🇹</div></div></div>
+      <div class="im" data-s="ch"><div class="im-th">⛷️</div><div class="im-info"><div class="im-nm">Chalet Zermatt</div><div class="im-mt">280 m² · 4 camere · Ski-in</div></div><div class="im-r"><div class="im-pr">CHF 3.2M</div><div class="tag t-ch">🇨🇭</div></div></div>
+    </div>
+    <div style="height:6px;"></div>
+  </div>
+
+  <!-- LEAD -->
+  <div class="pg" id="pg-lead">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:300;">Lead Attivi</div>
+    <div class="ll">
+      <div class="lc"><div class="lav">👨‍👩‍👧</div><div class="li"><div class="ln">Famiglia Bianchi</div><div class="ld">Villa lago · Budget €4M+ · 🇮🇹 Italia</div></div><div class="lh">🔥</div></div>
+      <div class="lc"><div class="lav">🤵</div><div class="li"><div class="ln">Mr. Hartmann</div><div class="ld">Chalet Verbier · CHF 5M · 🇨🇭 Svizzera</div></div><div class="lh">🔥</div></div>
+      <div class="lc"><div class="lav">⚖️</div><div class="li"><div class="ln">Studio Rossi</div><div class="ld">Uffici Milano centro · €800k</div></div><div class="lh">⚡</div></div>
+      <div class="lc"><div class="lav">👩‍💼</div><div class="li"><div class="ln">Dr.ssa Ferretti</div><div class="ld">Appartamento Como · €650k · 🇮🇹</div></div><div class="lh">⚡</div></div>
+      <div class="lc"><div class="lav">🏦</div><div class="li"><div class="ln">Fondo Helvetia</div><div class="ld">Portfolio immobili · CHF 12M · 🇨🇭</div></div><div class="lh">🌟</div></div>
+      <div class="lc"><div class="lav">👨</div><div class="li"><div class="ln">Sig. De Luca</div><div class="ld">Villa Toscana · €2.5M · 🇮🇹</div></div><div class="lh">⚡</div></div>
+    </div>
+    <div style="height:6px;"></div>
+  </div>
+
+  <!-- MESSAGGI -->
+  <div class="pg" id="pg-msg">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:300;">Messaggi</div>
+    <div class="mtabs">
+      <div class="mtab on" onclick="setMsgTab(this,'wa')">💬 WhatsApp (5)</div>
+      <div class="mtab" onclick="setMsgTab(this,'em')">✉️ Email (8)</div>
+    </div>
+    <div class="mlist" id="mwa">
+      <div class="mi"><div class="mav">👨</div><div class="minfo"><div class="mwho">Sig. Ferrari</div><div class="mprev">Buongiorno, vorrei info su Villa Cernobbio...</div></div><div class="mmeta"><div class="mtime">09:14</div><div class="mbadge">2</div></div></div>
+      <div class="mi"><div class="mav">👩</div><div class="minfo"><div class="mwho">Cliente Lugano</div><div class="mprev">È disponibile sabato per una visita?</div></div><div class="mmeta"><div class="mtime">08:52</div><div class="mbadge">1</div></div></div>
+      <div class="mi"><div class="mav">🏢</div><div class="minfo"><div class="mwho">Agenzia Partner</div><div class="mprev">Proposta co-mandato immobile Verbier</div></div><div class="mmeta"><div class="mtime">Ieri</div><div class="mbadge">1</div></div></div>
+      <div class="mi"><div class="mav">👨‍💼</div><div class="minfo"><div class="mwho">Notaio Lombardi</div><div class="mprev">Confermo rogito per giovedì 11 giugno</div></div><div class="mmeta"><div class="mtime">Ieri</div></div></div>
+    </div>
+    <div class="mlist" id="mem" style="display:none;">
+      <div class="mi"><div class="mav">⚖️</div><div class="minfo"><div class="mwho">Notaio Lombardi</div><div class="mprev">Documentazione rogito — giovedì 11 giugno</div></div><div class="mmeta"><div class="mtime">09:00</div><div class="mbadge">1</div></div></div>
+      <div class="mi"><div class="mav">🤵</div><div class="minfo"><div class="mwho">Thomas Hartmann</div><div class="mprev">Controproposta Chalet Verbier CHF 3.9M</div></div><div class="mmeta"><div class="mtime">08:30</div><div class="mbadge">1</div></div></div>
+      <div class="mi"><div class="mav">🌐</div><div class="minfo"><div class="mwho">Lead dal sito</div><div class="mprev">Cerco villa lago Como budget 2M</div></div><div class="mmeta"><div class="mtime">07:15</div><div class="mbadge">1</div></div></div>
+      <div class="mi"><div class="mav">🏦</div><div class="minfo"><div class="mwho">Banca Svizzera AG</div><div class="mprev">Perizia immobile Lugano completata</div></div><div class="mmeta"><div class="mtime">Ieri</div></div></div>
+    </div>
+    <div style="height:6px;"></div>
+  </div>
+
+  <!-- IMPOSTAZIONI -->
+  <div class="pg" id="pg-settings">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:300;">Impostazioni</div>
+    <div class="settings-list">
+
+      <!-- Aurora -->
+      <div class="sgroup">
+        <div class="sgroup-title">Agente Aurora</div>
+        <div class="srow">
+          <div class="srow-l">
+            <div class="srow-icon">🎙️</div>
+            <div class="srow-info">
+              <div class="srow-name">Voce di Aurora</div>
+              <div class="srow-desc" id="voice-desc">Aria — femminile, professionale</div>
+            </div>
+          </div>
+          <div class="srow-r"><div class="sarrow">›</div></div>
+        </div>
+        <div class="voice-opts" id="voice-panel">
+          <div class="vopt sel" onclick="setVoice(this,'Aria','femminile, professionale')">
+            <div class="vopt-icon">👩</div>
+            <div><div class="vopt-name">Aria</div><div class="vopt-desc">Professionale, calda</div></div>
+            <div class="vopt-check">✦</div>
+          </div>
+          <div class="vopt" onclick="setVoice(this,'Serena','rassicurante, chiara')">
+            <div class="vopt-icon">🧕</div>
+            <div><div class="vopt-name">Serena</div><div class="vopt-desc">Rassicurante, chiara</div></div>
+          </div>
+          <div class="vopt" onclick="setVoice(this,'Nova','giovane, energica')">
+            <div class="vopt-icon">👱‍♀️</div>
+            <div><div class="vopt-name">Nova</div><div class="vopt-desc">Giovane, energica</div></div>
+          </div>
+        </div>
+        <div class="srow">
+          <div class="srow-l">
+            <div class="srow-icon">🌐</div>
+            <div class="srow-info">
+              <div class="srow-name">Lingua</div>
+              <div class="srow-desc">Italiano</div>
+            </div>
+          </div>
+          <div class="srow-r"><div class="sarrow">›</div></div>
+        </div>
+        <div class="srow">
+          <div class="srow-l">
+            <div class="srow-icon">⚡</div>
+            <div class="srow-info">
+              <div class="srow-name">Risposte automatiche</div>
+              <div class="srow-desc">Aurora risponde ai messaggi</div>
+            </div>
+          </div>
+          <div class="srow-r">
+            <label class="toggle"><input type="checkbox" checked><div class="tslider"></div></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Aspetto -->
+      <div class="sgroup">
+        <div class="sgroup-title">Aspetto</div>
+        <div class="srow">
+          <div class="srow-l">
+            <div class="srow-icon">🌙</div>
+            <div class="srow-info">
+              <div class="srow-name">Tema scuro</div>
+              <div class="srow-desc">Attivo per impostazione predefinita</div>
+            </div>
+          </div>
+          <div class="srow-r">
+            <label class="toggle"><input type="checkbox" checked><div class="tslider"></div></label>
+          </div>
+        </div>
+        <div class="srow">
+          <div class="srow-l">
+            <div class="srow-icon">🎨</div>
+            <div class="srow-info">
+              <div class="srow-name">Colore accento</div>
+              <div class="srow-desc">Scegli il colore principale</div>
+            </div>
+          </div>
+        </div>
+        <div class="color-opts">
+          <div class="col-opt sel" style="background:#C9A96E;" onclick="setColor(this,'#C9A96E','rgba(201,169,110')" title="Oro"></div>
+          <div class="col-opt" style="background:#A8C5DA;" onclick="setColor(this,'#A8C5DA','rgba(168,197,218')" title="Azzurro"></div>
+          <div class="col-opt" style="background:#6EC9A9;" onclick="setColor(this,'#6EC9A9','rgba(110,201,169')" title="Verde"></div>
+          <div class="col-opt" style="background:#C96E6E;" onclick="setColor(this,'#C96E6E','rgba(201,110,110')" title="Rosso"></div>
+          <div class="col-opt" style="background:#9B8EC9;" onclick="setColor(this,'#9B8EC9','rgba(155,142,201')" title="Viola"></div>
+        </div>
+      </div>
+
+      <!-- Notifiche -->
+      <div class="sgroup">
+        <div class="sgroup-title">Notifiche</div>
+        <div class="srow">
+          <div class="srow-l"><div class="srow-icon">💬</div><div class="srow-info"><div class="srow-name">Nuovi WhatsApp</div><div class="srow-desc">Avviso in tempo reale</div></div></div>
+          <div class="srow-r"><label class="toggle"><input type="checkbox" checked><div class="tslider"></div></label></div>
+        </div>
+        <div class="srow">
+          <div class="srow-l"><div class="srow-icon">✉️</div><div class="srow-info"><div class="srow-name">Nuove email</div><div class="srow-desc">Avviso per email importanti</div></div></div>
+          <div class="srow-r"><label class="toggle"><input type="checkbox" checked><div class="tslider"></div></label></div>
+        </div>
+        <div class="srow">
+          <div class="srow-l"><div class="srow-icon">📅</div><div class="srow-info"><div class="srow-name">Promemoria appuntamenti</div><div class="srow-desc">30 minuti prima</div></div></div>
+          <div class="srow-r"><label class="toggle"><input type="checkbox" checked><div class="tslider"></div></label></div>
+        </div>
+      </div>
+
+      <!-- Integrazioni -->
+      <div class="sgroup">
+        <div class="sgroup-title">Integrazioni</div>
+        <div class="srow"><div class="srow-l"><div class="srow-icon">🏛️</div><div class="srow-info"><div class="srow-name">Miogest</div><div class="srow-desc" style="color:var(--ok)">● Connesso</div></div></div><div class="srow-r"><div class="sarrow">›</div></div></div>
+        <div class="srow"><div class="srow-l"><div class="srow-icon">💬</div><div class="srow-info"><div class="srow-name">WhatsApp Business</div><div class="srow-desc" style="color:var(--ok)">● Connesso</div></div></div><div class="srow-r"><div class="sarrow">›</div></div></div>
+        <div class="srow"><div class="srow-l"><div class="srow-icon">✉️</div><div class="srow-info"><div class="srow-name">Gmail</div><div class="srow-desc" style="color:var(--ok)">● Connesso</div></div></div><div class="srow-r"><div class="sarrow">›</div></div></div>
+        <div class="srow"><div class="srow-l"><div class="srow-icon">📁</div><div class="srow-info"><div class="srow-name">Google Drive</div><div class="srow-desc" style="color:var(--ok)">● Connesso</div></div></div><div class="srow-r"><div class="sarrow">›</div></div></div>
+      </div>
+
+      <!-- Account -->
+      <div class="sgroup">
+        <div class="sgroup-title">Account</div>
+        <div class="srow"><div class="srow-l"><div class="srow-icon">👤</div><div class="srow-info"><div class="srow-name">Marco</div><div class="srow-desc">Il Mondo di Marco · Admin</div></div></div><div class="srow-r"><div class="sarrow">›</div></div></div>
+        <div class="srow"><div class="srow-l"><div class="srow-icon">🔒</div><div class="srow-info"><div class="srow-name">Sicurezza</div><div class="srow-desc">PIN · Face ID</div></div></div><div class="srow-r"><div class="sarrow">›</div></div></div>
+      </div>
+
+    </div>
+    <div style="height:6px;"></div>
+  </div>
+
+  <!-- AURORA -->
+  <div class="pg aurora-pg" id="pg-aurora">
+    <div class="aur-hdr">
+      <div class="aur-row">
+        <div class="aur-big">✦</div>
+        <div><div class="aur-nm">Aurora</div><div class="aur-rl">AGENTE AI · IL MONDO DI MARCO</div></div>
+      </div>
+      <div class="vbars">
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        <div class="bar"></div><div class="bar"></div>
+      </div>
+    </div>
+    <div class="chat-msgs" id="chatMsgs">
+      <div class="cm a">
+        <div class="sndr">Aurora</div>
+        <div class="bbl">Buongiorno Marco! 👋<br><br>Ho 5 WhatsApp e 8 email in attesa. Oggi alle 15:00 hai Villa Cernobbio. Come posso aiutarti?</div>
+        <div class="cts">09:00</div>
+      </div>
+    </div>
+    <div class="quickrow">
+      <div class="qb" onclick="sendMsg('Controlla WhatsApp')">📱 WhatsApp</div>
+      <div class="qb" onclick="sendMsg('Leggi le email')">✉️ Email</div>
+      <div class="qb" onclick="sendMsg('Aggiorna Miogest')">🏛️ Miogest</div>
+      <div class="qb" onclick="sendMsg('Lead caldi')">🔥 Lead</div>
+      <div class="qb" onclick="sendMsg('Drive Italia')">📁 IT</div>
+      <div class="qb" onclick="sendMsg('Drive Svizzera')">📁 CH</div>
+    </div>
+    <div class="chat-in">
+      <button class="mic-b" id="micBtn" onclick="toggleMic()">🎤</button>
+      <textarea class="ci" id="chatIn" placeholder="Scrivi ad Aurora..." onkeydown="kd(event)"></textarea>
+      <button class="send-b" onclick="sendMsg()">➤</button>
+    </div>
+  </div>
+
+</div><!-- /pages -->
+
+<!-- BOTTOM NAV -->
+<div class="bnav">
+  <div class="bn on" onclick="setPage('home',this)"><div class="bn-ic">⌂</div><div class="bn-lb">Home</div></div>
+  <div class="bn" onclick="setPage('immobili',this)"><div class="bn-ic">🏠</div><div class="bn-lb">Immobili</div></div>
+  <div class="bn" onclick="setPage('lead',this)"><div class="bn-ic">👥</div><div class="bn-lb">Lead</div><div class="bn-badge">12</div></div>
+  <div class="bn" onclick="setPage('msg',this)"><div class="bn-ic">💬</div><div class="bn-lb">Messaggi</div><div class="bn-badge">13</div></div>
+  <div class="bn" onclick="setPage('settings',this)"><div class="bn-ic">⚙️</div><div class="bn-lb">Impostazioni</div></div>
+  <div class="bn" onclick="setPage('aurora',this)"><div class="bn-ic">✦</div><div class="bn-lb">Aurora</div></div>
+</div>
+
+</div><!-- /app -->
+<script>
+function setPage(id, el) {
+  document.querySelectorAll('.pg').forEach(p => { p.classList.remove('active'); });
+  document.querySelectorAll('.bn').forEach(b => b.classList.remove('on'));
+  const pg = document.getElementById('pg-' + id);
+  if (pg) pg.classList.add('active');
+  if (el) el.classList.add('on');
+}
+
+function setSec(s) {
+  document.getElementById('bIT').className = 'swb' + (s==='IT' ? ' it' : '');
+  document.getElementById('bCH').className = 'swb' + (s==='CH' ? ' ch' : '');
+}
+
+function setMsgTab(el, tab) {
+  document.querySelectorAll('.mtabs .mtab').forEach(t => t.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('mwa').style.display = tab==='wa' ? 'flex' : 'none';
+  document.getElementById('mem').style.display = tab==='em' ? 'flex' : 'none';
+}
+
+function filterImm(el, f) {
+  document.querySelectorAll('#pg-immobili .mtab').forEach(t => t.classList.remove('on'));
+  el.classList.add('on');
+  document.querySelectorAll('#imm-list .im').forEach(i => {
+    i.style.display = (f==='all' || i.dataset.s===f) ? 'flex' : 'none';
+  });
+}
+
+function setVoice(el, name, desc) {
+  document.querySelectorAll('.vopt').forEach(v => { v.classList.remove('sel'); v.querySelector('.vopt-check') && v.querySelector('.vopt-check').remove(); });
+  el.classList.add('sel');
+  const chk = document.createElement('div'); chk.className='vopt-check'; chk.textContent='✦';
+  el.appendChild(chk);
+  document.getElementById('voice-desc').textContent = name + ' — ' + desc;
+}
+
+function setColor(el, color, rgb) {
+  document.querySelectorAll('.col-opt').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+  document.documentElement.style.setProperty('--gold', color);
+  document.documentElement.style.setProperty('--gold-l', color + '99');
+}
+
+const replies = {
+  whatsapp:'Ho trovato 5 messaggi WhatsApp:\n\n💬 Sig. Ferrari — info Villa Cernobbio\n💬 Cliente Lugano — disponibilità sabato\n💬 Agenzia partner — co-mandato Verbier\n\nVuoi che risponda automaticamente?',
+  email:'Ci sono 8 email non lette:\n\n📧 Notaio Lombardi — rogito giovedì\n📧 Hartmann — controproposta CHF 3.9M\n📧 Lead nuovo — villa lago Como\n\nAurora può redigere le risposte.',
+  miogest:'✅ Miogest sincronizzato!\n\n• 47 immobili attivi\n• 12 trattative in corso\n• Scadenze aggiornate\n• 3 nuovi contatti oggi',
+  lead:'3 lead prioritari:\n\n🔥 Famiglia Bianchi — villa lago €4M+\n🔥 Mr. Hartmann — Verbier CHF 5M\n⚡ Studio Rossi — uffici Milano\n\nVuoi il briefing completo?',
+  drive:'📁 Drive aperto:\n\n• Contratti 2026 (12 file)\n• Foto immobili\n• Planimetrie\n• Due diligence\n\nQuale cartella?',
+};
+
+function tnow(){const d=new Date();return d.getHours()+':'+String(d.getMinutes()).padStart(2,'0');}
+
+function addBubble(txt,who){
+  const c=document.getElementById('chatMsgs');
+  const d=document.createElement('div');
+  d.className='cm '+who;
+  d.innerHTML=`<div class="sndr">${who==='a'?'Aurora':'Marco'}</div><div class="bbl">${txt.replace(/\n/g,'<br>')}</div><div class="cts">${tnow()}</div>`;
+  c.appendChild(d);
+  setTimeout(()=>c.scrollTop=c.scrollHeight,50);
+}
+
+function sendMsg(txt){
+  const inp=document.getElementById('chatIn');
+  const t=txt||inp.value.trim();
+  if(!t)return;
+  addBubble(t,'u');
+  inp.value='';
+  const c=document.getElementById('chatMsgs');
+  const ty=document.createElement('div');
+  ty.className='cm a';ty.id='typ';
+  ty.innerHTML='<div class="sndr">Aurora</div><div class="typing-ind"><div class="td"></div><div class="td"></div><div class="td"></div></div>';
+  c.appendChild(ty);
+  setTimeout(()=>c.scrollTop=c.scrollHeight,50);
+  setTimeout(()=>{
+    document.getElementById('typ')?.remove();
+    const low=t.toLowerCase();
+    let rep='Capito Marco! Elaboro subito. Vuoi che aggiorni Miogest?';
+    if(low.includes('whatsapp'))rep=replies.whatsapp;
+    else if(low.includes('email')||low.includes('mail'))rep=replies.email;
+    else if(low.includes('miogest'))rep=replies.miogest;
+    else if(low.includes('lead'))rep=replies.lead;
+    else if(low.includes('drive'))rep=replies.drive;
+    addBubble(rep,'a');
+  },900+Math.random()*500);
+}
+
+function kd(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();}}
+
+let rec=false;
+function toggleMic(){
+  const b=document.getElementById('micBtn');
+  rec=!rec;b.classList.toggle('rec',rec);
+  b.textContent=rec?'⏹':'🎤';
+  if(!rec){document.getElementById('chatIn').value='Mostrami le email di oggi';}
+}
+</script>
+</body>
+</html>
