@@ -243,26 +243,25 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
         <div>
           <div class="aur-nm">Aurora</div>
           <div class="aur-rl">AGENTE VOCALE · IL MONDO DI MARCO</div>
-          <div class="aur-status" id="aur-st">● Tocca il microfono per iniziare</div>
+          <div class="aur-status">● Tocca la sfera per parlare</div>
         </div>
       </div>
     </div>
-    <div class="voice-center">
-      <div class="orb-wrap">
-        <div class="ring"></div><div class="ring"></div><div class="ring"></div>
-        <div class="orb" id="orb">✦</div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;gap:20px;">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;text-align:center;color:var(--gold);">Parla con Aurora</div>
+      <div style="font-size:14px;color:var(--muted);text-align:center;line-height:1.7;">Tocca la sfera dorata in basso a destra<br>Aurora ti risponderà in italiano 🇮🇹</div>
+      <div style="background:var(--dark2);border:1px solid rgba(201,169,110,0.2);border-radius:16px;padding:20px;width:100%;max-width:320px;">
+        <div style="font-size:12px;color:var(--muted);margin-bottom:12px;text-align:center;">FUNZIONALITÀ VOCALE</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--soft);">🎙️ Parla e Aurora ti ascolta</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--soft);">🔊 Risposta vocale in italiano</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--soft);">🏡 Conosce tutti i tuoi immobili</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--soft);">🇮🇹 🇨🇭 Italia e Svizzera</div>
+        </div>
       </div>
-      <div class="waveform" id="wf">
-        <div class="wb"></div><div class="wb"></div><div class="wb"></div>
-        <div class="wb"></div><div class="wb"></div><div class="wb"></div>
-        <div class="wb"></div><div class="wb"></div><div class="wb"></div>
-        <div class="wb"></div><div class="wb"></div><div class="wb"></div>
-      </div>
-      <div class="voice-hint" id="vhint"><b>Tocca per parlare con Aurora</b><br>Si apre la voce in italiano</div>
     </div>
-    <div class="voice-btns">
-      <button class="call-btn" id="callBtn" onclick="openAurora()">🎤</button>
-    </div>
+    <elevenlabs-convai agent-id="agent_0401kthppeytfpks4sbhen3xctrb"></elevenlabs-convai>
+    <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
   </div>
 
   <!-- IMPOSTAZIONI -->
