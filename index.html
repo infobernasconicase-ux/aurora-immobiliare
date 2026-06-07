@@ -258,11 +258,10 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
         <div class="wb"></div><div class="wb"></div><div class="wb"></div>
         <div class="wb"></div><div class="wb"></div><div class="wb"></div>
       </div>
-      <div class="voice-hint" id="vhint"><b>Tocca il microfono</b><br>Aurora ti risponderà a voce in italiano</div>
+      <div class="voice-hint" id="vhint"><b>Tocca per parlare con Aurora</b><br>Si apre la voce in italiano</div>
     </div>
-    <div class="transcript-area" id="transcript"></div>
     <div class="voice-btns">
-      <button class="call-btn" id="callBtn" onclick="toggleCall()">🎤</button>
+      <button class="call-btn" id="callBtn" onclick="openAurora()">🎤</button>
     </div>
   </div>
 
@@ -317,161 +316,9 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
 </div>
 
 <script>
-const AGENT_ID = 'agent_0401kthppeytfpks4sbhen3xctrb';
-let ws = null;
-let audioCtx = null;
-let mediaStream = null;
-let processor = null;
-let callActive = false;
-let audioQueue = [];
-let isPlaying = false;
-
-function setStatus(state, txt) {
-  document.getElementById('aur-st').textContent = txt;
-  document.getElementById('orb').className = 'orb ' + state;
-  const wf = document.getElementById('wf');
-  wf.className = 'waveform ' + state;
-  animateWave(state);
+function openAurora() {
+  window.open('https://elevenlabs.io/app/agents/agents/agent_0401kthppeytfpks4sbhen3xctrb/preview?branchId=agtbrch_4001kthppeyvfyz9j614y49qbq8j&include_draft=true', '_blank');
 }
-
-let waveInterval = null;
-function animateWave(state) {
-  clearInterval(waveInterval);
-  const bars = document.querySelectorAll('.wb');
-  if (state === 'speaking') {
-    waveInterval = setInterval(() => {
-      bars.forEach(b => { b.style.height = (4 + Math.random() * 32) + 'px'; b.style.opacity = '0.9'; });
-    }, 100);
-  } else if (state === 'listening') {
-    waveInterval = setInterval(() => {
-      bars.forEach(b => { b.style.height = (4 + Math.random() * 14) + 'px'; b.style.opacity = '0.6'; });
-    }, 150);
-  } else {
-    bars.forEach(b => { b.style.height = '4px'; b.style.opacity = '0.3'; });
-  }
-}
-
-function addTr(who, text) {
-  const a = document.getElementById('transcript');
-  const d = document.createElement('div');
-  d.className = 'tr ' + who;
-  d.innerHTML = `<div class="tr-lbl">${who==='a'?'Aurora':'Tu'}</div>${text}`;
-  a.appendChild(d);
-  a.scrollTop = a.scrollHeight;
-}
-
-async function toggleCall() {
-  if (callActive) { endCall(); return; }
-  await startCall();
-}
-
-async function startCall() {
-  try {
-    setStatus('connecting', '● Connessione...');
-    document.getElementById('callBtn').textContent = '⏳';
-
-    // Richiedi microfono
-    mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-
-    // Ottieni token firmato da ElevenLabs
-    const resp = await fetch(`https://api.elevenlabs.io/v1/convai/conversation/token`, {
-      method: 'POST',
-      headers: { 'xi-api-key': 'sk_05c14cd0b376649f3e6d5bb51ee6d3b0a54d457222708fb9', 'Content-Type': 'application/json' },
-      body: JSON.stringify({ agent_id: AGENT_ID })
-    });
-    const { signed_url } = await resp.json();
-
-    // Connetti WebSocket
-    ws = new WebSocket(signed_url);
-    ws.binaryType = 'arraybuffer';
-
-    ws.onopen = () => {
-      callActive = true;
-      document.getElementById('callBtn').textContent = '🔴';
-      document.getElementById('callBtn').classList.add('on');
-      setStatus('listening', '● Aurora ti ascolta — parla!');
-      document.getElementById('vhint').innerHTML = '<b>Parla ora</b><br>Aurora ti sta ascoltando';
-      startMic();
-    };
-
-    ws.onmessage = (ev) => {
-      if (typeof ev.data === 'string') {
-        try {
-          const msg = JSON.parse(ev.data);
-          if (msg.type === 'agent_response' && msg.agent_response_event?.agent_response) {
-            addTr('a', msg.agent_response_event.agent_response);
-            setStatus('speaking', '● Aurora sta parlando');
-          }
-          if (msg.type === 'user_transcript' && msg.user_transcription_event?.user_transcript) {
-            addTr('u', msg.user_transcription_event.user_transcript);
-            setStatus('listening', '● Aurora ti ascolta');
-          }
-        } catch(e) {}
-      } else {
-        playAudio(ev.data);
-      }
-    };
-
-    ws.onclose = () => { endCall(); };
-    ws.onerror = () => { setStatus('idle', '● Errore connessione'); endCall(); };
-
-  } catch(e) {
-    console.error(e);
-    setStatus('idle', '● ' + (e.message || 'Microfono non disponibile'));
-    document.getElementById('callBtn').textContent = '🎤';
-    document.getElementById('callBtn').classList.remove('on');
-  }
-}
-
-function startMic() {
-  audioCtx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 });
-  const src = audioCtx.createMediaStreamSource(mediaStream);
-  processor = audioCtx.createScriptProcessor(4096, 1, 1);
-  processor.onaudioprocess = (e) => {
-    if (!ws || ws.readyState !== WebSocket.OPEN) return;
-    const f32 = e.inputBuffer.getChannelData(0);
-    const i16 = new Int16Array(f32.length);
-    for (let i = 0; i < f32.length; i++) i16[i] = Math.max(-32768, Math.min(32767, f32[i] * 32768));
-    const b64 = btoa(String.fromCharCode(...new Uint8Array(i16.buffer)));
-    ws.send(JSON.stringify({ user_audio_chunk: b64 }));
-  };
-  src.connect(processor);
-  processor.connect(audioCtx.destination);
-}
-
-function playAudio(data) {
-  audioQueue.push(data);
-  if (!isPlaying) processQueue();
-}
-
-function processQueue() {
-  if (!audioQueue.length) { isPlaying = false; return; }
-  isPlaying = true;
-  const data = audioQueue.shift();
-  const ctx = new (window.AudioContext || window.webkitAudioContext)();
-  ctx.decodeAudioData(data.slice(0), (buf) => {
-    const src = ctx.createBufferSource();
-    src.buffer = buf;
-    src.connect(ctx.destination);
-    src.onended = processQueue;
-    src.start();
-  }, processQueue);
-}
-
-function endCall() {
-  callActive = false;
-  clearInterval(waveInterval);
-  if (ws) { try { ws.close(); } catch(e){} ws = null; }
-  if (processor) { try { processor.disconnect(); } catch(e){} processor = null; }
-  if (audioCtx) { try { audioCtx.close(); } catch(e){} audioCtx = null; }
-  if (mediaStream) { mediaStream.getTracks().forEach(t => t.stop()); mediaStream = null; }
-  audioQueue = []; isPlaying = false;
-  setStatus('idle', '● Tocca il microfono per iniziare');
-  document.getElementById('callBtn').textContent = '🎤';
-  document.getElementById('callBtn').classList.remove('on');
-  document.getElementById('vhint').innerHTML = '<b>Tocca il microfono</b><br>Aurora ti risponderà a voce in italiano';
-}
-
 function setPage(id, el) {
   document.querySelectorAll('.pg').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.bn').forEach(b => b.classList.remove('on'));
