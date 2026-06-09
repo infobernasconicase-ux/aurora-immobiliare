@@ -116,6 +116,29 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
 .bn.on .bn-lb{color:var(--gold);}
 .bn-badge{position:absolute;top:4px;right:calc(50% - 18px);background:var(--gold);color:var(--dark);font-size:8px;font-weight:600;padding:1px 5px;border-radius:10px;}
 ::-webkit-scrollbar{width:0;height:0;}
+
+/* DETAIL MODAL */
+.detail-overlay{position:fixed;inset:0;z-index:100;background:var(--dark);display:flex;flex-direction:column;transform:translateY(100%);transition:transform .35s cubic-bezier(.32,.72,0,1);}
+.detail-overlay.open{transform:translateY(0);}
+.detail-photos{position:relative;height:260px;flex-shrink:0;overflow:hidden;background:var(--dark3);}
+.photo-slider{display:flex;height:100%;transition:transform .3s ease;}
+.photo-slide{min-width:100%;height:100%;object-fit:cover;flex-shrink:0;}
+.photo-dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:5px;}
+.pdot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.4);transition:all .2s;}
+.pdot.on{background:#fff;width:16px;border-radius:3px;}
+.detail-back{position:absolute;top:50px;left:14px;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;border:none;color:#fff;z-index:2;}
+.detail-share{position:absolute;top:50px;right:14px;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;border:none;color:#fff;z-index:2;}
+.detail-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:18px 16px 100px;}
+.detail-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;line-height:1.3;margin-bottom:6px;}
+.detail-loc{font-size:12px;color:var(--muted);margin-bottom:14px;}
+.detail-price{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:var(--gold);margin-bottom:16px;}
+.detail-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+.chip{background:var(--dark2);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:6px 12px;font-size:12px;color:var(--soft);}
+.detail-desc-title{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.detail-desc{font-size:13px;color:var(--soft);line-height:1.7;}
+.detail-actions{position:fixed;bottom:0;left:0;right:0;padding:12px 16px;padding-bottom:max(12px,env(safe-area-inset-bottom));background:var(--dark2);border-top:1px solid rgba(255,255,255,0.06);display:flex;gap:10px;}
+.btn-wa{flex:1;padding:13px;border-radius:12px;background:#25D366;border:none;color:#fff;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-call{width:50px;height:50px;border-radius:12px;background:var(--dark3);border:1px solid rgba(255,255,255,0.1);color:var(--text);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 </style>
 </head>
 <body>
@@ -180,7 +203,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
       <div class="mtab" onclick="filterImm(this,'aff')">Affitto</div>
     </div>
     <div class="ilist" id="imm-list">
-      <div class="im" data-s="it" data-t="vend">
+      <div class="im" data-s="it" data-t="vend" onclick="openDetail({id:'69',titolo:'Incredible Villa on the lake of Montorfano (COMO)',comune:'Montorfano',naz:'it',tipo:'vend',prezzo:'EUR 880.000',details:'📐 451 m² · 🏠 10 vani · 🚿 4 bagni · ✨ Buono',desc:'Montorfano (CO): in prossimità del centro di questo antico paese e a pochissimi passi dall’omonimo lago dalle origini risalenti all’età preistorica, sorge la prestigiosa villa proposta in vendita. La maggior parte della casa si sviluppa su un unico piano abitativo dalla forma allungata e dalle estremità caratterizzate da pareti arrotondate. L’aspetto architettonico della costruzione è stato realizzato da un rinomato architetto dell’epoca che ne ha curato ogni minimo dettaglio rendendo unico ogni',fotos:["https://img.miogest.com/25565/0/imm_1388-20230516103735-1280-.jpg", "https://img.miogest.com/25565/0/imm_1389-20230516103716-1280-.jpg", "https://img.miogest.com/25565/0/imm_1390-20230516103721-1280-.jpg", "https://img.miogest.com/25565/0/imm_1391-20230516103724-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/0/imm_1388-20230516103735-1280-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Incredible Villa on the lake of Montorfano (COMO)</div>
@@ -188,7 +211,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">EUR 880.000</div><div class="tag t-it">🇮🇹 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="aff">
+      <div class="im" data-s="ch" data-t="aff" onclick="openDetail({id:'127',titolo:'Esclusivo LOFT arredato in proprietà di prestigio',comune:'Morbio Inferiore',naz:'ch',tipo:'aff',prezzo:'CHF 1.500/mese',details:'📐 50 m² · 🛏️ 2 camere · 🚿 1 bagni · ✨ Buono',desc:'Nella più bella e prestigiosa proprietà privata a sud della Svizzera Italiana, é ubicato questo bellissimo LOFT indipendente, totalmente arredato e con box per due auto e moto e area BBQ esterna.  La meravigliosa proprietà si trova sulle colline del Mendrisiotto, strategicamente posizionata a 7 minuti dal lago di Como, 30 minuti da Milano e 15 da Lugano, circondata da vigneti ed ulivi e con una vista panoramica straordinaria.  Il LOFT viene affittato in modo flessibile, anche con contratti trime',fotos:["https://img.miogest.com/25565/1/imm_10177-20250207131422-1280-.png", "https://img.miogest.com/25565/1/imm_10182-20250207131433-1280-.png", "https://img.miogest.com/25565/1/imm_10172-20250207131452-1280-.png", "https://img.miogest.com/25565/1/imm_10169-20250207131507-1280-.png", "https://img.miogest.com/25565/1/imm_10170-20250207131511-1280-.png", "https://img.miogest.com/25565/1/imm_10165-20250207131522-1280-.png", "https://img.miogest.com/25565/1/imm_10178-20250207131531-1280-.png", "https://img.miogest.com/25565/0/imm_3290-20250207131736-1280-.png"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_10177-20250207131422-1280-.png" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Esclusivo LOFT arredato in proprietà di prestigio</div>
@@ -196,7 +219,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 1.500/mese</div><div class="tag t-ch">🇨🇭 Affitto</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="aff">
+      <div class="im" data-s="ch" data-t="aff" onclick="openDetail({id:'128',titolo:'CHALET DI CHARME in proprietà privata esclusiva',comune:'Morbio Inferiore',naz:'ch',tipo:'aff',prezzo:'CHF 1.490/mese',details:'📐 50 m² · 🛏️ 1 camere · 🚿 1 bagni · ✨ Buono',desc:'CONTRATTI FLESSIBILI DA 3, 6 O 12 MESI – MASSIMA LIBERTÀ, ZERO VINCOLI.  Se stai cercando qualcosa di veramente unico, esclusivo e introvabile sul mercato, questa è l’opportunità che aspettavi.  Chalet di charme in proprietà privata esclusiva – Mendrisiotto (Sud Svizzera) A soli 8 minuti dal Lago di Como  Immerso nella collina del Mendrisiotto, all’interno di una delle proprietà private più riservate ed esclusive della zona, proponiamo uno chalet indipendente di circa 50 mq, completamente arreda',fotos:["https://img.miogest.com/25565/1/imm_18537-20260225082257-1280-.png", "https://img.miogest.com/25565/1/imm_18539-20260225082304-1280-.png", "https://img.miogest.com/25565/1/imm_18550-20260225082322-1280-.png", "https://img.miogest.com/25565/1/imm_18551-20260225082328-1280-.png", "https://img.miogest.com/25565/1/imm_18554-20260225082335-1280-.png", "https://img.miogest.com/25565/1/imm_18553-20260225082342-1280-.png", "https://img.miogest.com/25565/1/imm_18545-20260225082359-1280-.png", "https://img.miogest.com/25565/1/imm_18540-20260225082409-1280-.png"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_18537-20260225082257-1280-.png" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">CHALET DI CHARME in proprietà privata esclusiva</div>
@@ -204,7 +227,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 1.490/mese</div><div class="tag t-ch">🇨🇭 Affitto</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'173',titolo:'Favolosa villa vista lago con piscina',comune:'Collina d\'Oro',naz:'ch',tipo:'vend',prezzo:'CHF 2.800.000',details:'📐 306 m² · 🛏️ 4 camere · 🚿 4 bagni · ✨ Ottimo',desc:'Collina D\'Oro - Montagnola, In zona molto riservata e tranquilla, lungo una strada chiusa, a poca distanza dal TASIS scuola Americana e servizi, vendesi luminosa ed ampia villa signorile di 306 mq., rinnovata nel 2015 con materiali di alta qualità, con magnifica vista lago, circondata da un giardino dove fioriscono tutto l\'anno alberi da frutto e dove troviamo una bellissima piscina esterna;  L\'immobile è composto da 3 livelli abitativi cosi composti:  Al piano terra/zona living: - ampio ingress',fotos:["https://img.miogest.com/25565/0/imm_4547-20240823125009--731.jpg", "https://img.miogest.com/25565/0/imm_4548-20240823125012-1023-.jpg", "https://img.miogest.com/25565/0/imm_7006-20240823125022--1280.JPG", "https://img.miogest.com/25565/0/imm_7005-20240823125146-1280-.JPG", "https://img.miogest.com/25565/0/imm_7001-20240823125149-1280-.JPG", "https://img.miogest.com/25565/0/imm_7003-20240823125153-1280-.JPG", "https://img.miogest.com/25565/0/imm_6997-20240823124930-1280-.JPG", "https://img.miogest.com/25565/0/imm_6995-20240823124933-1280-.JPG"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/0/imm_4547-20240823125009--731.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Favolosa villa vista lago con piscina</div>
@@ -212,7 +235,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 2.800.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'226',titolo:'THE GREATEST APARTMENT IN THE HEART OF ST. MORITZ',comune:'St. Moritz',naz:'ch',tipo:'vend',prezzo:'CHF 5.985.000',details:'📐 175 m² · 🛏️ 4 camere · 🚿 3 bagni · ✨ Ristrutturato',desc:'This exceptional and unique apartment, featuring a spacious terrace, is located just steps from the ski lift in the very heart of St. Moritz.  Recently renovated with impeccable style and elegance, it offers ample accommodation for up to 7 people across 4 luxurious bedrooms. The expansive terrace provides a perfect spot to soak up the sun and savor breathtaking views in absolute comfort. The apartment is being sold fully furnished.  The property is very well maintained and consists of only three',fotos:["https://img.miogest.com/25565/1/imm_15918-20251004115736-1280-.png", "https://img.miogest.com/25565/1/imm_15919-20251004115738-1280-.png", "https://img.miogest.com/25565/1/imm_15920-20251004115740-1280-.png", "https://img.miogest.com/25565/1/imm_15921-20251004115745-1280-.png", "https://img.miogest.com/25565/1/imm_15922-20251004115748-1280-.png", "https://img.miogest.com/25565/1/imm_15923-20251004115751-1280-.png", "https://img.miogest.com/25565/1/imm_15924-20251004115758-1280-.png", "https://img.miogest.com/25565/1/imm_15925-20251004115801-1280-.png"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_15918-20251004115736-1280-.png" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">THE GREATEST APARTMENT IN THE HEART OF ST. MORITZ</div>
@@ -220,7 +243,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 5.985.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="it" data-t="aff">
+      <div class="im" data-s="it" data-t="aff" onclick="openDetail({id:'260',titolo:'Affittasi a Como: Il tuo pied-à-terre ideale!',comune:'Como',naz:'it',tipo:'aff',prezzo:'EUR 1.800/mese',details:'📐 85 m² · 🛏️ 2 camere · 🚿 1 bagni · ✨ Ristrutturato',desc:'Cerchi un appartamento moderno e funzionale, in una posizione strategica per raggiungere il centro città, la stazione ferroviaria e la Svizzera? Abbiamo quello che fa per te in via Borgovico!  Splendido appartamento completamente ristrutturato con arredamento moderno e funzionale, composto da:  Luminoso soggiorno con angolo cottura attrezzato, camera matrimoniale confortevole, cameretta con due letti singoli e elegante bagno.  L\'appartamento è dotato di aria condizionata, cucina a induzione e bo',fotos:["https://img.miogest.com/25565/0/imm_6931-20241220182920-1280-.jpeg", "https://img.miogest.com/25565/0/imm_6935-20240819105918-1280-.jpeg", "https://img.miogest.com/25565/0/imm_6933-20240819105459-1280-.jpeg", "https://img.miogest.com/25565/0/imm_6936-20240819105514-1280-.jpeg", "https://img.miogest.com/25565/0/imm_6937-20240819105518-1280-.jpeg", "https://img.miogest.com/25565/0/imm_6934-20240819105502-1280-.jpeg", "https://img.miogest.com/25565/0/imm_6924-20240819110608-1280-.jpeg", "https://img.miogest.com/25565/0/imm_6925-20240819110612-1280-.jpeg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/0/imm_6931-20241220182920-1280-.jpeg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Affittasi a Como: Il tuo pied-à-terre ideale!</div>
@@ -228,7 +251,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">EUR 1.800/mese</div><div class="tag t-it">🇮🇹 Affitto</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'301',titolo:'BELLISSIMO IMMOBILE A REDDITO CON GIARDINO',comune:'Balerna',naz:'ch',tipo:'vend',prezzo:'CHF 1.995.000',details:'📐 712 m² · 🏠 7 vani · ✨ Buono · 🌄 Vista Aperta',desc:'\"Si tratta di uno degli immobili a reddito piu affascinanti e con il maggior potenziale che ho avuto modo di vedere negli ultimi anni nell\'area del Mendrisiotto\" SIMON BINDELLA  Questo tipico casone risalente alla meta degli anni 1900 é stato preservato in condizioni impeccabili e offre un \'eccezionale opportunità di investimento. Il complesso é impreziosito da un raro ed ampio giardino privato ad uso esclusivo per i condomini, completo di una caratteristica casetta con camino, perfetta per mome',fotos:["https://img.miogest.com/25565/0/imm_8538-20241018102336-1280-.jpg", "https://img.miogest.com/25565/0/imm_8399-20241007093603-1280-.jpg", "https://img.miogest.com/25565/0/imm_8400-20241007093603-1280-.jpg", "https://img.miogest.com/25565/0/imm_8401-20241007093604-1280-.jpg", "https://img.miogest.com/25565/0/imm_8402-20241007093605-1280-.jpg", "https://img.miogest.com/25565/0/imm_8403-20241007093605-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/0/imm_8538-20241018102336-1280-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">BELLISSIMO IMMOBILE A REDDITO CON GIARDINO</div>
@@ -236,7 +259,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 1.995.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'314',titolo:'NUOVA COSTRUZIONE A CADEMPINO CON GIARDINO PRIVATO',comune:'Cadempino',naz:'ch',tipo:'vend',prezzo:'CHF 804.000',details:'📐 81 m² · 🛏️ 2 camere · 🚿 2 bagni · ✨ Nuovo',desc:'Stai cercando un appartamento moderno con portico e giardino privato a Cadempino, in una zona serena?  Presentiamo un nuovo edificio in fase di realizzazione, composto da 6 appartamenti con ascensore, portici e giardini privati. Situato in un\'area di comfort, offre tranquillità e accesso comodo ai servizi.  L\'appartamento al piano terra è personalizzabile e include:  - Spaziosa zona giorno con soggiorno e cucina a vista che si apre su portico e giardino. - Camera matrimoniale con bagno privato, ',fotos:["https://img.miogest.com/25565/0/imm_9939-20251125140105-1280-.png", "https://img.miogest.com/25565/0/imm_9937-20251125140107-1280-.png", "https://img.miogest.com/25565/0/imm_9941-20250118141013-1280-.png", "https://img.miogest.com/25565/0/imm_9940-20250118141046-1280-.png", "https://img.miogest.com/25565/0/imm_9943-20250118140706-1280-.png", "https://img.miogest.com/25565/0/imm_8660-20250118140712-1280-.jpg", "https://img.miogest.com/25565/0/imm_8661-20250118140715-1280-.jpg", "https://img.miogest.com/25565/0/imm_8658-20250118140832-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/0/imm_9939-20251125140105-1280-.png" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">NUOVA COSTRUZIONE A CADEMPINO CON GIARDINO PRIVATO</div>
@@ -244,7 +267,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 804.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="it" data-t="vend">
+      <div class="im" data-s="it" data-t="vend" onclick="openDetail({id:'356',titolo:'Trilocali con Giardino e Servizi Esclusivi',comune:'Como',naz:'it',tipo:'vend',prezzo:'EUR 273.250',details:'📐 171 m² · 🛏️ 2 camere · 🚿 2 bagni · ✨ Nuovo',desc:'Benvenuti alla \"Residenza Panorama\", un progetto unico situato a Bizzarone, location ideale per chi lavora in Svizzera o desidera rimanere nelle vicinanze di Como, godendo al contempo della tranquillità e del verde circostante. Questa residenza offre soluzioni abitative perfette per famiglie, coppie, anziani e amanti degli animali, ed è ideale per chi cerca uno stile di vita attivo a contatto con la natura.  Gli appartamenti sono collocati in piccole palazzine di sole 6-8 unità, garantendo priva',fotos:["https://img.miogest.com/25565/1/imm_18243-20260526142441-1280-.jpg", "https://img.miogest.com/25565/1/imm_18231-20260526142447-1280-.jpg", "https://img.miogest.com/25565/1/imm_18244-20260526142450-1280-.jpg", "https://img.miogest.com/25565/1/imm_18224-20260526142453-1280-.jpg", "https://img.miogest.com/25565/1/imm_18225-20260209141117-1280-.jpg", "https://img.miogest.com/25565/1/imm_18226-20260209141126-1280-.jpg", "https://img.miogest.com/25565/1/imm_18237-20260209141136-1280-.jpg", "https://img.miogest.com/25565/1/imm_18245-20260209141149-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_18243-20260526142441-1280-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Trilocali con Giardino e Servizi Esclusivi</div>
@@ -252,7 +275,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">EUR 273.250</div><div class="tag t-it">🇮🇹 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1402',titolo:'Favolosa villa vista lago con piscina',comune:'Collina d\'Oro',naz:'ch',tipo:'vend',prezzo:'CHF 2.800.000',details:'📐 306 m² · 🛏️ 4 camere · 🚿 4 bagni · ✨ Ottimo',desc:'Collina D\'Oro - Montagnola, In zona molto riservata e tranquilla, lungo una strada chiusa, a poca distanza dal TASIS scuola Americana e servizi, vendesi luminosa ed ampia villa signorile di 306 mq., rinnovata nel 2015 con materiali di alta qualità, con magnifica vista lago, circondata da un giardino dove fioriscono tutto l\'anno alberi da frutto e dove troviamo una bellissima piscina esterna;  L\'immobile è composto da 3 livelli abitativi cosi composti:  Al piano terra/zona living: - ampio ingress',fotos:["https://img.miogest.com/25565/1/imm_12566-20250316204319-1023-.jpg", "https://img.miogest.com/25565/1/imm_12565-20250316204243--731.jpg", "https://img.miogest.com/25565/1/imm_12567-20250316204243--1280.JPG", "https://img.miogest.com/25565/1/imm_12568-20250316204243-1280-.JPG", "https://img.miogest.com/25565/1/imm_12569-20250316204243-1280-.JPG", "https://img.miogest.com/25565/1/imm_12570-20250316204243-1280-.JPG", "https://img.miogest.com/25565/1/imm_12571-20250316204243-1280-.JPG", "https://img.miogest.com/25565/1/imm_12572-20250316204243-1280-.JPG"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_12566-20250316204319-1023-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Favolosa villa vista lago con piscina</div>
@@ -260,7 +283,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 2.800.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1432',titolo:'MERIDE, ANGOLO DI PARADISO IMMERSO NELLA NATURA',comune:'Meride',naz:'ch',tipo:'vend',prezzo:'CHF 989.000',details:'📐 109 m² · 🏠 4 vani · ✨ Buono · 🌄 Vista Aperta',desc:'A Meride, zona Monte San Giorgio, patrimonio dell\' UNESCO, un angolo di pace immerso nella natura, a pochi minuti dal Serpiano e dai principali centri  Questa splendida proprietà con ca.900 mq di giardino, rappresenta una rara combinazione di tranquillità assoluta e posizione strategica. Immersa nel verde, circondata da un paesaggio aperto e soleggiato tutto il giorno, offre un’atmosfera rilassante e rigenerante, senza rinunciare alla comodità.  In pochi minuti si raggiungono Mendrisio, il confi',fotos:["https://img.miogest.com/25565/1/imm_13569-20250331093611-1280-.png", "https://img.miogest.com/25565/1/imm_13570-20250331093251-1280-.png", "https://img.miogest.com/25565/1/imm_13571-20250331093256-1280-.png", "https://img.miogest.com/25565/1/imm_13572-20250331093413-1280-.png", "https://img.miogest.com/25565/1/imm_13573-20250331093418-1280-.png", "https://img.miogest.com/25565/1/imm_13574-20250331093423-1280-.png", "https://img.miogest.com/25565/1/imm_13575-20250331093428-1280-.png", "https://img.miogest.com/25565/1/imm_13576-20250331093602-1280-.png"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_13569-20250331093611-1280-.png" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">MERIDE, ANGOLO DI PARADISO IMMERSO NELLA NATURA</div>
@@ -268,7 +291,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 989.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="it" data-t="vend">
+      <div class="im" data-s="it" data-t="vend" onclick="openDetail({id:'1434',titolo:'ESCLUSIVE ABITAZIONI TRA DESIGN E NATURA ',comune:'San Fermo della Battaglia',naz:'it',tipo:'vend',prezzo:'EUR 700.000',details:'📐 160 m² · 🛏️ 3 camere · 🚿 2 bagni · ✨ Nuovo',desc:'Sulla collina di Camerano, in una posizione panoramica e riservata, sorge la Residenza San Fermo, un nuovo complesso residenziale nel cuore di San Fermo della Battaglia. Un’architettura moderna e raffinata si inserisce armoniosamente in un contesto naturale di grande fascino, offrendo abitazioni indipendenti concepite per garantire il massimo comfort e un’elevata qualità della vita.  Le 13 unità terra-cielo, con metrature a partire da 120 mq, sono progettate per coniugare eleganza e funzionalità',fotos:["https://img.miogest.com/25565/1/imm_13642-20250331190754-1280-.png", "https://img.miogest.com/25565/1/imm_13641-20250331190759-1280-.png", "https://img.miogest.com/25565/1/imm_13644-20250331190808-1280-.png", "https://img.miogest.com/25565/1/imm_13643-20250331190812-1280-.png", "https://img.miogest.com/25565/1/imm_13645-20250331190819-1280-.png", "https://img.miogest.com/25565/1/imm_13647-20250331190836-1280-.png", "https://img.miogest.com/25565/1/imm_13640-20250331190839-1280-.png", "https://img.miogest.com/25565/1/imm_13656-20250402124721-1280-.JPG"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_13642-20250331190754-1280-.png" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">ESCLUSIVE ABITAZIONI TRA DESIGN E NATURA </div>
@@ -276,7 +299,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">EUR 700.000</div><div class="tag t-it">🇮🇹 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1452',titolo:'La villa più iconica di Morbio Inferiore ',comune:'Morbio Inferiore',naz:'ch',tipo:'vend',prezzo:'CHF 1.645.000',details:'📐 300 m² · 🛏️ 4 camere · 🚿 3 bagni · ✨ Buono',desc:'La villa più iconica di Morbio Inferiore è finalmente sul mercato. E non sarà disponibile a lungo.  Immersa nel verde, questa residenza esclusiva non è solo una casa: è un sogno a occhi aperti, pensato per chi desidera il meglio in termini di comfort, stile e vivibilità.  Un giardino da rivista, curato nei minimi dettagli, circonda la villa e anticipa un ingresso maestoso, che regala da subito un senso di armonia e raffinatezza. Ogni angolo è stato progettato con amore e attenzione: dai paviment',fotos:["https://img.miogest.com/25565/2/imm_20154-20260422121919-1280-.png", "https://img.miogest.com/25565/1/imm_14229-20250512105832-1280-.png", "https://img.miogest.com/25565/1/imm_14230-20250512105834-1280-.png", "https://img.miogest.com/25565/1/imm_14231-20250512105838-1280-.png", "https://img.miogest.com/25565/1/imm_14232-20250512105840-1280-.png", "https://img.miogest.com/25565/1/imm_14233-20250512105842-1280-.png", "https://img.miogest.com/25565/1/imm_14234-20250512105845-1280-.png", "https://img.miogest.com/25565/1/imm_14235-20250512105847-1280-.png"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20154-20260422121919-1280-.png" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">La villa più iconica di Morbio Inferiore </div>
@@ -284,7 +307,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 1.645.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1457',titolo:'Un sogno diventato realtà',comune:'Morcote',naz:'ch',tipo:'vend',prezzo:'CHF 2.980.000',details:'📐 180 m² · 🏠 6 vani · 🚿 2 bagni · ✨ Buono',desc:'Un Capolavoro con Vista Lago nella “Beverly Hills” del Sud della Svizzera. Benvenuti a Morcote  Situata sulle colline del meraviglioso paese di Morcote, ufficialmente riconosciuto come il borgo più bello della Svizzera, questa villa straordinaria rappresenta un’opportunità unica per vivere in un luogo esclusivo, immerso nella bellezza e nella tranquillità.  Immagina di svegliarti ogni giorno con una vista panoramica mozzafiato sul Lago di Lugano, circondato da eleganza, natura e privacy assoluta',fotos:["https://img.miogest.com/25565/1/imm_17842-20260130113026-1280-.png", "https://img.miogest.com/25565/1/imm_17843-20260130113028-1280-.png", "https://img.miogest.com/25565/1/imm_14319-20250602094946-1280-.png", "https://img.miogest.com/25565/1/imm_14320-20250602094955-1280-.png", "https://img.miogest.com/25565/1/imm_14321-20250602095002-1280-.png", "https://img.miogest.com/25565/1/imm_14322-20250602095003-1280-.png"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_17842-20260130113026-1280-.png" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Un sogno diventato realtà</div>
@@ -292,7 +315,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 2.980.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1459',titolo:'Affascinante Immobile a Reddito in zona verde',comune:'Balerna',naz:'ch',tipo:'vend',prezzo:'CHF 5.300.000',details:'📐 1500 m² · 🏠 20 vani',desc:'A Balerna, in zona collinare, riservata, verde e moltro tranquilla, lontano dal traffico ma a poca distanza dalle via dalle vie di comunicazioni, vendiamo ampio stabile plurifamiliare di 60 locali (ex masseria) di circa 1500mq. in ottime condizioni attualmente affittato con ottima resa annua di circa 4% e cosi\' composto:  - n. 15 appartamenti composti da 1,5-2,5-3,5-4,5 locali; - n. 2 casette indipendenti; - n.16 posti auto coperti; - n.9 posteggi esterni; - n.5 cantine; - bosco di 265mq.;  La r',fotos:["https://img.miogest.com/25565/1/imm_14324-20250603172129-1280-.jpg", "https://img.miogest.com/25565/1/imm_14325-20250603172129--1024.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_14324-20250603172129-1280-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Affascinante Immobile a Reddito in zona verde</div>
@@ -300,7 +323,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 5.300.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="it" data-t="vend">
+      <div class="im" data-s="it" data-t="vend" onclick="openDetail({id:'1473',titolo:'Ampio trilocale con terrazzo in Residenza ',comune:'Como',naz:'it',tipo:'vend',prezzo:'EUR 293.000',details:'📐 117 m² · 🛏️ 2 camere · 🚿 2 bagni · ✨ Nuovo',desc:'Benvenuti a Residenza Panorama, un progetto unico a Bizzarone, ideale per chi lavora in Svizzera o cerca un rifugio tranquillo vicino a Como. Immersa nel verde, questa residenza esclusiva offre comfort, modernità e servizi pensati per ogni esigenza.  Tra le diverse soluzioni abitative disponibili, proponiamo un trilocale situato al primo piano, perfetto per famiglie e coppie in cerca di spazi funzionali e ben distribuiti. L’appartamento si apre su un ampio soggiorno, cucina a vista, eventualment',fotos:["https://img.miogest.com/25565/1/imm_14707-20250812203813-1280-.jpg", "https://img.miogest.com/25565/1/imm_14709-20250812203813-1280-.jpg", "https://img.miogest.com/25565/1/imm_14710-20250812203813-1272-.png", "https://img.miogest.com/25565/1/imm_14711-20250812203813-1280-.jpg", "https://img.miogest.com/25565/1/imm_14712-20250812203813-1280-.jpg", "https://img.miogest.com/25565/1/imm_14713-20250812203813-1280-.jpg", "https://img.miogest.com/25565/1/imm_14714-20250812203813-1272-.png", "https://img.miogest.com/25565/1/imm_14715-20250812203813-1272-.png"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_14707-20250812203813-1280-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Ampio trilocale con terrazzo in Residenza </div>
@@ -308,7 +331,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">EUR 293.000</div><div class="tag t-it">🇮🇹 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="it" data-t="vend">
+      <div class="im" data-s="it" data-t="vend" onclick="openDetail({id:'1483',titolo:'Ampio trilocale con terrazzo in Residenza ',comune:'Bizzarone',naz:'it',tipo:'vend',prezzo:'EUR 293.000',details:'📐 117 m² · 🛏️ 2 camere · 🚿 2 bagni · ✨ Nuovo',desc:'Benvenuti a Residenza Panorama, un progetto unico a Bizzarone, ideale per chi lavora in Svizzera o cerca un rifugio tranquillo vicino a Como. Immersa nel verde, questa residenza esclusiva offre comfort, modernità e servizi pensati per ogni esigenza.  Tra le diverse soluzioni abitative disponibili, proponiamo un trilocale situato al primo piano, perfetto per famiglie e coppie in cerca di spazi funzionali e ben distribuiti. L’appartamento si apre su un ampio soggiorno, cucina a vista, eventualment',fotos:["https://img.miogest.com/25565/1/imm_14985-20260302205049-1274-.png", "https://img.miogest.com/25565/1/imm_18724-20260302205138-1280-.jpg", "https://img.miogest.com/25565/1/imm_18717-20260302205208-1280-.jpeg", "https://img.miogest.com/25565/1/imm_18725-20260302205304-1280-.jpg", "https://img.miogest.com/25565/1/imm_18729-20260302205310-1280-.jpg", "https://img.miogest.com/25565/1/imm_18726-20260302205317-1280-.jpg", "https://img.miogest.com/25565/1/imm_18730-20260302205320-1280-.jpg", "https://img.miogest.com/25565/1/imm_18722-20260302205326-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_14985-20260302205049-1274-.png" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Ampio trilocale con terrazzo in Residenza </div>
@@ -316,7 +339,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">EUR 293.000</div><div class="tag t-it">🇮🇹 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="it" data-t="vend">
+      <div class="im" data-s="it" data-t="vend" onclick="openDetail({id:'1484',titolo:'Trilocale con giardino privato e servizi esclusivi',comune:'Bizzarone',naz:'it',tipo:'vend',prezzo:'EUR 267.600',details:'📐 103 m² · 🛏️ 2 camere · 🚿 2 bagni · ✨ Nuovo',desc:'Benvenuti a Residenza Panorama, un progetto unico a Bizzarone, ideale per chi lavora in Svizzera o cerca un rifugio tranquillo vicino a Como. Immersa nel verde, questa residenza esclusiva offre comfort, modernità e servizi pensati per ogni esigenza.  Tra le diverse soluzioni abitative disponibili, proponiamo un trilocale situato al piano terra, perfetto per famiglie e coppie in cerca di spazi funzionali e ben distribuiti. L’appartamento si apre su un ampio soggiorno, cucina, eventualmente si può',fotos:["https://img.miogest.com/25565/1/imm_18163-20260508170344-1280-.jpg", "https://img.miogest.com/25565/1/imm_18150-20260526141550-1280-.jpg", "https://img.miogest.com/25565/1/imm_18153-20260209175412-1280-.jpg", "https://img.miogest.com/25565/1/imm_18159-20260209121936-1280-.jpg", "https://img.miogest.com/25565/1/imm_18149-20260209121950-1280-.jpg", "https://img.miogest.com/25565/1/imm_18155-20260209121955-1280-.jpg", "https://img.miogest.com/25565/1/imm_18162-20260209122005-1280-.jpg", "https://img.miogest.com/25565/1/imm_18148-20260209121208-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_18163-20260508170344-1280-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Trilocale con giardino privato e servizi esclusivi</div>
@@ -324,7 +347,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">EUR 267.600</div><div class="tag t-it">🇮🇹 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1486',titolo:'Appartamento con terrazzo e incantevole vista lago',comune:'Melide',naz:'ch',tipo:'vend',prezzo:'CHF 930.000',details:'📐 100 m² · 🛏️ 2 camere · 🚿 2 bagni · ✨ Ottimo',desc:'\"RESIDENZA SECONDARIA\" Nell\'incantevole lungo lago di Melide, in una recente ed esclusiva residenza, proponiamo in vendita un luminoso e LUSSUOSO APPARTAMENTO COMPLETAMENTE ARREDATO con un\'ampia terrazza vista lago a 180° e giardino privato.    L\'appartamento, unico nel suo genere, realizzato con finiture di ottimo livello, è composto da:   - Ingresso;   - Luminosa zona living con soggiorno e cucina, con accesso all\'ampia terrazza vista lago;   - Grande e comoda camera matrimoniale con bagno en ',fotos:["https://img.miogest.com/25565/1/imm_18063-20260414085143-1184-.png", "https://img.miogest.com/25565/1/imm_15110-20260404115421-1280-.jpg", "https://img.miogest.com/25565/1/imm_18062-20260203093202-1184-.png", "https://img.miogest.com/25565/1/imm_15105-20260203093212-1280-.jpg", "https://img.miogest.com/25565/1/imm_15106-20260404115431-1280-.jpg", "https://img.miogest.com/25565/1/imm_15108-20260203091839-1280-.jpg", "https://img.miogest.com/25565/1/imm_15107-20260203091841-1280-.jpg", "https://img.miogest.com/25565/1/imm_15109-20260203091853-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_18063-20260414085143-1184-.png" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Appartamento con terrazzo e incantevole vista lago</div>
@@ -332,7 +355,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 930.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1496',titolo:'Nuova porzione di Capannone 500mq. fronte strada',comune:'Lugano',naz:'ch',tipo:'vend',prezzo:'CHF 2.150.000',details:'📐 500 m² · 🏠 3 vani · ✨ Nuovo',desc:'Siamo tra Barbengo e Grancia, in location molto servita e strategica per l\'accesso dell\'autostrada, nella zona commerciale/industriale, vendesi in nuovo edificio fronte strada (ottima visibilità) porzione di capannone di 500 mq. da ultimare con le personalizzazioni del cliente. Ampi spazi di manovra, montacarichi e parcheggi di pertinenza altezza interna H 510. Possibilità di vendita di un totale di 1000 mq.  (H 510 piano terra e H 390 piano secondo collegati con monta-carico-auto,) per un prezz',fotos:["https://img.miogest.com/25565/1/imm_15410-20250906190331-1280-.jpeg", "https://img.miogest.com/25565/1/imm_15411-20250906190331-1280-.jpeg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_15410-20250906190331-1280-.jpeg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Nuova porzione di Capannone 500mq. fronte strada</div>
@@ -340,7 +363,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 2.150.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1501',titolo:'Palazzina a reddito netto 4,48% annuo',comune:'Bellinzona',naz:'ch',tipo:'vend',prezzo:'CHF 4.100.000',details:'📐 1000 m² · 🏠 25 vani · ✨ Abitabile',desc:'Proponiamo un interessante stabile a destinazione mista (residenziale e/o commerciale) situato in un’area ben servita di Bellinzona. Reddito annuo netto 4,48% con costo medio al mq pari a CHF 3100.  L’immobile gode di un’ottima posizione, con servizi, trasporti pubblici, scuole e negozi facilmente raggiungibili a piedi.  La proprietà, distribuita su più livelli, offre diverse unità abitative e spazi polivalenti, ideali per chi cerca un investimento solido e un buon potenziale di rendimento nel t',fotos:["https://img.miogest.com/25565/1/imm_15635-20250912152826-1280-.jpg", "https://img.miogest.com/25565/1/imm_15475-20250906191424-1280-.jpeg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_15635-20250912152826-1280-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Palazzina a reddito netto 4,48% annuo</div>
@@ -348,7 +371,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 4.100.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1505',titolo:'Un’icona di prestigio nel cuore del Sud della Svizzera',comune:'Vacallo',naz:'ch',tipo:'vend',prezzo:'CHF 1.850.000',details:'📐 400 m² · 🛏️ 4 camere · ✨ Da Ristrutturare · 🌄 Vista Aperta',desc:'Immersa nel silenzio e nella bellezza di un’area di assoluto prestigio, questa villa storica rappresenta una delle più affascinanti opportunità abitative e di investimento della regione. Un gioiello raro, capace di racchiudere l’eleganza delle dimore di una volta e il potenziale illimitato di una rinascita architettonica moderna.  Gli spazi sono maestosi: corridoi e scale di dimensioni imponenti, ambienti che respirano luce e libertà, proporzioni che oggi non si costruiscono più. Ogni camera da ',fotos:["https://img.miogest.com/25565/1/imm_15509-20250908101125-1280-.png", "https://img.miogest.com/25565/1/imm_15510-20250908101126-1280-.png", "https://img.miogest.com/25565/1/imm_15511-20250908101131-1280-.png", "https://img.miogest.com/25565/1/imm_15694-20250917100227-1280-.png", "https://img.miogest.com/25565/1/imm_15512-20250908101134-1280-.png", "https://img.miogest.com/25565/1/imm_15696-20250917100234-1280-.png", "https://img.miogest.com/25565/1/imm_15697-20250917100313-1280-.png", "https://img.miogest.com/25565/1/imm_15698-20250917100317-1280-.png"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_15509-20250908101125-1280-.png" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Un’icona di prestigio nel cuore del Sud della Svizzera</div>
@@ -356,7 +379,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 1.850.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1511',titolo:'Nuovo Commerciale e Residenziale a reddito ',comune:'Lugano',naz:'ch',tipo:'vend',prezzo:'CHF 11.500.000',details:'📐 1800 m² · 🏠 20 vani · ✨ Abitabile',desc:'Siamo a pochi minuti da Lugano, lungo una strada di forte passaggio, vendesi nuovo EDIFICIO COMMERCIALE di 1000mq., una nuova PALAZZINA RESIDENZIALE n.6 appartamenti, n. 32 posti auto, n. 2 appartamenti e n.1 locale commerciale attualmente già locati.  I nuovi edifici commerciali e residenziale  sarano consegnati a ottobre 2026 con contratti di locazione già in essere con primarie attività solvibili!!  Superfici commerciali circa 1800 mq. ',fotos:["https://img.miogest.com/25565/1/imm_15637-20250912153551-1280-.jpg", "https://img.miogest.com/25565/1/imm_15638-20250912153551--1024.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_15637-20250912153551-1280-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Nuovo Commerciale e Residenziale a reddito </div>
@@ -364,7 +387,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 11.500.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1512',titolo:'Affascinante Immobile a Reddito in zona verde',comune:'Balerna',naz:'ch',tipo:'vend',prezzo:'CHF 5.000.000',details:'📐 1500 m² · 🏠 20 vani',desc:'A Balerna, in zona collinare, riservata, verde e moltro tranquilla, lontano dal traffico ma a poca distanza dalle via dalle vie di comunicazioni, vendiamo ampio stabile plurifamiliare di 60 locali (ex masseria) di circa 1500mq. in ottime condizioni attualmente affittato con ottima resa annua di circa 4% e cosi\' composto:  - n. 15 appartamenti composti da 1,5-2,5-3,5-4,5 locali; - n. 2 casette indipendenti; - n.16 posti auto coperti; - n.9 posteggi esterni; - n.5 cantine; - bosco di 265mq.;  La r',fotos:["https://img.miogest.com/25565/1/imm_15639-20250912163000-1280-.jpg", "https://img.miogest.com/25565/1/imm_15640-20250912163000--1024.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_15639-20250912163000-1280-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Affascinante Immobile a Reddito in zona verde</div>
@@ -372,7 +395,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 5.000.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="aff">
+      <div class="im" data-s="ch" data-t="aff" onclick="openDetail({id:'1516',titolo:'AFFITTASI UFFICIO IN ZONA MOLTO SERVITA',comune:'Lugano',naz:'ch',tipo:'aff',prezzo:'CHF 1.300/mese',details:'📐 65 m² · 🏠 3,5 vani · ✨ Ottimo',desc:'Affittasi ufficio di 65 mq al 1° piano (con ascensore) in zona strategica e di forte passaggio, a pochi minuti dal centro di Lugano, vicino alla stazione ferroviaria e agli accessi autostradali di Lugano Nord.  L’ufficio è così suddiviso: -Ampia zona reception -Ufficio separato -Sala riunioni -Cucina spaziosa con lavandino e lavastoviglie -Piccolo locale ad eventuale uso deposito o server -Locale WC  L’ambiente è luminoso, funzionale e ideale per studi professionali, agenzie o piccole imprese ch',fotos:["https://img.miogest.com/25565/1/imm_15740-20250918084551-1280-.jpg", "https://img.miogest.com/25565/1/imm_15741-20250918084551-1280-.jpg", "https://img.miogest.com/25565/1/imm_15742-20250918084551-1280-.jpg", "https://img.miogest.com/25565/1/imm_15743-20250918084551-1280-.jpg", "https://img.miogest.com/25565/1/imm_15744-20250918084551-1280-.jpg", "https://img.miogest.com/25565/1/imm_15745-20250918084551-1280-.jpg", "https://img.miogest.com/25565/1/imm_15746-20250918084551-1280-.jpeg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_15740-20250918084551-1280-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">AFFITTASI UFFICIO IN ZONA MOLTO SERVITA</div>
@@ -380,7 +403,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 1.300/mese</div><div class="tag t-ch">🇨🇭 Affitto</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1523',titolo:'Vendesi Appartamenti di Prestigio a Massagno-Besso',comune:'Lugano',naz:'ch',tipo:'vend',prezzo:'CHF 462.000',details:'📐 56 m² · 🛏️ 1 camere',desc:'Nel cuore pulsante di Massagno, lungo la suggestiva via Besso, a pochi passi dalle principali infrastrutture e servizi della città di Lugano (scuole, supermercati, mezzi pubblici, centri sportivi e culturali)m presentiamo una nuova e moderna residenza con n.16 appartamenti di prestigio disponibili per la vendita.   Tipologie disponibili:  •⁠  ⁠Appartamenti di 2,5 locali  a partire da chf 462.000 da 56 mq.  •⁠  ⁠Appartamenti di 3,5 locali  a partire da chf 747.000 da 89 mq.  •⁠  ⁠Appartamenti di ',fotos:["https://img.miogest.com/25565/1/imm_15885-20250925111509--1280.jpg", "https://img.miogest.com/25565/1/imm_15886-20250925111506-1172-.JPG", "https://img.miogest.com/25565/1/imm_15887-20250925111605-1280-.jpeg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_15885-20250925111509--1280.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Vendesi Appartamenti di Prestigio a Massagno-Besso</div>
@@ -388,7 +411,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 462.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1525',titolo:'Vendesi Appartamenti di Prestigio a Massagno-Besso',comune:'Lugano',naz:'ch',tipo:'vend',prezzo:'CHF 747.000',details:'📐 89 m² · 🛏️ 2 camere · 🚿 2 bagni',desc:'Nel cuore pulsante di Massagno, lungo la suggestiva via Besso, a pochi passi dalle principali infrastrutture e servizi della città di Lugano (scuole, supermercati, mezzi pubblici, centri sportivi e culturali)m presentiamo una nuova e moderna residenza con n.16 appartamenti di prestigio disponibili per la vendita.   Tipologie disponibili:  •⁠  ⁠Appartamenti di 2,5 locali  a partire da chf 462.000 da 56 mq.  •⁠  ⁠Appartamenti di 3,5 locali  a partire da chf 747.000 da 89 mq.  •⁠  ⁠Appartamenti di ',fotos:["https://img.miogest.com/25565/1/imm_15912-20251002084309--1280.jpg", "https://img.miogest.com/25565/1/imm_15913-20251002084309-1172-.JPG", "https://img.miogest.com/25565/1/imm_15914-20251002084309-1280-.jpeg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_15912-20251002084309--1280.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Vendesi Appartamenti di Prestigio a Massagno-Besso</div>
@@ -396,7 +419,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 747.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1526',titolo:'Vendesi Appartamenti di Prestigio a Massagno-Besso',comune:'Lugano',naz:'ch',tipo:'vend',prezzo:'CHF 960.000',details:'📐 107 m² · 🛏️ 3 camere · 🚿 2 bagni',desc:'Nel cuore pulsante di Massagno, lungo la suggestiva via Besso, a pochi passi dalle principali infrastrutture e servizi della città di Lugano (scuole, supermercati, mezzi pubblici, centri sportivi e culturali)m presentiamo una nuova e moderna residenza con n.16 appartamenti di prestigio disponibili per la vendita.   Tipologie disponibili:  •⁠  ⁠Appartamenti di 2,5 locali  a partire da chf 462.000 da 56 mq.  •⁠  ⁠Appartamenti di 3,5 locali  a partire da chf 747.000 da 89 mq.  •⁠  ⁠Appartamenti di ',fotos:["https://img.miogest.com/25565/1/imm_15915-20251002084519--1280.jpg", "https://img.miogest.com/25565/1/imm_15916-20251002084519-1172-.JPG", "https://img.miogest.com/25565/1/imm_15917-20251002084519-1280-.jpeg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_15915-20251002084519--1280.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Vendesi Appartamenti di Prestigio a Massagno-Besso</div>
@@ -404,7 +427,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 960.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="it" data-t="vend">
+      <div class="im" data-s="it" data-t="vend" onclick="openDetail({id:'1530',titolo:'Attico 170 mq con terrazzo vista lago e Monte Rosa ',comune:'Varese',naz:'it',tipo:'vend',prezzo:'EUR 765.000',details:'📐 170 m² · 🛏️ 3 camere · 🚿 3 bagni · ✨ Ottimo',desc:'L\'inserimento in un complesso di solo quattro abitazioni permette di mantenere un certo livello di esclusività e privacy.  Sembra essere un\'ottima scelta per chi cerca un ambiente sereno e raffinato. Questo attico a Varese sembra davvero un luogo incantevole per vivere e, con una superficie di 170 mq, offre viste spettacolari sul lago e sulle montagne, con un connubio perfetto di tranquillità e lusso. Il design recente e signorile, unito all\'accoglienza degli spazi interni, contribuisce a creare',fotos:["https://img.miogest.com/25565/1/imm_16128-20260508170208-1280-.jpg", "https://img.miogest.com/25565/1/imm_16154-20260508170214-1280-.jpg", "https://img.miogest.com/25565/1/imm_16129-20260508170217-1280-.jpg", "https://img.miogest.com/25565/1/imm_16161-20260227113915-1280-.jpg", "https://img.miogest.com/25565/1/imm_16113-20260227113921-1280-.jpg", "https://img.miogest.com/25565/1/imm_16164-20251215091400-1280-.jpg", "https://img.miogest.com/25565/1/imm_16163-20251103111804-1280-.jpg", "https://img.miogest.com/25565/1/imm_16160-20251103111809-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_16128-20260508170208-1280-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Attico 170 mq con terrazzo vista lago e Monte Rosa </div>
@@ -412,7 +435,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">EUR 765.000</div><div class="tag t-it">🇮🇹 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1532',titolo:'Nuova Villa Singola con vista panoramica',comune:'Vacallo',naz:'ch',tipo:'vend',prezzo:'CHF 1.200.000',details:'📐 210 m² · 🛏️ 3 camere · 🚿 3 bagni · ✨ Ottimo',desc:'Benvenuti a Vacallo, nel cuore di una posizione strategica a pochi minuti da Chisso, dal confine con l\'Italia, dall\'autostrada e dai centri commerciali.  Scopri questa splendida nuova e moderna villa singola in corso di costruzione con possibilità di personalizzazioni di 210 mq, situata in una zona riservata e panoramica. Immersa nel verde, e con ottima esposizione solare a sud, la proprietà offre totale indipendenza lungo una tranquilla via privata.  Caratteristiche principali: •⁠  ⁠Ampio soggi',fotos:["https://img.miogest.com/25565/1/imm_15967-20251011085531-1000-.jpg", "https://img.miogest.com/25565/1/imm_16702-20251124150726-1280-.jpg", "https://img.miogest.com/25565/1/imm_16703-20251124150729-1280-.jpg", "https://img.miogest.com/25565/1/imm_16704-20251124150731-1280-.jpg", "https://img.miogest.com/25565/1/imm_16705-20251124150734-1280-.jpg", "https://img.miogest.com/25565/1/imm_16706-20251124150736-1280-.jpg", "https://img.miogest.com/25565/1/imm_16707-20251124150739-1280-.jpg", "https://img.miogest.com/25565/1/imm_15968-20251011085531-1280-.jpeg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_15967-20251011085531-1000-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Nuova Villa Singola con vista panoramica</div>
@@ -420,7 +443,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 1.200.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1541',titolo:'Villa Storica del 1904 Immersa in un Parco Incantato',comune:'Vacallo',naz:'ch',tipo:'vend',prezzo:'CHF 1.950.000',details:'📐 360 m² · 🏠 20 vani · ✨ Buono · 🌄 Vista Aperta',desc:'Un’elegante villa del 1904, incastonata in un parco privato rigoglioso con maestosi alberi secolari, rappresenta una rara opportunità di vivere o investire in una proprietà dal fascino intramontabile. La posizione è ideale: immersa nella quiete e nel verde, ma a pochi minuti da tutti i principali servizi — supermercati, scuole, mezzi pubblici e collegamenti stradali.  Un’Eleganza Senza Tempo  La villa si sviluppa su quattro livelli e offre circa **venti vani** complessivi, distribuiti in ambient',fotos:["https://img.miogest.com/25565/1/imm_16201-20251027161704-1280-.png", "https://img.miogest.com/25565/1/imm_16202-20251027161707-1280-.png", "https://img.miogest.com/25565/1/imm_16203-20251027161709-1280-.png", "https://img.miogest.com/25565/1/imm_16204-20251027161712-1280-.png", "https://img.miogest.com/25565/1/imm_16205-20251027161715-1280-.png", "https://img.miogest.com/25565/1/imm_16206-20251027161717-1280-.png", "https://img.miogest.com/25565/1/imm_16207-20251027161722-1280-.png", "https://img.miogest.com/25565/1/imm_16208-20251027161725-1280-.png"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_16201-20251027161704-1280-.png" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Villa Storica del 1904 Immersa in un Parco Incantato</div>
@@ -428,7 +451,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 1.950.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1575',titolo:'Melano – Porzione di villa bifamiliare moderna con giardino privato',comune:'Melano',naz:'ch',tipo:'vend',prezzo:'CHF 1.830.000',details:'📐 254 m² · 🛏️ 3 camere · 🚿 3 bagni · ✨ In Costruzione',desc:'Proponiamo in vendita una villa luminosa e moderna situata a Melano, in un’area residenziale molto apprezzata per tranquillità, vicinanza al lago e comodi collegamenti con Lugano e il confine italiano.  La proprietà, parte di una bifamiliare di nuova realizzazione, offre 143 mq distribuiti su tre livelli, con possibilità di personalizzare le finiture interne secondo le proprie esigenze. Ogni unità immobiliare è rifinita con materiali di prima qualità, con particolare attenzione al dettaglio, e g',fotos:["https://img.miogest.com/25565/1/imm_18126-20260207171150-1280-.png", "https://img.miogest.com/25565/1/imm_18134-20260207171158--1024.jpeg", "https://img.miogest.com/25565/1/imm_18133-20260207171200--1024.jpeg", "https://img.miogest.com/25565/1/imm_18135-20260207171217--1024.jpeg", "https://img.miogest.com/25565/1/imm_18131-20260207171206--1024.jpeg", "https://img.miogest.com/25565/1/imm_18132-20260207171208--1024.jpeg", "https://img.miogest.com/25565/1/imm_18130-20260207171210--1024.jpeg", "https://img.miogest.com/25565/1/imm_18138-20260207171253-1184-.jpeg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_18126-20260207171150-1280-.png" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Melano – Porzione di villa bifamiliare moderna con giardino privato</div>
@@ -436,7 +459,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 1.830.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1578',titolo:'NUOVA ED AMPIA VILLA CON GIARDINO ',comune:'Coldrerio',naz:'ch',tipo:'vend',prezzo:'CHF 1.175.000',details:'📐 173 m² · 🛏️ 3 camere · 🚿 3 bagni',desc:'Sognate una villa immersa nel verde a due passi da tutto? Ecco la vostra occasione!  In zona tranquilla e residenziale, a pochi passi da tutti i servizi, vi proponiamo in vendita una NUOVA ed AMPIA VILLA di 173 mq su due livelli, con un meraviglioso giardino di 222 mq, in un moderno e signorile edificio realizzato con finiture di altissimo livello.  La villa è perfetta per chi desidera:  Ampi spazi e luminosità: La villa vanta una superficie interna di 173 mq, ben distribuiti su due livelli, e g',fotos:["https://img.miogest.com/25565/1/imm_16940-20260115091322-1280-.jpg", "https://img.miogest.com/25565/1/imm_16917-20251209151229-1280-.JPG", "https://img.miogest.com/25565/1/imm_16920-20251209152009-1280-.jpg", "https://img.miogest.com/25565/1/imm_16921-20251209152026-1280-.jpg", "https://img.miogest.com/25565/1/imm_16918-20251209151229-1280-.jpg", "https://img.miogest.com/25565/1/imm_16922-20251209151229-1280-.jpg", "https://img.miogest.com/25565/1/imm_16923-20251209151229-1280-.jpg", "https://img.miogest.com/25565/1/imm_16924-20251209151229-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_16940-20260115091322-1280-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">NUOVA ED AMPIA VILLA CON GIARDINO </div>
@@ -444,7 +467,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 1.175.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1581',titolo:'INVESTIMENTO REDDITIZIO NEL CUORE VERDE DEL TICINO – REDDITIVITÀ DAL 4%',comune:'Bellinzona',naz:'ch',tipo:'vend',prezzo:'CHF 345.000',details:'📐 41 m² · 🛏️ 1 camere · 🚿 1 bagni · ✨ Nuovo',desc:'A Claro, a pochi minuti da Bellinzona e immerso nel verde della natura ticinese, nasce un innovativo progetto immobiliare pensato per l’affitto turistico a breve e medio termine, in una zona strategica per attrattività e richiesta.  All’interno della Residenza Ticino, proponiamo in vendita un moderno monolocale completamente arredato, ideale per chi desidera investire in un immobile già pronto per la messa a reddito.  CARATTERISTICHE DEL MONOLOCALE: 	•	Superficie di 40 mq, ottimamente distribuit',fotos:["https://img.miogest.com/25565/1/imm_17022-20260130105530-1280-.jpeg", "https://img.miogest.com/25565/1/imm_17023-20260130105533-1280-.jpeg", "https://img.miogest.com/25565/1/imm_17018-20260130105525-1280-.jpg", "https://img.miogest.com/25565/1/imm_17124-20251215170758-1280-.JPG", "https://img.miogest.com/25565/1/imm_17120-20251215170802-1280-.JPG", "https://img.miogest.com/25565/1/imm_17122-20251215170805-1280-.JPG", "https://img.miogest.com/25565/1/imm_17123-20251215170810-1280-.JPG", "https://img.miogest.com/25565/1/imm_17121-20251215170812-1280-.JPG"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_17022-20260130105530-1280-.jpeg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">INVESTIMENTO REDDITIZIO NEL CUORE VERDE DEL TICINO – REDDITIVITÀ DAL 4</div>
@@ -452,7 +475,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 345.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1583',titolo:'INVESTIMENTO REDDITIZIO NEL CUORE VERDE DEL TICINO – REDDITIVITÀ DAL 4%',comune:'Bellinzona',naz:'ch',tipo:'vend',prezzo:'CHF 635.000',details:'📐 113,73 m² · 🛏️ 1 camere · 🚿 1 bagni',desc:'A Claro, a pochi minuti da Bellinzona e immerso nel verde della natura ticinese, nasce un innovativo progetto immobiliare pensato per l’affitto turistico a breve e medio termine, in una zona strategica per attrattività e richiesta.  All’interno della Residenza Ticino, proponiamo in vendita un moderno monolocale completamente arredato, ideale per chi desidera investire in un immobile già pronto per la messa a reddito.  CARATTERISTICHE DELL’APPARTAMENTO: 	•	Bilocale moderno situato al primo piano ',fotos:["https://img.miogest.com/25565/1/imm_17026-20260130105606-1280-.jpeg", "https://img.miogest.com/25565/1/imm_17027-20260130105626-1280-.jpeg", "https://img.miogest.com/25565/1/imm_17029-20260130105602-1280-.jpeg", "https://img.miogest.com/25565/1/imm_17129-20251215171535-1280-.JPG", "https://img.miogest.com/25565/1/imm_17028-20260130105618-1280-.jpeg", "https://img.miogest.com/25565/1/imm_17125-20251215171540-1280-.JPG", "https://img.miogest.com/25565/1/imm_17127-20251215171543-1280-.JPG", "https://img.miogest.com/25565/1/imm_17126-20251215171545-1280-.JPG"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_17026-20260130105606-1280-.jpeg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">INVESTIMENTO REDDITIZIO NEL CUORE VERDE DEL TICINO – REDDITIVITÀ DAL 4</div>
@@ -460,7 +483,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 635.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1584',titolo:'PACCHETTO INVESTIMENTO – 3 APPARTAMENTI A REDDITO NEL TICINO',comune:'Bellinzona',naz:'ch',tipo:'vend',prezzo:'CHF 1.005.000',details:'📐 123 m² · 🛏️ 3 camere · 🚿 3 bagni',desc:'CHF 1’005’000 – Redditività dal 4%  A Claro, in posizione strategica e immersa nella natura, proponiamo 3 appartamenti arredati all’interno della moderna Residenza Ticino, già attiva negli affitti turistici a breve e medio termine.  Monolocali e bilocali pronti all’uso Terrazze private, cucina attrezzata, comfort elevato Check-in autonomo, Wi-Fi, parcheggio Gestione semplificata – reddito immediato  Ottima opportunità per investitori in cerca di una rendita stabile e sicura.  Contattaci ora per ',fotos:["https://img.miogest.com/25565/1/imm_17035-20260130105646-1280-.jpeg", "https://img.miogest.com/25565/1/imm_17038-20260130105650-1280-.jpeg", "https://img.miogest.com/25565/1/imm_17036-20260130105652-1280-.jpeg", "https://img.miogest.com/25565/1/imm_17134-20251215171749-1280-.JPG", "https://img.miogest.com/25565/1/imm_17130-20251215171753-1280-.JPG", "https://img.miogest.com/25565/1/imm_17132-20251215171755-1280-.JPG", "https://img.miogest.com/25565/1/imm_17131-20251215171758-1280-.JPG", "https://img.miogest.com/25565/1/imm_17133-20251215171800-1280-.JPG"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_17035-20260130105646-1280-.jpeg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">PACCHETTO INVESTIMENTO – 3 APPARTAMENTI A REDDITO NEL TICINO</div>
@@ -468,7 +491,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 1.005.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1585',titolo:'2.5 LOCALI CON GIARDINO PRIVATO – INVESTIMENTO O CASA VACANZA',comune:'Bellinzona',naz:'ch',tipo:'vend',prezzo:'CHF 690.000',details:'📐 126,71 m² · 🛏️ 1 camere · 🚿 1 bagni · ✨ Nuovo',desc:'A solo 10 minuti dal centro di Bellinzona, in posizione strategica per natura, laghi e turismo,  vendiamo Ampio e luminoso appartamento di 2.5 locali con giardino privato, situato in una residenza moderna pensata per affitti a breve e medio termine, immersa nel verde del Ticino.  Zona giorno con cucina a vista e accesso diretto al giardino Camera da letto matrimoniale separata Divano letto per ospiti aggiuntivi Bagno moderno con doccia walk-in Grandi vetrate, spazi ben distribuiti e arredamento ',fotos:["https://img.miogest.com/25565/1/imm_17115-20251215170242-1280-.JPG", "https://img.miogest.com/25565/1/imm_17119-20251215170244-1280-.JPG", "https://img.miogest.com/25565/1/imm_17117-20251215170248-1280-.JPG", "https://img.miogest.com/25565/1/imm_17116-20251215170250-1280-.JPG", "https://img.miogest.com/25565/1/imm_17114-20251215170254-1280-.JPG", "https://img.miogest.com/25565/1/imm_17118-20251215170257-1280-.JPG", "https://img.miogest.com/25565/1/imm_17040-20251215121014-1280-.jpeg", "https://img.miogest.com/25565/1/imm_17041-20251215121604-1280-.jpeg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_17115-20251215170242-1280-.JPG" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">2.5 LOCALI CON GIARDINO PRIVATO – INVESTIMENTO O CASA VACANZA</div>
@@ -476,7 +499,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 690.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1586',titolo:'1.5 LOCALI CON GIARDINO NEL VERDE DEL TICINO – INVESTIMENTO O CASA VACANZA',comune:'Bellinzona',naz:'ch',tipo:'vend',prezzo:'CHF 355.000',details:'📐 43,76 m² · 🛏️ 1 camere · 🚿 1 bagni · ✨ Nuovo',desc:'A solo 10 minuti dal centro di Bellinzona, in posizione strategica per natura, laghi e turismo. vendiamo Moderno e Luminoso appartamento di 1.5 locali con giardino privato, situato in una residenza di nuova costruzione, pensata per affitti turistici a breve e medio termine.  Spazio ben distribuito con zona notte e soggiorno Cucina attrezzata, bagno moderno con doccia walk-in Ampie vetrate, giardino ideale per relax o ospitalità Wi-Fi, Smart TV, riscaldamento e raffrescamento a pavimento  Ottimo ',fotos:["https://img.miogest.com/25565/1/imm_17099-20260130105459-1280-.JPG", "https://img.miogest.com/25565/1/imm_17051-20260130105506-1280-.jpeg", "https://img.miogest.com/25565/1/imm_17077-20251215163909-1280-.JPG", "https://img.miogest.com/25565/1/imm_17081-20251215163911-1280-.JPG", "https://img.miogest.com/25565/1/imm_17078-20251215163917-1280-.JPG", "https://img.miogest.com/25565/1/imm_17101-20251215164504-1280-.JPG", "https://img.miogest.com/25565/1/imm_17098-20251215164518-1280-.JPG", "https://img.miogest.com/25565/1/imm_17100-20251215164525-1280-.JPG"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_17099-20260130105459-1280-.JPG" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">1.5 LOCALI CON GIARDINO NEL VERDE DEL TICINO – INVESTIMENTO O CASA VAC</div>
@@ -484,7 +507,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 355.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1587',titolo:'Esclusivo 3.5 locali con ampia terrazza e vista lago',comune:'Bissone',naz:'ch',tipo:'vend',prezzo:'CHF 1.600.000',details:'📐 168 m² · 🛏️ 2 camere · 🚿 3 bagni · ✨ Ottimo',desc:'A Bissone, in posizione privilegiata e tranquilla, a pochi passi dal Lido e con rapido accesso all’autostrada, proponiamo in vendita un elegante appartamento di 3.5 locali situato al secondo ed ultimo piano di una residenza curata.  L’immobile si distingue per gli spazi generosi, l’eccellente luminosità e una vista lago aperta di grande impatto, rendendolo ideale sia come residenza primaria, sia come raffinata casa vacanza, sia come investimento immobiliare.  La zona giorno accoglie un ampio dop',fotos:["https://img.miogest.com/25565/1/imm_17056-20260203093931-1280-.jpg", "https://img.miogest.com/25565/1/imm_17055-20251215124622-1280-.jpg", "https://img.miogest.com/25565/1/imm_17057-20251215124628-1280-.jpg", "https://img.miogest.com/25565/1/imm_17065-20251215124632-1280-.jpg", "https://img.miogest.com/25565/1/imm_17069-20251215124639-1280-.jpg", "https://img.miogest.com/25565/1/imm_17067-20251215124651-1280-.jpg", "https://img.miogest.com/25565/1/imm_17068-20251215124659-1280-.jpg", "https://img.miogest.com/25565/1/imm_17066-20251215124701-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_17056-20260203093931-1280-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Esclusivo 3.5 locali con ampia terrazza e vista lago</div>
@@ -492,7 +515,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 1.600.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1596',titolo:'Nuovo Capannone 1000mq. fronte strada',comune:'Lugano',naz:'ch',tipo:'vend',prezzo:'CHF 4.300.000',details:'📐 1000 m² · 🏠 7 vani · ✨ Nuovo',desc:'Siamo tra Barbengo e Grancia, in location molto servita e strategica per l\'accesso dell\'autostrada, nella zona commerciale/industriale, vendesi in nuovo edificio fronte strada (ottima visibilità)  vendiamo capannone di 1000 mq.  su 2 livellida 500 mq. caduno e collegati da ampio monta-carichi- per auto , possibilità di personalizzarioni interne a scelta del cliente.  Ampio spazio di manovra, montacarichi e parcheggi di pertinenza altezza interna  H 510 piano terra e H 390 piano secondo. Le immag',fotos:["https://img.miogest.com/25565/1/imm_17204-20251217120902-1280-.jpeg", "https://img.miogest.com/25565/1/imm_17205-20251217120902-1280-.jpeg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_17204-20251217120902-1280-.jpeg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Nuovo Capannone 1000mq. fronte strada</div>
@@ -500,7 +523,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 4.300.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1603',titolo:'Il Tuo Rifugio di Design Vista Lago: Luce, Spazio e Modernità',comune:'Canobbio',naz:'ch',tipo:'vend',prezzo:'CHF 1.550.000',details:'📐 114 m² · 🛏️ 2 camere · 🚿 2 bagni · ✨ Ottimo',desc:'Residenza Corba II – Dove il comfort incontra l’esclusività.  Se cerchi un’abitazione che rifletta il tuo successo e il tuo gusto per il bello, questo ampio 3.5 locali di ultima generazione è la risposta. Situato nella parte più alta e panoramica di Canobbio, l\'appartamento con terrazzo e vista lago è un inno alla luce e ai materiali nobili.  Perché scegliere questa proprietà? Vivere \"Indoor-Outdoor\": Il cuore della casa è lo scenografico soggiorno open-space che si fonde con una terrazza copert',fotos:["https://img.miogest.com/25565/1/imm_19525-20260327082234-1280-.jpg", "https://img.miogest.com/25565/1/imm_19537-20260327082619-1248-.png", "https://img.miogest.com/25565/1/imm_19535-20260327082454-1280-.jpg", "https://img.miogest.com/25565/1/imm_19536-20260327082624-1280-.png", "https://img.miogest.com/25565/1/imm_19528-20260327082423-1280-.jpg", "https://img.miogest.com/25565/1/imm_19527-20260327082419-1280-.jpg", "https://img.miogest.com/25565/1/imm_19526-20260327082430-1280-.jpg", "https://img.miogest.com/25565/1/imm_19533-20260327082414-1248-.png"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_19525-20260327082234-1280-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Il Tuo Rifugio di Design Vista Lago: Luce, Spazio e Modernità</div>
@@ -508,7 +531,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 1.550.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1604',titolo:'Residenza di lusso \"Blade\", ampio appartamento con giardino',comune:'Canobbio',naz:'ch',tipo:'vend',prezzo:'CHF 2.100.000',details:'📐 201 m² · 🛏️ 3 camere · 🚿 3 bagni · ✨ Ottimo',desc:'Siete pronti a vivere in un’opera d’arte contemporanea? Situato nella prestigiosa e iconica \"Residenza Blade\" a Canobbio, progettata dal rinomato architetto Mino Caggiula. Il suo approccio da \"archistar\" integra perfettamente gli spazi interni ed esterni, aumentando notevolmente il valore d\'uso e la percezione dello spazio. Questo ampio appartamento con giardino ridefinisce il concetto di lusso moderno. Un perfetto equilibrio tra l’audacia dell’acciaio Cor-Ten, la trasparenza del vetro e la morb',fotos:["https://img.miogest.com/25565/1/imm_17553-20260122091007-1168-.jpg", "https://img.miogest.com/25565/2/imm_20308-20260502102901-1280-.jpg", "https://img.miogest.com/25565/1/imm_17554-20260122091011-1155-.jpg", "https://img.miogest.com/25565/1/imm_17555-20260502103016-1161-.jpg", "https://img.miogest.com/25565/2/imm_20313-20260502103025-1280-.png", "https://img.miogest.com/25565/2/imm_20318-20260502103357-1280-.png", "https://img.miogest.com/25565/2/imm_20314-20260502103039-1280-.png", "https://img.miogest.com/25565/2/imm_20310-20260502103008-1280-.png"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_17553-20260122091007-1168-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Residenza di lusso "Blade", ampio appartamento con giardino</div>
@@ -516,7 +539,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 2.100.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1606',titolo:'Vista lago, nuovo appartamento 2,5 con terrazzo',comune:'Bissone',naz:'ch',tipo:'vend',prezzo:'CHF 670.000',details:'📐 78 m² · 🛏️ 1 camere · 🚿 1 bagni · ✨ Nuovo',desc:'Bissone, a pochi minuti da Lugano, in zona molto riservata e tranquilla, in nuova residenza di lusso, vendiamo ampio e luminso appartamento di 2,5 locali con 20 mq. di terrazzo e con vista lago, da personalizzare internamente. L\'esposizione solare ad sud/ovest, garantisce stupendi tramonti quindi da godersi in totale Relax.  L\'abitazione è posta al piano primo ed è così composta:  - Ampio e luminoso soggiorno con affaccio sul terrazzo; - Cucina a vista; - 1 Camera padronale con affaccio sul terr',fotos:["https://img.miogest.com/25565/1/imm_17635-20260125143528-1184-.png", "https://img.miogest.com/25565/1/imm_17597-20260125141529-1280-.jpg", "https://img.miogest.com/25565/1/imm_17599-20260125141529-1280-.jpg", "https://img.miogest.com/25565/1/imm_17600-20260125141529-1280-.jpg", "https://img.miogest.com/25565/1/imm_17601-20260125141529-1280-.jpg", "https://img.miogest.com/25565/1/imm_17602-20260125141529-1280-.jpg", "https://img.miogest.com/25565/1/imm_17603-20260125141529-1280-.jpg", "https://img.miogest.com/25565/1/imm_17604-20260125141529-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_17635-20260125143528-1184-.png" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Vista lago, nuovo appartamento 2,5 con terrazzo</div>
@@ -524,7 +547,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 670.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="it" data-t="vend">
+      <div class="im" data-s="it" data-t="vend" onclick="openDetail({id:'1624',titolo:'Nuovo trilocale con giardino vicino al confine – piscina a sfioro',comune:'Bizzarone',naz:'it',tipo:'vend',prezzo:'EUR 273.250',details:'📐 171 m² · 🛏️ 2 camere · 🚿 2 bagni · ✨ Nuovo',desc:'Residenza Panorama: il tuo nuovo rifugio tra Como e la Svizzera Se cerchi l’equilibrio perfetto tra la comodità per il lavoro in Svizzera e il piacere di vivere immerso nel verde a pochi passi da Como, la Residenza Panorama a Bizzarone è la scelta ideale.   Il complesso si distingue per le sue eleganti palazzine, composte da sole 6-12 unità, pensate per garantire massima privacy e un’atmosfera riservata.  Uno stile di vita esclusivo e senza pensieri Qui il tempo libero ha un valore speciale graz',fotos:["https://img.miogest.com/25565/1/imm_18266-20260227111523-1280-.jpg", "https://img.miogest.com/25565/1/imm_18253-20260526141411-1280-.jpg", "https://img.miogest.com/25565/1/imm_18254-20260526141419-1280-.jpg", "https://img.miogest.com/25565/1/imm_18250-20260209142012-1280-.jpg", "https://img.miogest.com/25565/1/imm_18251-20260209142012-1280-.jpg", "https://img.miogest.com/25565/1/imm_18255-20260209142012-1280-.jpg", "https://img.miogest.com/25565/1/imm_18256-20260209142012-1280-.jpg", "https://img.miogest.com/25565/1/imm_18257-20260209142012-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_18266-20260227111523-1280-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Nuovo trilocale con giardino vicino al confine – piscina a sfioro</div>
@@ -532,7 +555,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">EUR 273.250</div><div class="tag t-it">🇮🇹 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="it" data-t="vend">
+      <div class="im" data-s="it" data-t="vend" onclick="openDetail({id:'1629',titolo:'Nuovo trilocale con giardino privato, piscina 150mq e box 50mq',comune:'Bizzarone',naz:'it',tipo:'vend',prezzo:'EUR 269.200',details:'📐 95 m² · 🛏️ 2 camere · 🚿 2 bagni · ✨ Nuovo',desc:'Residenza Panorama è il nuovo complesso residenziale di sole 6-12 unità immerso nel verde, situato in posizione strategica a pochi minuti dal confine svizzero e da Como. La soluzione ideale per chi cerca tranquillità, privacy e servizi esclusivi con spese condominiali contenute.  L\'APPARTAMENTO: Trilocale con giardino privato.  Proponiamo un ampio trilocale al piano terra, studiato per offrire comfort e luminosità:  Zona Giorno: Soggiorno spazioso con cucina a vista (eventualmente separabile), p',fotos:["https://img.miogest.com/25565/1/imm_18477-20260302201022-1280-.jpg", "https://img.miogest.com/25565/1/imm_18449-20260219121732-1280-.jpg", "https://img.miogest.com/25565/1/imm_18447-20260219121438-1280-.jpg", "https://img.miogest.com/25565/1/imm_18448-20260219121537-1280-.jpg", "https://img.miogest.com/25565/1/imm_18450-20260219121544-1280-.jpg", "https://img.miogest.com/25565/1/imm_18452-20260219121559-1280-.jpg", "https://img.miogest.com/25565/1/imm_18454-20260219121618-1280-.jpg", "https://img.miogest.com/25565/1/imm_18455-20260219121622-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_18477-20260302201022-1280-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Nuovo trilocale con giardino privato, piscina 150mq e box 50mq</div>
@@ -540,7 +563,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">EUR 269.200</div><div class="tag t-it">🇮🇹 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="it" data-t="vend">
+      <div class="im" data-s="it" data-t="vend" onclick="openDetail({id:'1630',titolo:'Nuovo trilocale con giardino privato, piscina 150mq e box 50mq',comune:'Como',naz:'it',tipo:'vend',prezzo:'EUR 269.200',details:'📐 95 m² · 🛏️ 2 camere · 🚿 2 bagni · ✨ Nuovo',desc:'Residenza Panorama è il nuovo complesso residenziale di sole 6-12 unità immerso nel verde, situato in posizione strategica a pochi minuti dal confine svizzero e da Como. La soluzione ideale per chi cerca tranquillità, privacy e servizi esclusivi con spese condominiali contenute.  L\'APPARTAMENTO: Trilocale con giardino privato.  Proponiamo un ampio trilocale al piano terra, studiato per offrire comfort e luminosità:  Zona Giorno: Soggiorno spazioso con cucina a vista (eventualmente separabile), p',fotos:["https://img.miogest.com/25565/1/imm_18509-20260526142119-1280-.jpg", "https://img.miogest.com/25565/1/imm_18508-20260526142114-1280-.jpg", "https://img.miogest.com/25565/1/imm_18485-20260219132148-1280-.jpg", "https://img.miogest.com/25565/1/imm_18486-20260219132148-1280-.jpg", "https://img.miogest.com/25565/1/imm_18487-20260219132148-1280-.jpg", "https://img.miogest.com/25565/1/imm_18488-20260219132148-1280-.jpg", "https://img.miogest.com/25565/1/imm_18489-20260219132148-1280-.jpg", "https://img.miogest.com/25565/1/imm_18490-20260219132148-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_18509-20260526142119-1280-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Nuovo trilocale con giardino privato, piscina 150mq e box 50mq</div>
@@ -548,7 +571,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">EUR 269.200</div><div class="tag t-it">🇮🇹 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="it" data-t="vend">
+      <div class="im" data-s="it" data-t="vend" onclick="openDetail({id:'1632',titolo:'Nuovo trilocale con terrazzo, piscina  di 150 mq',comune:'Bizzarone',naz:'it',tipo:'vend',prezzo:'EUR 276.500',details:'📐 100,24 m² · 🛏️ 2 camere · 🚿 2 bagni · ✨ Nuovo',desc:'A Bizzarone, nella nuova \"Residenza Panorama\" (sole 6-12 unità), proponiamo un moderno trilocale al primo piano, perfetto per chi lavora in Svizzera o cerca la tranquillità a due passi da Como.  PUNTI DI FORZA DELL\'APPARTAMENTO:  - Zona Giorno XL: Circa 45 mq di open space con cucina a vista (separabile), estremamente luminoso. - Terrazzo Abitabile: 17 mq ideali per barbecue e relax all\'aperto. - Notte e Servizi: Camera matrimoniale ampia con spazio per cabina armadio, camera singola e due bagni',fotos:["https://img.miogest.com/25565/1/imm_18696-20260302200249-1280-.jpeg", "https://img.miogest.com/25565/1/imm_18688-20260302195352-1280-.jpeg", "https://img.miogest.com/25565/1/imm_18680-20260302195404-1280-.jpg", "https://img.miogest.com/25565/1/imm_18684-20260302195414-1280-.jpg", "https://img.miogest.com/25565/1/imm_18689-20260302195417-1280-.jpeg", "https://img.miogest.com/25565/1/imm_18683-20260302195440-1280-.jpg", "https://img.miogest.com/25565/1/imm_18686-20260302195446-1280-.jpeg", "https://img.miogest.com/25565/1/imm_18681-20260302195451-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_18696-20260302200249-1280-.jpeg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Nuovo trilocale con terrazzo, piscina  di 150 mq</div>
@@ -556,7 +579,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">EUR 276.500</div><div class="tag t-it">🇮🇹 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="it" data-t="vend">
+      <div class="im" data-s="it" data-t="vend" onclick="openDetail({id:'1634',titolo:'Nuovo trilocale con terrazzo, piscina di 150 mq',comune:'Uggiate con Ronago',naz:'it',tipo:'vend',prezzo:'EUR 276.500',details:'📐 100,24 m² · 🛏️ 2 camere · 🚿 2 bagni · ✨ Nuovo',desc:'A Bizzarone, nella nuova \"Residenza Panorama\" (sole 6-12 unità), proponiamo un moderno trilocale al primo piano, perfetto per chi lavora in Svizzera o cerca la tranquillità a due passi da Como.  PUNTI DI FORZA DELL\'APPARTAMENTO:  - Zona Giorno XL: Circa 45 mq di open space con cucina a vista (separabile), estremamente luminoso. - Terrazzo Abitabile: 17 mq ideali per barbecue e relax all\'aperto. - Notte e Servizi: Camera matrimoniale ampia con spazio per cabina armadio, camera singola e due bagni',fotos:["https://img.miogest.com/25565/1/imm_18731-20260313085027-1280-.jpeg", "https://img.miogest.com/25565/1/imm_18732-20260313085027-1280-.jpeg", "https://img.miogest.com/25565/1/imm_18733-20260313085027-1280-.jpg", "https://img.miogest.com/25565/1/imm_18734-20260313085027-1280-.jpg", "https://img.miogest.com/25565/1/imm_18735-20260313085027-1280-.jpeg", "https://img.miogest.com/25565/1/imm_18736-20260313085027-1280-.jpg", "https://img.miogest.com/25565/1/imm_18737-20260313085027-1280-.jpeg", "https://img.miogest.com/25565/1/imm_18738-20260313085027-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_18731-20260313085027-1280-.jpeg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Nuovo trilocale con terrazzo, piscina di 150 mq</div>
@@ -564,7 +587,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">EUR 276.500</div><div class="tag t-it">🇮🇹 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="it" data-t="vend">
+      <div class="im" data-s="it" data-t="vend" onclick="openDetail({id:'1635',titolo:'Nuovo trilocale con giardino privato, piscina 150mq e box 50mq',comune:'Olgiate Comasco',naz:'it',tipo:'vend',prezzo:'EUR 269.200',details:'📐 95 m² · 🛏️ 2 camere · 🚿 2 bagni · ✨ Nuovo',desc:'Residenza Panorama è il nuovo complesso residenziale di sole 6-12 unità immerso nel verde, situato in posizione strategica a pochi minuti dal confine svizzero e da Como. La soluzione ideale per chi cerca tranquillità, privacy e servizi esclusivi con spese condominiali contenute.  L\'APPARTAMENTO: Trilocale con giardino privato.  Proponiamo un ampio trilocale al piano terra, studiato per offrire comfort e luminosità:  Zona Giorno: Soggiorno spazioso con cucina a vista (eventualmente separabile), p',fotos:["https://img.miogest.com/25565/1/imm_18780-20260526141801-1280-.jpg", "https://img.miogest.com/25565/1/imm_18757-20260313085145-1280-.jpg", "https://img.miogest.com/25565/1/imm_18758-20260313085145-1280-.jpg", "https://img.miogest.com/25565/1/imm_18759-20260313085145-1280-.jpg", "https://img.miogest.com/25565/1/imm_18760-20260313085145-1280-.jpg", "https://img.miogest.com/25565/1/imm_18761-20260313085145-1280-.jpg", "https://img.miogest.com/25565/1/imm_18762-20260313085146-1280-.jpg", "https://img.miogest.com/25565/1/imm_18763-20260313085146-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_18780-20260526141801-1280-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Nuovo trilocale con giardino privato, piscina 150mq e box 50mq</div>
@@ -572,7 +595,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">EUR 269.200</div><div class="tag t-it">🇮🇹 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1640',titolo:'Attico Esclusivo con terrazzo panoramico e Vista sui Due Laghi',comune:'Muzzano',naz:'ch',tipo:'vend',prezzo:'CHF 2.490.000',details:'📐 190 m² · 🛏️ 3 camere · 🚿 3 bagni · ✨ Ottimo',desc:'Non è solo una casa. È il traguardo che hai sempre sognato. A Muzzano, dove il blu del Ceresio incontra il verde delle colline, sorge un’opera architettonica senza compromessi. Situato in una posizione dominante e riservata, questo attico di 5,5 locali rappresenta la quintessenza del lusso contemporaneo.  Gli Spazi: Luce, Design e Panorama Progettato per chi non accetta compromessi, l\'attico si distingue per una distribuzione impeccabile:  Zona Giorno: Ingresso scenografico, ampio soggiorno con ',fotos:["https://img.miogest.com/25565/1/imm_18952-20260316145804-1280-.jpg", "https://img.miogest.com/25565/1/imm_18953-20260316145804-1280-.jpg", "https://img.miogest.com/25565/1/imm_18954-20260316145804-1280-.jpg", "https://img.miogest.com/25565/1/imm_18955-20260316145804-1280-.jpg", "https://img.miogest.com/25565/1/imm_18956-20260316145804-1280-.jpg", "https://img.miogest.com/25565/1/imm_18957-20260316145804-1280-.jpg", "https://img.miogest.com/25565/1/imm_18958-20260316145804-1280-.jpg", "https://img.miogest.com/25565/1/imm_18959-20260316145804-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_18952-20260316145804-1280-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Attico Esclusivo con terrazzo panoramico e Vista sui Due Laghi</div>
@@ -580,7 +603,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 2.490.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1642',titolo:'Splendido attico panoramico con ampio terrazzo',comune:'Lugano',naz:'ch',tipo:'vend',prezzo:'CHF 3.000.000',details:'📐 400 m² · 🛏️ 5 camere · 🚿 6 bagni · ✨ Nuovo',desc:'Splendido Attico di 400 mq con Ampio Terrazzo in Elegante Contesto a Massagno  Posizionato in una zona altamente servita, a breve distanza da tutti i principali servizi primari come negozi, scuole e mezzi di trasporto, proponiamo in vendita questo moderno e raffinato appartamento di 5.5 locali al quinto piano di un edificio di pregio. L\'edificio è caratterizzato da finiture di alta qualità ed è dotato di servizi aggiuntivi quali un supermercato al piano terra, servizio postale e assicurativo.  L',fotos:["https://img.miogest.com/25565/1/imm_19016-20260316150056-1184-.png", "https://img.miogest.com/25565/1/imm_19017-20260316150056-1184-.png", "https://img.miogest.com/25565/1/imm_19018-20260316150056-1184-.png", "https://img.miogest.com/25565/1/imm_19019-20260316150056-1184-.png", "https://img.miogest.com/25565/1/imm_19020-20260316150056-1184-.png", "https://img.miogest.com/25565/1/imm_19021-20260316150056-1280-.jpg", "https://img.miogest.com/25565/1/imm_19022-20260316150056-1280-.jpg", "https://img.miogest.com/25565/1/imm_19023-20260316150056-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_19016-20260316150056-1184-.png" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Splendido attico panoramico con ampio terrazzo</div>
@@ -588,7 +611,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 3.000.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1645',titolo:'Il lusso dei due laghi: la tua nuova dimora',comune:'Lugano',naz:'ch',tipo:'vend',prezzo:'CHF 3.950.000',details:'📐 410 m² · 🛏️ 5 camere · 🚿 4 bagni · ✨ Buono',desc:'Situata nell\'incantevole borgo di Carona, a pochi minuti da Lugano, questa villa rappresenta un\'oasi di tranquillità e privacy. Immersa nella natura, offre una vista spettacolare sui due laghi, ideale per chi cerca un rifugio esclusivo con comfort e aria fresca. Il design contemporaneo ti farà sentire come se vivessi in uno yacht di lusso, con terrazzi che ricordano i pontili navali e ampie vetrate che incorniciano panorami mozzafiato.  Dettagli della Proprietà:  - Superficie: Circa 400 mq distr',fotos:["https://img.miogest.com/25565/2/imm_20472-20260506120857-1280-.jpg", "https://img.miogest.com/25565/2/imm_20475-20260506120903-1280-.jpg", "https://img.miogest.com/25565/2/imm_20478-20260506120908-1280-.jpg", "https://img.miogest.com/25565/2/imm_20464-20260506120913-1280-.jpg", "https://img.miogest.com/25565/2/imm_20465-20260506120917-1280-.jpg", "https://img.miogest.com/25565/2/imm_20471-20260506120922-1280-.jpg", "https://img.miogest.com/25565/2/imm_20470-20260506120927-1280-.jpg", "https://img.miogest.com/25565/2/imm_20476-20260506120945-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20472-20260506120857-1280-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Il lusso dei due laghi: la tua nuova dimora</div>
@@ -596,7 +619,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 3.950.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="it" data-t="vend">
+      <div class="im" data-s="it" data-t="vend" onclick="openDetail({id:'1649',titolo:'Bizzarone - Residenza Panorama: Trilocale con terrazzo, piscina e vista panoramica',comune:'Bizzarone',naz:'it',tipo:'vend',prezzo:'EUR 330.600',details:'📐 116 m² · 🛏️ 2 camere · 🚿 2 bagni · ✨ Nuovo',desc:'All’interno dell’esclusiva Residenza Panorama a Bizzarone, a ridosso del confine svizzero, proponiamo in vendita un prestigioso appartamento di 116 mq situato in una posizione dominante, soleggiata e tranquilla.  L’immobile è libero su tre lati e gode di una straordinaria luminosità naturale grazie all’esposizione a Sud-Ovest. Attualmente la soluzione è strutturata come un ampio trilocale dagli spazi generosi, ma la metratura generosa consente facilmente di ricavare una terza camera matrimoniale',fotos:["https://img.miogest.com/25565/1/imm_19426-20260317132723-1280-.jpeg", "https://img.miogest.com/25565/1/imm_19419-20260317132729-1280-.jpg", "https://img.miogest.com/25565/1/imm_19425-20260317132755-1280-.jpeg", "https://img.miogest.com/25565/1/imm_19415-20260317132759-1280-.jpg", "https://img.miogest.com/25565/1/imm_19414-20260317132827-1280-.jpg", "https://img.miogest.com/25565/1/imm_19424-20260317132834-1280-.jpeg", "https://img.miogest.com/25565/1/imm_19413-20260317132839-1280-.jpg", "https://img.miogest.com/25565/1/imm_19423-20260317132853-1280-.jpeg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_19426-20260317132723-1280-.jpeg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Bizzarone - Residenza Panorama: Trilocale con terrazzo, piscina e vist</div>
@@ -604,7 +627,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">EUR 330.600</div><div class="tag t-it">🇮🇹 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1650',titolo:'Luminoso appartamento 2,5 con ampio terrazzo',comune:'Balerna',naz:'ch',tipo:'vend',prezzo:'CHF 400.000',details:'📐 55 m² · 🛏️ 1 camere · 🚿 1 bagni · ✨ Ottimo',desc:'Siamo a Balerna, in una zona molto servita, proponiamo in vendita, in una nuova e moderna palazzina un luminoso appartamento di 2,5 locali con ampio terrazzo privato.  L\'appartamento è composto da comodo ingresso, ampio soggiorno con moderna cucina a vista e accesso sul terrazzo, una camera matrimoniale con accesso sul terrazzo e comodo bagno con doccia. Ampia lavanderia privata e ampia cantina. Ottime finiture interne. A disposizione posto auto coperto in autorimessa a CHF 40.000  Spese accesso',fotos:["https://img.miogest.com/25565/1/imm_19496-20260325113214-1280-.png", "https://img.miogest.com/25565/1/imm_19500-20260326090412-1280-.png", "https://img.miogest.com/25565/1/imm_19501-20260326090415-1280-.png", "https://img.miogest.com/25565/1/imm_19497-20260325113217-1280-.png", "https://img.miogest.com/25565/1/imm_19495-20260326090421--1280.jpg", "https://img.miogest.com/25565/1/imm_19465-20260324150154-1280-.jpeg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_19496-20260325113214-1280-.png" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Luminoso appartamento 2,5 con ampio terrazzo</div>
@@ -612,7 +635,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 400.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1651',titolo:'Luminoso 3,5 con ampi terrazzi',comune:'Balerna',naz:'ch',tipo:'vend',prezzo:'CHF 700.000',details:'📐 110 m² · 🛏️ 2 camere · 🚿 2 bagni · ✨ Ottimo',desc:'Balerna, in una zona molto servita, proponiamo in vendita, in una nuova e moderna palazzina un luminoso appartamento di 3,5 locali con ampi terrazzi privato.  L\'appartamento è composto da comodo ingresso, ampio soggiorno con moderna cucina a vista e accesso su due ampi terrazzi, una camera matrimoniale con bagno en suite, seconda comoda camera. Ampia lavanderia privata e ampia cantina. A disposizione posto auto coperto in autorimessa a CHF 40.000  Spese accessorie circa CHF 150/mese con conguagl',fotos:["https://img.miogest.com/25565/1/imm_19482-20260324161237-1280-.png", "https://img.miogest.com/25565/1/imm_19473-20260324161317-1280-.png", "https://img.miogest.com/25565/1/imm_19489-20260324161320-1280-.png", "https://img.miogest.com/25565/1/imm_19467-20260324161324-1024-.jpg", "https://img.miogest.com/25565/1/imm_19468-20260324161331-1024-.jpg", "https://img.miogest.com/25565/1/imm_19470-20260324161334-1024-.jpg", "https://img.miogest.com/25565/1/imm_19471-20260324161336-1024-.jpg", "https://img.miogest.com/25565/1/imm_19481-20260324161239-1280-.png"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_19482-20260324161237-1280-.png" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Luminoso 3,5 con ampi terrazzi</div>
@@ -620,7 +643,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 700.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1652',titolo:'Ampio Attico 4,5 locali con terrazzo vista lago',comune:'Melano',naz:'ch',tipo:'vend',prezzo:'CHF 780.000',details:'📐 123 m² · 🛏️ 3 camere · ✨ Ottimo · 🌄 Vista Lago',desc:'Siamo a Melano, in una zona molto servita con vista sul lago di Lugano, Vi presentiamo un\'ottima opportunità, in un recente e moderno piccolo edificio, sito al piano secondo e ultimo, con accesso diretti con l\'ascensore, un ampio e  luminoso APPARTAMENTO DI 4,5 LOCALI CON AMPIO TERRAZZO CON VISTA LAGO!!   Caratteristiche dell\'Appartamento: •⁠  ⁠Superficie: Appartamento di 123 mq commerciali, con terrazzo •⁠  ⁠Soggiorno: Ampio, con zona pranzo con affaccio sul terrazzo perfetto per godere di magn',fotos:["https://img.miogest.com/25565/1/imm_19644-20260327190029-1280-.jpeg", "https://img.miogest.com/25565/1/imm_19618-20260327190038-1280-.jpg", "https://img.miogest.com/25565/1/imm_19622-20260327190051-1280-.jpg", "https://img.miogest.com/25565/1/imm_19621-20260327190048-1280-.jpg", "https://img.miogest.com/25565/1/imm_19646-20260327190153-1114-.jpeg", "https://img.miogest.com/25565/1/imm_19620-20260327190216-1280-.jpg", "https://img.miogest.com/25565/1/imm_19643-20260327190250-1280-.jpeg", "https://img.miogest.com/25565/1/imm_19619-20260327190258-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_19644-20260327190029-1280-.jpeg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Ampio Attico 4,5 locali con terrazzo vista lago</div>
@@ -628,7 +651,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 780.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1653',titolo:'Ampio Appartamento 4,5 locali con terrazzo vista lago',comune:'Lugano',naz:'ch',tipo:'vend',prezzo:'CHF 780.000',details:'📐 123 m² · 🛏️ 3 camere · ✨ Ottimo · 🌄 Vista Lago',desc:'Siamo a Melano, in una zona molto servita con vista sul lago di Lugano, Vi presentiamo un\'ottima opportunità, in un recente e moderno piccolo edificio, sito al piano secondo e ultimo, con accesso diretti con l\'ascensore, un ampio e  luminoso APPARTAMENTO DI 4,5 LOCALI CON AMPIO TERRAZZO CON VISTA LAGO!!   Caratteristiche dell\'Appartamento: •⁠  ⁠Superficie: Appartamento di 123 mq commerciali, con terrazzo •⁠  ⁠Soggiorno: Ampio, con zona pranzo con affaccio sul terrazzo perfetto per godere di magn',fotos:["https://img.miogest.com/25565/1/imm_19566-20260327084004-1184-.png", "https://img.miogest.com/25565/1/imm_19568-20260327084007-1280-.jpg", "https://img.miogest.com/25565/1/imm_19565-20260327083741-1184-.png", "https://img.miogest.com/25565/1/imm_19571-20260327084011-1280-.jpg", "https://img.miogest.com/25565/1/imm_19567-20260327083741-1184-.png", "https://img.miogest.com/25565/1/imm_19569-20260327083741-1280-.jpg", "https://img.miogest.com/25565/1/imm_19570-20260327083741-1280-.jpg", "https://img.miogest.com/25565/1/imm_19572-20260327083741-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_19566-20260327084004-1184-.png" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Ampio Appartamento 4,5 locali con terrazzo vista lago</div>
@@ -636,7 +659,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 780.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1654',titolo:'Investimento al 7%, ampio negozio-ufficio ristrutturato',comune:'St. Moritz',naz:'ch',tipo:'vend',prezzo:'CHF 500.000',details:'📐 60 m² · 🏠 2 vani · ✨ Ristrutturato',desc:'In una delle gallerie più rinomate del centro di San Moritz, proponiamo in vendita un elegante negozio di 60 m², recentemente ristrutturato e dotato di tre ampie vetrine che garantiscono un’ottima visibilità e passaggio costante.  Caratteristiche principali:  - Superficie: 60 m² - Completamente ristrutturato, finiture moderne e ambienti luminosi - Tre vetrine fronte galleria con ottima esposizione - Posizione strategica nel cuore della zona commerciale - Possibilità di locazione mensile a CHF 3.',fotos:["https://img.miogest.com/25565/1/imm_19588-20260327104606-395-.jpg", "https://img.miogest.com/25565/1/imm_19589-20260327104606-379-.jpg", "https://img.miogest.com/25565/1/imm_19590-20260327104606-386-.jpg", "https://img.miogest.com/25565/1/imm_19591-20260327104606-1280-.jpg", "https://img.miogest.com/25565/1/imm_19592-20260327104606-492-.jpeg", "https://img.miogest.com/25565/1/imm_19593-20260327104606-1184-.jpeg", "https://img.miogest.com/25565/1/imm_19594-20260327104606--1024.jpeg", "https://img.miogest.com/25565/1/imm_19595-20260327104606-492-.jpeg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_19588-20260327104606-395-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Investimento al 7%, ampio negozio-ufficio ristrutturato</div>
@@ -644,7 +667,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 500.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="it" data-t="vend">
+      <div class="im" data-s="it" data-t="vend" onclick="openDetail({id:'1656',titolo:'Villa unifamiliare con esposizione solare a sud tra Como e la Svizzera',comune:'Montano Lucino',naz:'it',tipo:'vend',prezzo:'EUR 695.000',details:'📐 266 m² · 🛏️ 3 camere · 🚿 4 bagni · ✨ Ristrutturato',desc:'IL PRIVILEGIO DELLA RISERVATEZZA A POCHI MINUTI DAL CONFINE In una posizione esclusiva e protetta di Montano Lucino, accessibile tramite una comoda strada privata che assicura silenzio e assenza di traffico, proponiamo in vendita una prestigiosa villa singola di 266 mq commerciali. La dimora, mantenuta in condizioni impeccabili, gode di un’esposizione solare a Sud che irradia luce naturale in ogni ambiente per tutto l\'arco della giornata.  ARCHITETTURA E COMFORT SU TRE LIVELLI La villa è stata p',fotos:["https://img.miogest.com/25565/1/imm_19865-20260407121403-1280-.jpeg", "https://img.miogest.com/25565/1/imm_19864-20260407121407-1280-.jpg", "https://img.miogest.com/25565/1/imm_19680-20260407123120-1280-.jpg", "https://img.miogest.com/25565/1/imm_19682-20260407123201-1280-.jpg", "https://img.miogest.com/25565/1/imm_19683-20260407123210-1280-.jpg", "https://img.miogest.com/25565/1/imm_19692-20260407123229-1280-.jpg", "https://img.miogest.com/25565/1/imm_19863-20260407110447-1280-.jpeg", "https://img.miogest.com/25565/1/imm_19661-20260407110522-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_19865-20260407121403-1280-.jpeg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Villa unifamiliare con esposizione solare a sud tra Como e la Svizzera</div>
@@ -652,7 +675,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">EUR 695.000</div><div class="tag t-it">🇮🇹 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1657',titolo:'Esclusiva casa indipendente con vista lago e piscina',comune:'Viganello',naz:'ch',tipo:'vend',prezzo:'CHF 1.350.000',details:'📐 176 m² · 🛏️ 3 camere · 🚿 3 bagni · ✨ Da Ristrutturare',desc:'NON E\' SOLO UNA CASA VISTA LAGO, MA E\' UN SOGNO CHE SI REALIZZA!!  Situata in una posizione dominante e strategica, proponiamo in vendita una magnifica proprietà che incarna il potenziale perfetto tra eleganza classica e personalizzazione moderna. Caratterizzata da una vista panoramica a 180° che spazia dal blu del Ceresio al profilo iconico del Monte San Salvatore e della città, questa residenza è un vero gioiello di rara reperibilità.  Punti di Forza Versatilità: Ideale come residenza primaria',fotos:["https://img.miogest.com/25565/1/imm_19961-20260421182208-1280-.jpg", "https://img.miogest.com/25565/1/imm_19950-20260421182242-1280-.png", "https://img.miogest.com/25565/1/imm_19947-20260421182210-1280-.jpg", "https://img.miogest.com/25565/1/imm_19960-20260421182235-1280-.png", "https://img.miogest.com/25565/1/imm_19963-20260421182303-1280-.jpg", "https://img.miogest.com/25565/1/imm_19959-20260421182305-1280-.png", "https://img.miogest.com/25565/1/imm_19860-20260421182212-1280-.png", "https://img.miogest.com/25565/1/imm_19956-20260421182216-1280-.png"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_19961-20260421182208-1280-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Esclusiva casa indipendente con vista lago e piscina</div>
@@ -660,7 +683,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 1.350.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="it" data-t="vend">
+      <div class="im" data-s="it" data-t="vend" onclick="openDetail({id:'1661',titolo:'PRIVACY, ELEGANZA E SAPORE MEDITERRANEO',comune:'Como',naz:'it',tipo:'vend',prezzo:'EUR 695.000',details:'📐 266 m² · 🛏️ 3 camere · 🚿 4 bagni · ✨ Ristrutturato',desc:'Nel cuore di una delle zone più esclusive e riservate di Montano Lucino, accessibile tramite una strada privata che garantisce assoluto silenzio, proponiamo una splendida residenza singola di 266 mq. Una proprietà pensata per chi cerca un rifugio di prestigio, caratterizzato da finiture impeccabili e una gestione degli spazi moderna e funzionale.  ARCHITETTURA E LUCE La villa si sviluppa su tre livelli, ognuno progettato per un’esperienza abitativa superiore:  L\'Area Living: Un salone di alta ra',fotos:["https://img.miogest.com/25565/1/imm_19882-20260408164710-1280-.jpeg", "https://img.miogest.com/25565/1/imm_19883-20260408164710-1280-.jpg", "https://img.miogest.com/25565/1/imm_19885-20260408164710-1280-.jpg", "https://img.miogest.com/25565/1/imm_19888-20260408164710-1280-.jpeg", "https://img.miogest.com/25565/1/imm_19889-20260408164710-1280-.jpg", "https://img.miogest.com/25565/1/imm_19890-20260408164710-1280-.jpg", "https://img.miogest.com/25565/1/imm_19891-20260408164710-1280-.jpg", "https://img.miogest.com/25565/1/imm_19892-20260408164710-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_19882-20260408164710-1280-.jpeg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">PRIVACY, ELEGANZA E SAPORE MEDITERRANEO</div>
@@ -668,7 +691,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">EUR 695.000</div><div class="tag t-it">🇮🇹 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1662',titolo:'Esclusiva casa indipendente con vista lago e piscina',comune:'Lugano',naz:'ch',tipo:'vend',prezzo:'CHF 1.350.000',details:'📐 176 m² · 🛏️ 3 camere · 🚿 3 bagni · ✨ Da Ristrutturare',desc:'NON E\' SOLO UNA CASA VISTA LAGO, MA E\' UN SOGNO CHE SI REALIZZA!!  Situata in una posizione dominante e strategica, proponiamo in vendita una magnifica proprietà che incarna il potenziale perfetto tra eleganza classica e personalizzazione moderna. Caratterizzata da una vista panoramica a 180° che spazia dal blu del Ceresio al profilo iconico del Monte San Salvatore e della città, questa residenza è un vero gioiello di rara reperibilità.  Punti di Forza Versatilità: Ideale come residenza primaria',fotos:["https://img.miogest.com/25565/1/imm_19971-20260411124014-1280-.png", "https://img.miogest.com/25565/1/imm_19972-20260411124014-1280-.png", "https://img.miogest.com/25565/1/imm_19974-20260411124014-1280-.png", "https://img.miogest.com/25565/1/imm_19975-20260411124014-1280-.png", "https://img.miogest.com/25565/1/imm_19976-20260411124014-1280-.jpg", "https://img.miogest.com/25565/1/imm_19977-20260411124014-1280-.png", "https://img.miogest.com/25565/1/imm_19978-20260411124014-1280-.png", "https://img.miogest.com/25565/1/imm_19979-20260411124014-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/1/imm_19971-20260411124014-1280-.png" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Esclusiva casa indipendente con vista lago e piscina</div>
@@ -676,7 +699,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 1.350.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="it" data-t="aff">
+      <div class="im" data-s="it" data-t="aff" onclick="openDetail({id:'1664',titolo:'ESCLUSIVA MASSERIA - AFFITTO VACANZIERO',comune:'Carovigno',naz:'it',tipo:'aff',prezzo:'EUR 16.000/mese',details:'📐 400 m² · 🏠 7 vani',desc:'Immergetevi nel fascino senza tempo della Puglia autentica nella magnifica Masseria Marfa Carbina. Un\'oasi di tranquillità dove storia e comfort si fondono in perfetta armonia.  CARATTERISTICHE PRINCIPALI: • Antica masseria sapientemente restaurata • Ampi spazi esterni con giardino mediterraneo • Atmosfera rustica ed elegante • Location esclusiva e riservata • Ideale per vacanze in totale privacy  LA STRUTTURA OFFRE: • Piscina • Sistemazioni di lusso con finiture di pregio fino a 12 ospiti • Amb',fotos:["https://img.miogest.com/25565/2/imm_20022-20260420101957-1280-.jpg", "https://img.miogest.com/25565/2/imm_20023-20260420101959-1280-.jpg", "https://img.miogest.com/25565/2/imm_20021-20260420101528-1280-.jpg", "https://img.miogest.com/25565/2/imm_20024-20260420101528-1280-.jpg", "https://img.miogest.com/25565/2/imm_20025-20260420101528-1280-.jpg", "https://img.miogest.com/25565/2/imm_20026-20260420101528-1280-.jpg", "https://img.miogest.com/25565/2/imm_20027-20260420101528-1280-.jpg", "https://img.miogest.com/25565/2/imm_20029-20260420101528-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20022-20260420101957-1280-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">ESCLUSIVA MASSERIA - AFFITTO VACANZIERO</div>
@@ -684,7 +707,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">EUR 16.000/mese</div><div class="tag t-it">🇮🇹 Affitto</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1665',titolo:'CRYPTO FRIENDLY - 3.5 locali con terrazzo vista lago – grande potenziale a Paradiso',comune:'Paradiso',naz:'ch',tipo:'vend',prezzo:'CHF 570.000',details:'📐 90 m² · 🛏️ 2 camere · 🚿 1 bagni · ✨ Buono',desc:'CRYPTO FRIENDLY - Acquista la tua casa dei sogni, anche con crypto!  In una zona tranquilla e soleggiata di Paradiso, a pochi minuti dal centro di Lugano, proponiamo questo appartamento di 3.5 locali con terrazzo e parziale vista lago, situato in una palazzina ben tenuta degli anni ’80.  L’abitazione, di circa 90 m² commerciali, si distingue per un soggiorno ampio e luminoso con accesso diretto al terrazzo, una camera matrimoniale spaziosa, una seconda camera e una cucina separata. La disposizio',fotos:["https://img.miogest.com/25565/2/imm_20078-20260420103036-1280-.jpeg", "https://img.miogest.com/25565/2/imm_20079-20260420103036-1280-.jpg", "https://img.miogest.com/25565/2/imm_20080-20260420103036-1280-.jpeg", "https://img.miogest.com/25565/2/imm_20081-20260420103036-1280-.jpg", "https://img.miogest.com/25565/2/imm_20082-20260420103036-1280-.jpg", "https://img.miogest.com/25565/2/imm_20083-20260420103036-1280-.jpeg", "https://img.miogest.com/25565/2/imm_20084-20260420103036-1280-.jpg", "https://img.miogest.com/25565/2/imm_20085-20260420103037-1280-.jpeg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20078-20260420103036-1280-.jpeg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">CRYPTO FRIENDLY - 3.5 locali con terrazzo vista lago – grande potenzia</div>
@@ -692,7 +715,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 570.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1666',titolo:'Attico Esclusivo con terrazzo panoramico e Vista sui Due Laghi',comune:'Lugano',naz:'ch',tipo:'vend',prezzo:'CHF 2.490.000',details:'📐 190 m² · 🛏️ 3 camere · 🚿 3 bagni · ✨ Ottimo',desc:'Non è solo una casa. È il traguardo che hai sempre sognato. A Muzzano, dove il blu del Ceresio incontra il verde delle colline, sorge un’opera architettonica senza compromessi. Situato in una posizione dominante e riservata, questo attico di 5,5 locali rappresenta la quintessenza del lusso contemporaneo.  Gli Spazi: Luce, Design e Panorama Progettato per chi non accetta compromessi, l\'attico si distingue per una distribuzione impeccabile:  Zona Giorno: Ingresso scenografico, ampio soggiorno con ',fotos:["https://img.miogest.com/25565/2/imm_20133-20260420105829-1280-.jpg", "https://img.miogest.com/25565/2/imm_20131-20260420104706-1280-.jpg", "https://img.miogest.com/25565/2/imm_20132-20260420104706-1280-.jpg", "https://img.miogest.com/25565/2/imm_20134-20260420104706-1280-.jpg", "https://img.miogest.com/25565/2/imm_20135-20260420104706-1280-.jpg", "https://img.miogest.com/25565/2/imm_20136-20260420104706-1280-.jpg", "https://img.miogest.com/25565/2/imm_20137-20260420104706-1280-.jpg", "https://img.miogest.com/25565/2/imm_20138-20260420104706-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20133-20260420105829-1280-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Attico Esclusivo con terrazzo panoramico e Vista sui Due Laghi</div>
@@ -700,7 +723,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 2.490.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1669',titolo:'Il Tuo Gioiello Pieds-dans-l\'eau a Bissone, Rarità con Darsena Privata',comune:'Bissone',naz:'ch',tipo:'vend',prezzo:'CHF 2.800.000',details:'📐 139 m² · 🛏️ 2 camere · 🚿 2 bagni · ✨ Ristrutturato',desc:'Immaginate di svegliarvi ogni mattina con il riflesso del Lago che danza sulle pareti di casa.  Esiste un luogo dove il confine tra casa e lago svanisce.   A Bissone, nella cornice più prestigiosa del Ceresio, sorge un vero gioiello architettonico esposto interamente a Sud. Questa proprietà non è semplicemente una dimora, ma un pezzo unico di costa baciato dal sole e cullato dalle onde.  🌊 L\'Esperienza Esterna: Un Paradiso Mediterraneo Il giardino, adornato da palme e piante mediterranee, offre ',fotos:["https://img.miogest.com/25565/2/imm_20294-20260430115249-1280-.png", "https://img.miogest.com/25565/2/imm_20293-20260430120414-1280-.png", "https://img.miogest.com/25565/2/imm_20307-20260430163209-1280-.png", "https://img.miogest.com/25565/2/imm_20244-20260430102146-1280-.jpg", "https://img.miogest.com/25565/2/imm_20303-20260430121123-1280-.png", "https://img.miogest.com/25565/2/imm_20232-20260430102153-1280-.jpg", "https://img.miogest.com/25565/2/imm_20302-20260430120548-1280-.png", "https://img.miogest.com/25565/2/imm_20296-20260430115315-1280-.png"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20294-20260430115249-1280-.png" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Il Tuo Gioiello Pieds-dans-l'eau a Bissone, Rarità con Darsena Privata</div>
@@ -708,7 +731,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 2.800.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1670',titolo:'NUOVO APPARTAMENTO CON GIARDINO IN ZONA RISERVATA',comune:'Cadempino',naz:'ch',tipo:'vend',prezzo:'CHF 750.000',details:'📐 84 m² · 🛏️ 2 camere · 🚿 2 bagni · ✨ Nuovo',desc:'Cerchi un moderno appartamento con portico e giardino privato a Cadempino in una zona tranquilla?  Proponiamo un edificio di prossima realizzazione con 6 appartamenti serviti da ascensore, portici e giardini privati. Situato in un\'oasi di comfort, offre serenità e vicinanza ai servizi.  L\'appartamento al piano terra è personalizzabile e comprende:  - Ampia zona living con soggiorno e cucina a vista che si affaccia su portico e giardino. - Camera matrimoniale con bagno en suite, seconda camera, b',fotos:["https://img.miogest.com/25565/2/imm_20323-20260504121516-1280-.jpg", "https://img.miogest.com/25565/2/imm_20324-20260504121516-1280-.jpg", "https://img.miogest.com/25565/2/imm_20325-20260504121516-1280-.jpg", "https://img.miogest.com/25565/2/imm_20326-20260504121516-1280-.jpg", "https://img.miogest.com/25565/2/imm_20327-20260504121516-1280-.jpg", "https://img.miogest.com/25565/2/imm_20328-20260504121516-1280-.jpg", "https://img.miogest.com/25565/2/imm_20329-20260504121516-1280-.jpg", "https://img.miogest.com/25565/2/imm_20330-20260504121516-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20323-20260504121516-1280-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">NUOVO APPARTAMENTO CON GIARDINO IN ZONA RISERVATA</div>
@@ -716,7 +739,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 750.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1671',titolo:'NUOVO 4,5 LOCALI CON GIARDINO IN ZONA RISERVATA',comune:'Cadempino',naz:'ch',tipo:'vend',prezzo:'CHF 1.053.000',details:'📐 112 m² · 🛏️ 3 camere · 🚿 2 bagni · ✨ Nuovo',desc:'Cerchi un appartamento moderno con un grande portico e giardino privato a Cadempino, in una zona serena?  Proponiamo un nuovo complesso in costruzione, composto da 6 appartamenti serviti da ascensore e dotati di spaziosi portici e giardini privati. Situato in un ambiente confortevole, offre tranquillità e facile accesso ai servizi.  L\'appartamento, situato al piano terra, è personalizzabile e include:  - Ampia zona giorno con soggiorno e cucina a vista che si apre su un grande portico e giardino',fotos:["https://img.miogest.com/25565/2/imm_20351-20260504121833-1280-.jpg", "https://img.miogest.com/25565/2/imm_20352-20260504121833-1280-.jpg", "https://img.miogest.com/25565/2/imm_20353-20260504121833-1280-.jpg", "https://img.miogest.com/25565/2/imm_20354-20260504121833-1280-.jpg", "https://img.miogest.com/25565/2/imm_20355-20260504121833-1280-.jpg", "https://img.miogest.com/25565/2/imm_20356-20260504121833-1280-.jpg", "https://img.miogest.com/25565/2/imm_20357-20260504121833-1280-.jpg", "https://img.miogest.com/25565/2/imm_20358-20260504121833-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20351-20260504121833-1280-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">NUOVO 4,5 LOCALI CON GIARDINO IN ZONA RISERVATA</div>
@@ -724,7 +747,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 1.053.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1672',titolo:'NUOVA COSTRUZIONE A CADEMPINO',comune:'Cadempino',naz:'ch',tipo:'vend',prezzo:'CHF 722.000',details:'📐 84 m² · 🛏️ 2 camere · 🚿 2 bagni · ✨ Nuovo',desc:'Cerchi un moderno appartamento con ampio terrazzo a Cadempino in una zona tranquilla?  Proponiamo in vendita un edificio di prossima realizzazione con 6 appartamenti serviti da ascensore, giardini e terrazzi privati. Situato in un\'oasi di comfort, offre serenità e vicinanza ai servizi.  L\'appartamento al primo piano è personalizzabile e comprende: - Ampia zona living con soggiorno e cucina a vista che si affaccia su un ampio terrazzo - Camera matrimoniale con bagno en suite, seconda camera, bagn',fotos:["https://img.miogest.com/25565/2/imm_20384-20260504122018-1280-.png", "https://img.miogest.com/25565/2/imm_20385-20260504122018-1280-.jpg", "https://img.miogest.com/25565/2/imm_20386-20260504122018-1280-.png", "https://img.miogest.com/25565/2/imm_20387-20260504122018-1280-.jpg", "https://img.miogest.com/25565/2/imm_20388-20260504122018-1280-.jpg", "https://img.miogest.com/25565/2/imm_20389-20260504122018-1280-.jpg", "https://img.miogest.com/25565/2/imm_20390-20260504122018-1280-.jpg", "https://img.miogest.com/25565/2/imm_20391-20260504122018-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20384-20260504122018-1280-.png" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">NUOVA COSTRUZIONE A CADEMPINO</div>
@@ -732,7 +755,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 722.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1673',titolo:'NUOVO 4,5 LOCALI CON AMPIO TERRAZZO',comune:'Cadempino',naz:'ch',tipo:'vend',prezzo:'CHF 994.000',details:'📐 112 m² · 🛏️ 2 camere · 🚿 2 bagni · ✨ Nuovo',desc:'Stai cercando un appartamento moderno con un ampio terrazzo a Cadempino, in una zona tranquilla?  Presentiamo un nuovo edificio in fase di realizzazione CONSEGNA FINE SETTEMBRE 2026, composto da 6 appartamenti con ascensore e ampi terrazzi privati. Situato in un\'area di comfort, offre tranquillità e facile accesso ai servizi.  L\'appartamento si trova al primo piano ed è personalizzabile, comprendendo:  - Spaziosa zona giorno con soggiorno e cucina a vista con accesso diretto all\'ampio terrazzo. ',fotos:["https://img.miogest.com/25565/2/imm_20404-20260504122202-1280-.png", "https://img.miogest.com/25565/2/imm_20405-20260504122202-1280-.png", "https://img.miogest.com/25565/2/imm_20406-20260504122202-1280-.png", "https://img.miogest.com/25565/2/imm_20407-20260504122202-1280-.png", "https://img.miogest.com/25565/2/imm_20408-20260504122202-1280-.png", "https://img.miogest.com/25565/2/imm_20409-20260504122202-1280-.jpg", "https://img.miogest.com/25565/2/imm_20410-20260504122202-1280-.jpg", "https://img.miogest.com/25565/2/imm_20411-20260504122202-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20404-20260504122202-1280-.png" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">NUOVO 4,5 LOCALI CON AMPIO TERRAZZO</div>
@@ -740,7 +763,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 994.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1674',titolo:'NUOVE VILLE CON GIARDINO IN ZONA RISERVATA',comune:'Cadempino',naz:'ch',tipo:'vend',prezzo:'CHF 1.220.000',details:'📐 167 m² · 🛏️ 3 camere · 🚿 3 bagni · ✨ Nuovo',desc:'Vuoi una nuova e moderna Villa con giardino e ampio portico a Cadempino in zona riservata e tranquilla?  Benvenuti a Cadempino,  Vi presentiamo la nuova ed esclusiva residenza \"LA CADEMPINA\",  composta da otto moderne ville a risparmio energetico con giardini e terrazzi di proprietà, in un\'oasi di comfort e comodità situata alla fine di una strada privata esclusivamente riservata ai residenti, questa residenza offre una soluzione abitativa perfetta per chi cerca la serenità senza rinunciare alla',fotos:["https://img.miogest.com/25565/2/imm_20428-20260504122353-1280-.jpg", "https://img.miogest.com/25565/2/imm_20429-20260504122353-1280-.jpg", "https://img.miogest.com/25565/2/imm_20430-20260504122353-1280-.jpg", "https://img.miogest.com/25565/2/imm_20431-20260504122353-1280-.jpg", "https://img.miogest.com/25565/2/imm_20432-20260504122353-1280-.jpg", "https://img.miogest.com/25565/2/imm_20433-20260504122353-1280-.jpg", "https://img.miogest.com/25565/2/imm_20434-20260504122353-1280-.jpg", "https://img.miogest.com/25565/2/imm_20435-20260504122353-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20428-20260504122353-1280-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">NUOVE VILLE CON GIARDINO IN ZONA RISERVATA</div>
@@ -748,7 +771,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 1.220.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1675',titolo:'Charme Storico e Soleggiato: La Tua Oasi di Pace a Coldrerio',comune:'Coldrerio',naz:'ch',tipo:'vend',prezzo:'CHF 580.000',details:'📐 100 m² · 🛏️ 2 camere · 🚿 1 bagni',desc:'Cerchi l’indipendenza senza rinunciare al calore di una corte ristrutturata? Nel cuore pulsante del centro storico di Coldrerio, in piccola corte di sole 3 unità abitative, proponiamo in vendita una splendida porzione di testa indipendente, libera sui 3 lati, ristutturata nel 20219 e perfetta per chi cerca tranquillità, luce e spazi verdi privati.  I Punti di Forza che te ne faranno innamorare: Esposizione Solare Invidiabile: Situata in posizione dominante, la casa è baciata dal sole per tutto i',fotos:["https://img.miogest.com/25565/2/imm_20529-20260506174734-1280-.png", "https://img.miogest.com/25565/2/imm_20513-20260506174744-1280-.jpeg", "https://img.miogest.com/25565/2/imm_20521-20260506174716-1280-.png", "https://img.miogest.com/25565/2/imm_20531-20260506174847-1280-.jpeg", "https://img.miogest.com/25565/2/imm_20532-20260506175814-1280-.jpg", "https://img.miogest.com/25565/2/imm_20533-20260506175817-1280-.png", "https://img.miogest.com/25565/2/imm_20504-20260506175055-1280-.jpeg", "https://img.miogest.com/25565/2/imm_20524-20260506175059-1280-.png"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20529-20260506174734-1280-.png" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Charme Storico e Soleggiato: La Tua Oasi di Pace a Coldrerio</div>
@@ -756,7 +779,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 580.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1678',titolo:'Moderno 4,5 con grande terrazzo',comune:'Balerna',naz:'ch',tipo:'vend',prezzo:'CHF 660.000',details:'📐 134 m² · 🛏️ 3 camere · 🚿 2 bagni · ✨ Ottimo',desc:'Proponiamo in vendita un appartamento di ampia metratura, situato al primo piano di una palazzina moderna del 2019, composta da cinque piani totali e dotata di ascensore. L’immobile rappresenta una vera occasione grazie all’ottimo rapporto qualità/prezzo, attestandosi a circa CHF 5.000/mq.  Composizione:  - Ingresso - Soggiorno con cucina a vista e uscita sul grande terrazzo - Tre camere matrimoniali - Due bagni completi - Bagno di servizio - Ulteriore balconcino  Pertinenze:  - Due cantine incl',fotos:["https://img.miogest.com/25565/2/imm_20562-20260511181334-1280-.jpg", "https://img.miogest.com/25565/2/imm_20563-20260511181335-1280-.jpeg", "https://img.miogest.com/25565/2/imm_20564-20260511181335-1280-.jpeg", "https://img.miogest.com/25565/2/imm_20565-20260511181335-1280-.jpeg", "https://img.miogest.com/25565/2/imm_20566-20260511181335-1280-.jpg", "https://img.miogest.com/25565/2/imm_20567-20260511181335-1280-.jpeg", "https://img.miogest.com/25565/2/imm_20568-20260511181335-1280-.jpeg", "https://img.miogest.com/25565/2/imm_20569-20260511181335-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20562-20260511181334-1280-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Moderno 4,5 con grande terrazzo</div>
@@ -764,7 +787,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 660.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="aff">
+      <div class="im" data-s="ch" data-t="aff" onclick="openDetail({id:'1680',titolo:'Appartamento arredato di 3,5 locali con terrazzo e vista lago',comune:'Canobbio',naz:'ch',tipo:'aff',prezzo:'CHF 2.700/mese',details:'📐 114 m² · 🛏️ 2 camere · 🚿 2 bagni · ✨ Ottimo',desc:'Residenza Corba II – Dove il comfort incontra l’esclusività.  Se cerchi un’abitazione che rifletta il tuo successo e il tuo gusto per il bello, questo ampio 3.5 locali di ultima generazione è la risposta. Situato nella parte più alta e panoramica di Canobbio, l\'appartamento con terrazzo e vista lago è un inno alla luce e ai materiali nobili.  Perché scegliere questa proprietà? Vivere \"Indoor-Outdoor\": Il cuore della casa è lo scenografico soggiorno open-space che si fonde con una terrazza copert',fotos:["https://img.miogest.com/25565/2/imm_20616-20260518155734-1280-.jpg", "https://img.miogest.com/25565/2/imm_20617-20260518155734-1248-.png", "https://img.miogest.com/25565/2/imm_20618-20260518155734-1280-.jpg", "https://img.miogest.com/25565/2/imm_20619-20260518155734-1280-.png", "https://img.miogest.com/25565/2/imm_20620-20260518155734-1280-.jpg", "https://img.miogest.com/25565/2/imm_20621-20260518155734-1280-.jpg", "https://img.miogest.com/25565/2/imm_20622-20260518155734-1280-.jpg", "https://img.miogest.com/25565/2/imm_20623-20260518155734-1248-.png"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20616-20260518155734-1280-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Appartamento arredato di 3,5 locali con terrazzo e vista lago</div>
@@ -772,7 +795,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 2.700/mese</div><div class="tag t-ch">🇨🇭 Affitto</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="aff">
+      <div class="im" data-s="ch" data-t="aff" onclick="openDetail({id:'1681',titolo:'In zona Riservata e nella Natura  SIGNORILE VILLA con giardino e bosco',comune:'Ponte Capriasca',naz:'ch',tipo:'aff',prezzo:'CHF 4.000/mese',details:'📐 286 m² · 🛏️ 3 camere · 🚿 4 bagni · ✨ Ottimo',desc:'A solo 10 minuti dal Lugano, Scopri il tuo nuovo rifugio in questa splendida location verde e molto riservata, ti proponiamo in AFFITTO una meravigliosa VILLA INDIPENDENTE con ottima esposizione solare, e con ampio giardino con bosco.  Caratteristiche principali:  •⁠  ⁠Piano terra, di 114mq. ideale per chi cerca comfort e praticità. composta da ampia zona living con ampio soggiorno/pranzo, ampia cucina a vista con affaccio sul giardino e terrazza per godere pranzi e cene con riservatezza, bagno ',fotos:["https://img.miogest.com/25565/2/imm_20635-20260518160641-1280-.jpg", "https://img.miogest.com/25565/2/imm_20634-20260518160644-1280-.jpg", "https://img.miogest.com/25565/2/imm_20629-20260518160544-1280-.jpg", "https://img.miogest.com/25565/2/imm_20630-20260518160544-1280-.jpg", "https://img.miogest.com/25565/2/imm_20631-20260518160544-1280-.jpg", "https://img.miogest.com/25565/2/imm_20632-20260518160544-1280-.jpg", "https://img.miogest.com/25565/2/imm_20633-20260518160544-1280-.jpg", "https://img.miogest.com/25565/2/imm_20636-20260518160544-1280-.JPG"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20635-20260518160641-1280-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">In zona Riservata e nella Natura  SIGNORILE VILLA con giardino e bosco</div>
@@ -780,7 +803,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 4.000/mese</div><div class="tag t-ch">🇨🇭 Affitto</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="aff">
+      <div class="im" data-s="ch" data-t="aff" onclick="openDetail({id:'1682',titolo:'Luminosa e ampia Villa di testa con vista lago e giardino - Rent to buy',comune:'Vico Morcote',naz:'ch',tipo:'aff',prezzo:'CHF 6.500/mese',details:'📐 280 m² · 🛏️ 4 camere · 🚿 3 bagni · ✨ Ottimo',desc:'Proponiamo in affitto una splendida villa di testa, situata in una delle zone più esclusive di Vico Morcote. Questa proprietà unica, disposta su tre livelli collegati da scale interne e ascensore, offre ampi spazi abitativi, un\'incantevole vista lago e un giardino privato.  Al piano terra troviamo un accogliente ingresso, camera ad uso studio, perfetta per il lavoro da casa, locale tecnico, ampia lavanderia e cantina.   Salendo con ascensore o le scale al piano superiore, troviamo un ampio soggi',fotos:["https://img.miogest.com/25565/2/imm_20704-20260518182626-1195-.png", "https://img.miogest.com/25565/2/imm_20702-20260518175251-1195-.png", "https://img.miogest.com/25565/2/imm_20700-20260518175248-1280-.png", "https://img.miogest.com/25565/2/imm_20698-20260518175356-1195-.png", "https://img.miogest.com/25565/2/imm_20701-20260518175400--1195.png", "https://img.miogest.com/25565/2/imm_20703-20260518175402--1195.png", "https://img.miogest.com/25565/2/imm_20699-20260518175405-1195-.png", "https://img.miogest.com/25565/2/imm_20676-20260518161144-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20704-20260518182626-1195-.png" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Luminosa e ampia Villa di testa con vista lago e giardino - Rent to bu</div>
@@ -788,7 +811,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 6.500/mese</div><div class="tag t-ch">🇨🇭 Affitto</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="vend">
+      <div class="im" data-s="ch" data-t="vend" onclick="openDetail({id:'1683',titolo:'Ampia e Luminosa villa di testa con imperdibile vista lago - Rent to buy',comune:'Vico Morcote',naz:'ch',tipo:'vend',prezzo:'CHF 2.900.000',details:'📐 280 m² · 🛏️ 4 camere · 🚿 3 bagni · ✨ Ottimo',desc:'Proponiamo in vendita una splendida e ampia villa di testa, situata in una delle zone più esclusive di Vico Morcote. Questa proprietà unica, disposta su tre livelli collegati da scale interne e ascensore, offre ampi spazi abitativi, un\'incantevole vista lago e un giardino privato.  Al piano terra troviamo un accogliente ingresso, camera ad uso studio, perfetta per il lavoro da casa, locale tecnico, ampia lavanderia e cantina.   Salendo con ascensore o le scale al piano superiore, troviamo un amp',fotos:["https://img.miogest.com/25565/2/imm_20740-20260518180134-1195-.png", "https://img.miogest.com/25565/2/imm_20742-20260518180124-1195-.png", "https://img.miogest.com/25565/2/imm_20738-20260518180139-1280-.png", "https://img.miogest.com/25565/2/imm_20736-20260518180148-1195-.png", "https://img.miogest.com/25565/2/imm_20746-20260518182159-1195-.png", "https://img.miogest.com/25565/2/imm_20739-20260518180151--1195.png", "https://img.miogest.com/25565/2/imm_20741-20260518180153--1195.png", "https://img.miogest.com/25565/2/imm_20737-20260518180157-1195-.png"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20740-20260518180134-1195-.png" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Ampia e Luminosa villa di testa con imperdibile vista lago - Rent to b</div>
@@ -796,7 +819,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 2.900.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="aff">
+      <div class="im" data-s="ch" data-t="aff" onclick="openDetail({id:'1684',titolo:'Luminosa e ampia Villa di testa con vista lago e giardino - Rent to buy',comune:'Lugano',naz:'ch',tipo:'aff',prezzo:'CHF 6.500/mese',details:'📐 280 m² · 🛏️ 4 camere · 🚿 3 bagni · ✨ Ottimo',desc:'Proponiamo in affitto una splendida villa di testa, situata in una delle zone più esclusive di Vico Morcote. Questa proprietà unica, disposta su tre livelli collegati da scale interne e ascensore, offre ampi spazi abitativi, un\'incantevole vista lago e un giardino privato.  Al piano terra troviamo un accogliente ingresso, camera ad uso studio, perfetta per il lavoro da casa, locale tecnico, ampia lavanderia e cantina.   Salendo con ascensore o le scale al piano superiore, troviamo un ampio soggi',fotos:["https://img.miogest.com/25565/2/imm_20748-20260518182335-1195-.png", "https://img.miogest.com/25565/2/imm_20749-20260518182335-1195-.png", "https://img.miogest.com/25565/2/imm_20750-20260518182335-1280-.png", "https://img.miogest.com/25565/2/imm_20752-20260518182335-1195-.png", "https://img.miogest.com/25565/2/imm_20753-20260518182335--1195.png", "https://img.miogest.com/25565/2/imm_20754-20260518182335--1195.png", "https://img.miogest.com/25565/2/imm_20755-20260518182335-1195-.png", "https://img.miogest.com/25565/2/imm_20756-20260518182335-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20748-20260518182335-1195-.png" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Luminosa e ampia Villa di testa con vista lago e giardino - Rent to bu</div>
@@ -804,7 +827,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">CHF 6.500/mese</div><div class="tag t-ch">🇨🇭 Affitto</div></div>
         </div>
       </div>
-      <div class="im" data-s="ch" data-t="aff">
+      <div class="im" data-s="ch" data-t="aff" onclick="openDetail({id:'1686',titolo:'Luxury Seascape Apartment: Vista Mozzafiato, Piscina & Relax',comune:'Benidorm',naz:'ch',tipo:'aff',prezzo:'EUR 7.400/mese',details:'📐 143 m² · 🛏️ 3 camere · 🚿 2 bagni · ✨ Nuovo',desc:'Benvenuti nel vostro angolo di paradiso a Finestrat! Questo esclusivo appartamento di lusso combina il comfort di ampi spazi interni con un\'esperienza resort a 5 stelle. Che cerchiate il relax assoluto sul grande terrazzo panoramico o l\'avventura tra mare e montagna, qui troverete la vostra fuga perfetta.  Lo spazio L\'appartamento, finemente arredato e dagli spazi generosi, è ideale per famiglie, coppie o gruppi di amici che non vogliono scendere a compromessi sullo stile e sulla comodità.  Zona',fotos:["https://img.miogest.com/25565/2/imm_20856-20260531132135-1280-.jpeg", "https://img.miogest.com/25565/2/imm_20854-20260531132131-1280-.jpeg", "https://img.miogest.com/25565/2/imm_20853-20260531132139-1280-.jpeg", "https://img.miogest.com/25565/2/imm_20855-20260531132143-1280-.jpeg", "https://img.miogest.com/25565/2/imm_20813-20260525172409-1280-.jpeg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20856-20260531132135-1280-.jpeg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Luxury Seascape Apartment: Vista Mozzafiato, Piscina & Relax</div>
@@ -812,7 +835,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
           <div class="im-foot"><div class="im-pr">EUR 7.400/mese</div><div class="tag t-ch">🇨🇭 Affitto</div></div>
         </div>
       </div>
-      <div class="im" data-s="it" data-t="aff">
+      <div class="im" data-s="it" data-t="aff" onclick="openDetail({id:'1687',titolo:'Splendida villa di lusso con piscina coperta e parco – vicino Svizzera e Como',comune:'Montano Lucino',naz:'it',tipo:'aff',prezzo:'EUR 8.000/mese',details:'📐 600 m² · 🛏️ 5 camere · 🚿 6 bagni · ✨ Ottimo',desc:'A pochi minuti dal confine svizzero e dal lago di Como, proponiamo in affitto una spettacolare villa singola completamente arredata di recente costruzione (2013), caratterizzata da totale privacy, ampi spazi e finiture di pregio a Montano Lucino.  La villa si sviluppa su 600 mq totali disposti su 3 livelli, collegati da ascensore interno:  Piano terra: Salone monumentale con camino a legna, zona pranzo separata con uscita su terrazzo e porticato attrezzato per pranzare all\'aperto, grande cucina ',fotos:["https://img.miogest.com/25565/2/imm_20827-20260530170139-1280-.jpg", "https://img.miogest.com/25565/2/imm_20841-20260530170355-1280-.jpg", "https://img.miogest.com/25565/2/imm_20842-20260530170358-1280-.jpg", "https://img.miogest.com/25565/2/imm_20840-20260530170406-1280-.jpg", "https://img.miogest.com/25565/2/imm_20828-20260530170417-1280-.jpg", "https://img.miogest.com/25565/2/imm_20829-20260530170420-1280-.jpg", "https://img.miogest.com/25565/2/imm_20839-20260530170452-1280-.jpg", "https://img.miogest.com/25565/2/imm_20846-20260530170425-1280-.jpg"]})">
         <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20827-20260530170139-1280-.jpg" onerror="this.style.display='none'">
         <div class="im-body">
           <div class="im-nm">Splendida villa di lusso con piscina coperta e parco – vicino Svizzera</div>
@@ -914,9 +937,123 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
   <div class="bn" onclick="setPage('aurora',this)"><div class="bn-ic">✦</div><div class="bn-lb">Aurora</div></div>
   <div class="bn" onclick="setPage('settings',this)"><div class="bn-ic">⚙️</div><div class="bn-lb">Settings</div></div>
 </div>
+
+<!-- DETAIL MODAL -->
+<div class="detail-overlay" id="detailOverlay">
+  <div class="detail-photos" id="detailPhotos">
+    <div class="photo-slider" id="photoSlider"></div>
+    <div class="photo-dots" id="photoDots"></div>
+    <button class="detail-back" onclick="closeDetail()">‹</button>
+    <button class="detail-share" id="detailShareBtn">⬆</button>
+  </div>
+  <div class="detail-body">
+    <div class="detail-title" id="detailTitle"></div>
+    <div class="detail-loc" id="detailLoc"></div>
+    <div class="detail-price" id="detailPrice"></div>
+    <div class="detail-chips" id="detailChips"></div>
+    <div class="detail-desc-title">Descrizione</div>
+    <div class="detail-desc" id="detailDesc"></div>
+  </div>
+  <div class="detail-actions">
+    <button class="btn-wa" id="detailWaBtn">💬 Contatta su WhatsApp</button>
+    <button class="btn-call" onclick="window.location='tel:+41762215645'">📞</button>
+  </div>
+</div>
+
 </div>
 
 <script>
+
+let currentPhotos = [];
+let currentPhotoIdx = 0;
+let touchStartX = 0;
+
+function openDetail(p) {
+  const overlay = document.getElementById('detailOverlay');
+  document.getElementById('detailTitle').textContent = p.titolo;
+  document.getElementById('detailLoc').textContent = (p.naz==='it'?'🇮🇹 Italia':'🇨🇭 Svizzera') + ' · ' + p.comune;
+  document.getElementById('detailPrice').textContent = p.prezzo;
+  
+  // Chips
+  const chips = document.getElementById('detailChips');
+  chips.innerHTML = '';
+  if(p.details) {
+    p.details.split(' · ').forEach(d => {
+      if(d.trim()) chips.innerHTML += `<div class="chip">${d.trim()}</div>`;
+    });
+  }
+  chips.innerHTML += `<div class="chip">${p.tipo==='vend'?'Vendita':'Affitto'}</div>`;
+  
+  document.getElementById('detailDesc').textContent = p.desc || 'Contattaci per maggiori informazioni.';
+  
+  // Photos
+  currentPhotos = p.fotos || [];
+  currentPhotoIdx = 0;
+  renderPhotos();
+  
+  // WhatsApp
+  const msg = encodeURIComponent('Ciao Marco, sono interessato a: ' + p.titolo + ' — ' + p.prezzo);
+  document.getElementById('detailWaBtn').onclick = () => window.open('https://wa.me/41762215645?text='+msg);
+  document.getElementById('detailShareBtn').onclick = () => {
+    if(navigator.share) navigator.share({title:p.titolo, text:p.prezzo});
+  };
+  
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDetail() {
+  document.getElementById('detailOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function renderPhotos() {
+  const slider = document.getElementById('photoSlider');
+  const dots = document.getElementById('photoDots');
+  slider.innerHTML = '';
+  dots.innerHTML = '';
+  
+  if(!currentPhotos.length) {
+    slider.innerHTML = '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:40px;">🏠</div>';
+    return;
+  }
+  
+  currentPhotos.forEach((f, i) => {
+    const img = document.createElement('img');
+    img.className = 'photo-slide';
+    img.src = f;
+    img.onerror = function(){this.style.display='none'};
+    slider.appendChild(img);
+    
+    const dot = document.createElement('div');
+    dot.className = 'pdot' + (i===0?' on':'');
+    dot.onclick = () => goToPhoto(i);
+    dots.appendChild(dot);
+  });
+  
+  updatePhotoSlider();
+  
+  // Touch swipe
+  slider.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, {passive:true});
+  slider.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if(Math.abs(diff) > 50) {
+      if(diff > 0 && currentPhotoIdx < currentPhotos.length-1) goToPhoto(currentPhotoIdx+1);
+      else if(diff < 0 && currentPhotoIdx > 0) goToPhoto(currentPhotoIdx-1);
+    }
+  }, {passive:true});
+}
+
+function goToPhoto(idx) {
+  currentPhotoIdx = idx;
+  updatePhotoSlider();
+}
+
+function updatePhotoSlider() {
+  document.getElementById('photoSlider').style.transform = `translateX(-${currentPhotoIdx*100}%)`;
+  document.querySelectorAll('.pdot').forEach((d,i) => d.classList.toggle('on', i===currentPhotoIdx));
+}
+
 function setPage(id,el){document.querySelectorAll('.pg').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.bn').forEach(b=>b.classList.remove('on'));document.getElementById('pg-'+id).classList.add('active');if(el)el.classList.add('on');}
 function setSec(s){document.getElementById('bIT').className='swb'+(s==='IT'?' it':'');document.getElementById('bCH').className='swb'+(s==='CH'?' ch':'');}
 function setMsgTab(el,tab){document.querySelectorAll('.mtabs .mtab').forEach(t=>t.classList.remove('on'));el.classList.add('on');document.getElementById('mwa').style.display=tab==='wa'?'flex':'none';document.getElementById('mem').style.display=tab==='em'?'flex':'none';}
