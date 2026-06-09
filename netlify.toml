@@ -1,0 +1,7 @@
+[build]
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/webhook/whatsapp"
+  to = "/.netlify/functions/whatsapp"
+  status = 200
