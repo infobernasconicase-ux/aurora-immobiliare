@@ -46,26 +46,21 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
 .ic-name{font-size:12px;color:var(--soft);font-weight:500;}
 .ic-st{font-size:10px;color:var(--ok);margin-top:1px;}
 .ilist{display:flex;flex-direction:column;gap:8px;}
-.im{background:var(--dark2);border:1px solid rgba(255,255,255,0.06);border-radius:13px;padding:13px;display:flex;align-items:center;gap:11px;cursor:pointer;}
+.im{background:var(--dark2);border:1px solid rgba(255,255,255,0.06);border-radius:13px;overflow:hidden;cursor:pointer;transition:background .2s;}
 .im:active{background:var(--dark3);}
-.im-th{width:46px;height:46px;border-radius:10px;background:var(--dark4);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
-.im-info{flex:1;min-width:0;}
+.im-photo{width:100%;height:140px;object-fit:cover;display:block;}
+.im-body{padding:12px;}
 .im-nm{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .im-mt{font-size:11px;color:var(--muted);margin-top:2px;}
-.im-r{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0;}
-.im-pr{font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:600;color:var(--gold);}
+.im-foot{display:flex;align-items:center;justify-content:space-between;margin-top:8px;}
+.im-pr{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:600;color:var(--gold);}
 .tag{font-size:9px;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:20px;}
 .t-it{background:rgba(201,169,110,0.12);color:var(--gold);}
 .t-ch{background:rgba(168,197,218,0.12);color:var(--ch);}
-.ll{display:flex;flex-direction:column;gap:8px;}
-.lc{background:var(--dark2);border:1px solid rgba(255,255,255,0.06);border-radius:13px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;}
-.lav{width:44px;height:44px;border-radius:50%;background:var(--dark4);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
-.li{flex:1;min-width:0;}
-.ln{font-size:13px;font-weight:500;}
-.ld{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.lh{font-size:18px;flex-shrink:0;}
-.mtabs{display:flex;gap:6px;margin-bottom:2px;}
-.mtab{padding:7px 14px;border-radius:8px;font-size:12px;cursor:pointer;background:var(--dark3);color:var(--muted);border:1px solid rgba(255,255,255,0.06);transition:all .2s;}
+.t-aff{background:rgba(110,201,169,0.12);color:var(--ok);}
+.mtabs{display:flex;gap:6px;margin-bottom:2px;overflow-x:auto;}
+.mtabs::-webkit-scrollbar{display:none;}
+.mtab{padding:7px 14px;border-radius:8px;font-size:12px;cursor:pointer;background:var(--dark3);color:var(--muted);border:1px solid rgba(255,255,255,0.06);transition:all .2s;white-space:nowrap;flex-shrink:0;}
 .mtab.on{background:rgba(201,169,110,0.12);color:var(--gold);border-color:rgba(201,169,110,0.25);}
 .mlist{display:flex;flex-direction:column;gap:7px;}
 .mi{background:var(--dark2);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:13px;display:flex;align-items:flex-start;gap:11px;cursor:pointer;}
@@ -76,7 +71,6 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
 .mmeta{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;}
 .mtime{font-size:10px;color:var(--muted);}
 .mbadge{background:var(--gold);color:var(--dark);font-size:9px;font-weight:600;padding:2px 6px;border-radius:20px;}
-/* AURORA PAGE */
 .aurora-pg{display:flex;flex-direction:column;}
 .aur-hdr{flex-shrink:0;background:var(--dark2);border-bottom:1px solid rgba(255,255,255,0.05);padding:20px 16px 16px;}
 .aur-row{display:flex;align-items:center;gap:12px;}
@@ -92,26 +86,9 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
 .ring:nth-child(3){width:168px;height:168px;animation-delay:1.4s;}
 @keyframes ringout{0%{opacity:0.7;transform:scale(0.85)}100%{opacity:0;transform:scale(1)}}
 .orb{width:110px;height:110px;border-radius:50%;background:linear-gradient(135deg,#B8860B,#C9A96E,#E8D5B0);display:flex;align-items:center;justify-content:center;font-size:38px;cursor:pointer;position:relative;z-index:2;transition:all .3s;}
-.orb.listening{box-shadow:0 0 40px rgba(168,197,218,0.7);animation:breathe 1s ease-in-out infinite;}
-.orb.speaking{box-shadow:0 0 40px rgba(110,201,169,0.7);animation:breathe 0.5s ease-in-out infinite;}
-.orb.connecting{animation:breathe 1.5s ease-in-out infinite;}
-@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
-.waveform{display:flex;align-items:center;gap:3px;height:44px;}
-.wb{width:4px;border-radius:2px;background:var(--gold);height:4px;opacity:0.3;transition:all .15s;}
-.waveform.speaking .wb,.waveform.listening .wb{opacity:0.8;}
 .voice-hint{font-size:14px;color:var(--muted);text-align:center;line-height:1.7;padding:0 20px;}
 .voice-hint b{color:var(--soft);}
-.transcript-area{padding:0 14px 12px;max-height:160px;overflow-y:auto;}
-.tr{padding:8px 12px;border-radius:10px;font-size:13px;line-height:1.5;margin-bottom:6px;}
-.tr.a{background:var(--dark3);color:var(--soft);border:1px solid rgba(255,255,255,0.06);}
-.tr.u{background:rgba(201,169,110,0.12);color:var(--text);text-align:right;}
-.tr-lbl{font-size:10px;color:var(--muted);margin-bottom:2px;}
-.tr.u .tr-lbl{text-align:right;}
 .voice-btns{padding:16px;display:flex;justify-content:center;flex-shrink:0;}
-.call-btn{width:76px;height:76px;border-radius:50%;background:linear-gradient(135deg,#C9A96E,#A8834A);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:30px;box-shadow:0 4px 24px rgba(201,169,110,0.4);transition:all .2s;}
-.call-btn:active{transform:scale(0.94);}
-.call-btn.on{background:linear-gradient(135deg,#C96E6E,#A84A4A);box-shadow:0 4px 24px rgba(201,110,110,0.4);}
-/* SETTINGS */
 .settings-list{display:flex;flex-direction:column;gap:8px;}
 .sgroup{background:var(--dark2);border:1px solid rgba(255,255,255,0.06);border-radius:14px;overflow:hidden;}
 .sgroup-title{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:12px 16px 6px;}
@@ -160,25 +137,34 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
 
   <!-- HOME -->
   <div class="pg active" id="pg-home">
-    <div><div style="font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:300;">Buongiorno, Marco</div><div style="font-size:11px;color:var(--muted);margin-top:2px;">Il Mondo di Marco · Mercato attivo</div></div>
+    <div><div style="font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:300;">Buongiorno, Marco</div><div style="font-size:11px;color:var(--muted);margin-top:2px;">Il Mondo di Marco · Luxury Real Estate</div></div>
     <div class="kpi-grid">
-      <div class="kc" style="--kcc:var(--gold)"><div class="ki">🏠</div><div class="kl">Portafoglio</div><div class="kv">47</div><div class="kd">↑ +3 questo mese</div></div>
-      <div class="kc" style="--kcc:var(--ok)"><div class="ki">🤝</div><div class="kl">Lead attivi</div><div class="kv">12</div><div class="kd">↑ 5 nuovi</div></div>
-      <div class="kc" style="--kcc:var(--ch)"><div class="ki">💶</div><div class="kl">Valore tot.</div><div class="kv">18M</div><div class="kd">↑ +2.3%</div></div>
-      <div class="kc" style="--kcc:#A8C5DA"><div class="ki">✅</div><div class="kl">Rogiti YTD</div><div class="kv">9</div><div class="kd">↑ 85% obiettivo</div></div>
+      <div class="kc" style="--kcc:var(--gold)"><div class="ki">🏠</div><div class="kl">Portafoglio</div><div class="kv">8</div><div class="kd">↑ Aggiornato da Miogest</div></div>
+      <div class="kc" style="--kcc:var(--ok)"><div class="ki">💶</div><div class="kl">Vendita</div><div class="kv">6</div><div class="kd">🇮🇹 2 · 🇨🇭 4</div></div>
+      <div class="kc" style="--kcc:var(--ch)"><div class="ki">🔑</div><div class="kl">Affitto</div><div class="kv">2</div><div class="kd">🇨🇭 Ticino</div></div>
+      <div class="kc" style="--kcc:#A8C5DA"><div class="ki">💎</div><div class="kl">Prestigio</div><div class="kv">5</div><div class="kd">↑ Top listing</div></div>
     </div>
     <div><div class="sh" style="margin-bottom:10px;"><div class="st">Integrazioni</div></div>
     <div class="int-grid">
       <div class="ic"><div class="ic-icon">🏛️</div><div><div class="ic-name">Miogest</div><div class="ic-st">● Sincronizzato</div></div></div>
-      <div class="ic"><div class="ic-icon">💬</div><div><div class="ic-name">WhatsApp</div><div class="ic-st">● 5 non letti</div></div></div>
-      <div class="ic"><div class="ic-icon">✉️</div><div><div class="ic-name">Gmail</div><div class="ic-st">● 8 non letti</div></div></div>
+      <div class="ic"><div class="ic-icon">💬</div><div><div class="ic-name">WhatsApp</div><div class="ic-st">● Attivo</div></div></div>
+      <div class="ic"><div class="ic-icon">✉️</div><div><div class="ic-name">Gmail</div><div class="ic-st">● Attivo</div></div></div>
       <div class="ic"><div class="ic-icon">📁</div><div><div class="ic-name">Drive</div><div class="ic-st">● Collegato</div></div></div>
     </div></div>
-    <div><div class="sh" style="margin-bottom:10px;"><div class="st">Immobili recenti</div><div class="sa" onclick="setPage('immobili',document.querySelectorAll('.bn')[1])">Vedi tutti →</div></div>
+    <div><div class="sh" style="margin-bottom:10px;"><div class="st">In evidenza</div><div class="sa" onclick="setPage('immobili',document.querySelectorAll('.bn')[1])">Vedi tutti →</div></div>
     <div class="ilist">
-      <div class="im"><div class="im-th">🏙️</div><div class="im-info"><div class="im-nm">Attico Via Montenapoleone</div><div class="im-mt">280 m² · Milano · Piano 8</div></div><div class="im-r"><div class="im-pr">€2.8M</div><div class="tag t-it">🇮🇹 IT</div></div></div>
-      <div class="im"><div class="im-th">🏔️</div><div class="im-info"><div class="im-nm">Chalet Verbier</div><div class="im-mt">320 m² · Vista panoramica</div></div><div class="im-r"><div class="im-pr">CHF 4.2M</div><div class="tag t-ch">🇨🇭 CH</div></div></div>
-      <div class="im"><div class="im-th">🏡</div><div class="im-info"><div class="im-nm">Villa Lago di Como</div><div class="im-mt">550 m² · Cernobbio</div></div><div class="im-r"><div class="im-pr">€5.5M</div><div class="tag t-it">🇮🇹 IT</div></div></div>
+      <div class="im" data-s="ch">
+        <img class="im-photo" src="https://img.miogest.com/25565/0/imm_4547-20240823125009--731.jpg" onerror="this.style.display='none'">
+        <div class="im-body"><div class="im-nm">Favolosa villa vista lago con piscina</div><div class="im-mt">Collina d'Oro · Montagnola · 306 m² · 4 camere</div><div class="im-foot"><div class="im-pr">CHF 2.800.000</div><div class="tag t-ch">🇨🇭 CH</div></div></div>
+      </div>
+      <div class="im" data-s="ch">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_15918-20251004115736-1280-.png" onerror="this.style.display='none'">
+        <div class="im-body"><div class="im-nm">The Greatest Apartment — St. Moritz</div><div class="im-mt">St. Moritz · 175 m² · 4 camere · Terrazzo</div><div class="im-foot"><div class="im-pr">CHF 5.985.000</div><div class="tag t-ch">🇨🇭 CH</div></div></div>
+      </div>
+      <div class="im" data-s="it">
+        <img class="im-photo" src="https://img.miogest.com/25565/0/imm_1388-20230516103735-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body"><div class="im-nm">Villa di Prestigio — Montorfano</div><div class="im-mt">Montorfano (CO) · 451 m² · 10 vani · Vista Lago</div><div class="im-foot"><div class="im-pr">€ 880.000</div><div class="tag t-it">🇮🇹 IT</div></div></div>
+      </div>
     </div></div>
     <div style="height:6px;"></div>
   </div>
@@ -187,30 +173,653 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
   <div class="pg" id="pg-immobili">
     <div style="font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:300;">Immobili</div>
     <div class="mtabs">
-      <div class="mtab on" onclick="filterImm(this,'all')">Tutti (47)</div>
+      <div class="mtab on" onclick="filterImm(this,'all')">Tutti (80)</div>
       <div class="mtab" onclick="filterImm(this,'it')">🇮🇹 Italia</div>
       <div class="mtab" onclick="filterImm(this,'ch')">🇨🇭 Svizzera</div>
+      <div class="mtab" onclick="filterImm(this,'vend')">Vendita</div>
+      <div class="mtab" onclick="filterImm(this,'aff')">Affitto</div>
     </div>
     <div class="ilist" id="imm-list">
-      <div class="im" data-s="it"><div class="im-th">🏙️</div><div class="im-info"><div class="im-nm">Attico Via Montenapoleone</div><div class="im-mt">280 m² · Milano · 4 camere</div></div><div class="im-r"><div class="im-pr">€2.8M</div><div class="tag t-it">🇮🇹</div></div></div>
-      <div class="im" data-s="ch"><div class="im-th">🏔️</div><div class="im-info"><div class="im-nm">Chalet Verbier</div><div class="im-mt">320 m² · 5 camere</div></div><div class="im-r"><div class="im-pr">CHF 4.2M</div><div class="tag t-ch">🇨🇭</div></div></div>
-      <div class="im" data-s="it"><div class="im-th">🏡</div><div class="im-info"><div class="im-nm">Villa Lago di Como</div><div class="im-mt">550 m² · Cernobbio</div></div><div class="im-r"><div class="im-pr">€5.5M</div><div class="tag t-it">🇮🇹</div></div></div>
-      <div class="im" data-s="ch"><div class="im-th">🏢</div><div class="im-info"><div class="im-nm">App. Lugano Centro</div><div class="im-mt">150 m² · Terrazzo</div></div><div class="im-r"><div class="im-pr">CHF 1.75M</div><div class="tag t-ch">🇨🇭</div></div></div>
-      <div class="im" data-s="it"><div class="im-th">🏠</div><div class="im-info"><div class="im-nm">Villa Portofino</div><div class="im-mt">420 m² · Vista mare</div></div><div class="im-r"><div class="im-pr">€4.1M</div><div class="tag t-it">🇮🇹</div></div></div>
-      <div class="im" data-s="ch"><div class="im-th">⛷️</div><div class="im-info"><div class="im-nm">Chalet Zermatt</div><div class="im-mt">280 m² · Ski-in</div></div><div class="im-r"><div class="im-pr">CHF 3.2M</div><div class="tag t-ch">🇨🇭</div></div></div>
-    </div>
-    <div style="height:6px;"></div>
-  </div>
-
-  <!-- LEAD -->
-  <div class="pg" id="pg-lead">
-    <div style="font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:300;">Lead Attivi</div>
-    <div class="ll">
-      <div class="lc"><div class="lav">👨‍👩‍👧</div><div class="li"><div class="ln">Famiglia Bianchi</div><div class="ld">Villa lago · €4M+ · 🇮🇹</div></div><div class="lh">🔥</div></div>
-      <div class="lc"><div class="lav">🤵</div><div class="li"><div class="ln">Mr. Hartmann</div><div class="ld">Chalet Verbier · CHF 5M · 🇨🇭</div></div><div class="lh">🔥</div></div>
-      <div class="lc"><div class="lav">⚖️</div><div class="li"><div class="ln">Studio Rossi</div><div class="ld">Uffici Milano · €800k</div></div><div class="lh">⚡</div></div>
-      <div class="lc"><div class="lav">👩‍💼</div><div class="li"><div class="ln">Dr.ssa Ferretti</div><div class="ld">App. Como · €650k · 🇮🇹</div></div><div class="lh">⚡</div></div>
-      <div class="lc"><div class="lav">🏦</div><div class="li"><div class="ln">Fondo Helvetia</div><div class="ld">Portfolio · CHF 12M · 🇨🇭</div></div><div class="lh">🌟</div></div>
+      <div class="im" data-s="it" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/0/imm_1388-20230516103735-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Incredible Villa on the lake of Montorfano (COMO)</div>
+          <div class="im-mt">451 m² · Montorfano · 10 vani</div>
+          <div class="im-foot"><div class="im-pr">EUR 880.000</div><div class="tag t-it">🇮🇹 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="aff">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_10177-20250207131422-1280-.png" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Esclusivo LOFT arredato in proprietà di prestigio</div>
+          <div class="im-mt">50 m² · Morbio Inferiore · 2 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 1.500/mese</div><div class="tag t-ch">🇨🇭 Affitto</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="aff">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_18537-20260225082257-1280-.png" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">CHALET DI CHARME in proprietà privata esclusiva</div>
+          <div class="im-mt">50 m² · Morbio Inferiore · 1 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 1.490/mese</div><div class="tag t-ch">🇨🇭 Affitto</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/0/imm_4547-20240823125009--731.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Favolosa villa vista lago con piscina</div>
+          <div class="im-mt">306 m² · Collina d'Oro · 4 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 2.800.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_15918-20251004115736-1280-.png" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">THE GREATEST APARTMENT IN THE HEART OF ST. MORITZ</div>
+          <div class="im-mt">175 m² · St. Moritz · 4 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 5.985.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="it" data-t="aff">
+        <img class="im-photo" src="https://img.miogest.com/25565/0/imm_6931-20241220182920-1280-.jpeg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Affittasi a Como: Il tuo pied-à-terre ideale!</div>
+          <div class="im-mt">85 m² · Como · 2 camere</div>
+          <div class="im-foot"><div class="im-pr">EUR 1.800/mese</div><div class="tag t-it">🇮🇹 Affitto</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/0/imm_8538-20241018102336-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">BELLISSIMO IMMOBILE A REDDITO CON GIARDINO</div>
+          <div class="im-mt">712 m² · Balerna · 7 vani</div>
+          <div class="im-foot"><div class="im-pr">CHF 1.995.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/0/imm_9939-20251125140105-1280-.png" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">NUOVA COSTRUZIONE A CADEMPINO CON GIARDINO PRIVATO</div>
+          <div class="im-mt">81 m² · Cadempino · 2 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 804.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="it" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_18243-20260526142441-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Trilocali con Giardino e Servizi Esclusivi</div>
+          <div class="im-mt">171 m² · Como · 2 camere</div>
+          <div class="im-foot"><div class="im-pr">EUR 273.250</div><div class="tag t-it">🇮🇹 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_12566-20250316204319-1023-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Favolosa villa vista lago con piscina</div>
+          <div class="im-mt">306 m² · Collina d'Oro · 4 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 2.800.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_13569-20250331093611-1280-.png" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">MERIDE, ANGOLO DI PARADISO IMMERSO NELLA NATURA</div>
+          <div class="im-mt">109 m² · Meride · 4 vani</div>
+          <div class="im-foot"><div class="im-pr">CHF 989.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="it" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_13642-20250331190754-1280-.png" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">ESCLUSIVE ABITAZIONI TRA DESIGN E NATURA </div>
+          <div class="im-mt">160 m² · San Fermo della Battaglia · 3 camere</div>
+          <div class="im-foot"><div class="im-pr">EUR 700.000</div><div class="tag t-it">🇮🇹 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20154-20260422121919-1280-.png" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">La villa più iconica di Morbio Inferiore </div>
+          <div class="im-mt">300 m² · Morbio Inferiore · 4 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 1.645.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_17842-20260130113026-1280-.png" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Un sogno diventato realtà</div>
+          <div class="im-mt">180 m² · Morcote · 6 vani</div>
+          <div class="im-foot"><div class="im-pr">CHF 2.980.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_14324-20250603172129-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Affascinante Immobile a Reddito in zona verde</div>
+          <div class="im-mt">1500 m² · Balerna · 20 vani</div>
+          <div class="im-foot"><div class="im-pr">CHF 5.300.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="it" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_14707-20250812203813-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Ampio trilocale con terrazzo in Residenza </div>
+          <div class="im-mt">117 m² · Como · 2 camere</div>
+          <div class="im-foot"><div class="im-pr">EUR 293.000</div><div class="tag t-it">🇮🇹 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="it" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_14985-20260302205049-1274-.png" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Ampio trilocale con terrazzo in Residenza </div>
+          <div class="im-mt">117 m² · Bizzarone · 2 camere</div>
+          <div class="im-foot"><div class="im-pr">EUR 293.000</div><div class="tag t-it">🇮🇹 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="it" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_18163-20260508170344-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Trilocale con giardino privato e servizi esclusivi</div>
+          <div class="im-mt">103 m² · Bizzarone · 2 camere</div>
+          <div class="im-foot"><div class="im-pr">EUR 267.600</div><div class="tag t-it">🇮🇹 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_18063-20260414085143-1184-.png" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Appartamento con terrazzo e incantevole vista lago</div>
+          <div class="im-mt">100 m² · Melide · 2 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 930.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_15410-20250906190331-1280-.jpeg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Nuova porzione di Capannone 500mq. fronte strada</div>
+          <div class="im-mt">500 m² · Lugano · 3 vani</div>
+          <div class="im-foot"><div class="im-pr">CHF 2.150.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_15635-20250912152826-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Palazzina a reddito netto 4,48% annuo</div>
+          <div class="im-mt">1000 m² · Bellinzona · 25 vani</div>
+          <div class="im-foot"><div class="im-pr">CHF 4.100.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_15509-20250908101125-1280-.png" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Un’icona di prestigio nel cuore del Sud della Svizzera</div>
+          <div class="im-mt">400 m² · Vacallo · 4 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 1.850.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_15637-20250912153551-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Nuovo Commerciale e Residenziale a reddito </div>
+          <div class="im-mt">1800 m² · Lugano · 20 vani</div>
+          <div class="im-foot"><div class="im-pr">CHF 11.500.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_15639-20250912163000-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Affascinante Immobile a Reddito in zona verde</div>
+          <div class="im-mt">1500 m² · Balerna · 20 vani</div>
+          <div class="im-foot"><div class="im-pr">CHF 5.000.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="aff">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_15740-20250918084551-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">AFFITTASI UFFICIO IN ZONA MOLTO SERVITA</div>
+          <div class="im-mt">65 m² · Lugano · 3,5 vani</div>
+          <div class="im-foot"><div class="im-pr">CHF 1.300/mese</div><div class="tag t-ch">🇨🇭 Affitto</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_15885-20250925111509--1280.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Vendesi Appartamenti di Prestigio a Massagno-Besso</div>
+          <div class="im-mt">56 m² · Lugano · 1 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 462.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_15912-20251002084309--1280.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Vendesi Appartamenti di Prestigio a Massagno-Besso</div>
+          <div class="im-mt">89 m² · Lugano · 2 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 747.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_15915-20251002084519--1280.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Vendesi Appartamenti di Prestigio a Massagno-Besso</div>
+          <div class="im-mt">107 m² · Lugano · 3 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 960.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="it" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_16128-20260508170208-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Attico 170 mq con terrazzo vista lago e Monte Rosa </div>
+          <div class="im-mt">170 m² · Varese · 3 camere</div>
+          <div class="im-foot"><div class="im-pr">EUR 765.000</div><div class="tag t-it">🇮🇹 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_15967-20251011085531-1000-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Nuova Villa Singola con vista panoramica</div>
+          <div class="im-mt">210 m² · Vacallo · 3 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 1.200.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_16201-20251027161704-1280-.png" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Villa Storica del 1904 Immersa in un Parco Incantato</div>
+          <div class="im-mt">360 m² · Vacallo · 20 vani</div>
+          <div class="im-foot"><div class="im-pr">CHF 1.950.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_18126-20260207171150-1280-.png" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Melano – Porzione di villa bifamiliare moderna con giardino privato</div>
+          <div class="im-mt">254 m² · Melano · 3 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 1.830.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_16940-20260115091322-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">NUOVA ED AMPIA VILLA CON GIARDINO </div>
+          <div class="im-mt">173 m² · Coldrerio · 3 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 1.175.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_17022-20260130105530-1280-.jpeg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">INVESTIMENTO REDDITIZIO NEL CUORE VERDE DEL TICINO – REDDITIVITÀ DAL 4</div>
+          <div class="im-mt">41 m² · Bellinzona · 1 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 345.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_17026-20260130105606-1280-.jpeg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">INVESTIMENTO REDDITIZIO NEL CUORE VERDE DEL TICINO – REDDITIVITÀ DAL 4</div>
+          <div class="im-mt">113,73 m² · Bellinzona · 1 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 635.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_17035-20260130105646-1280-.jpeg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">PACCHETTO INVESTIMENTO – 3 APPARTAMENTI A REDDITO NEL TICINO</div>
+          <div class="im-mt">123 m² · Bellinzona · 3 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 1.005.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_17115-20251215170242-1280-.JPG" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">2.5 LOCALI CON GIARDINO PRIVATO – INVESTIMENTO O CASA VACANZA</div>
+          <div class="im-mt">126,71 m² · Bellinzona · 1 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 690.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_17099-20260130105459-1280-.JPG" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">1.5 LOCALI CON GIARDINO NEL VERDE DEL TICINO – INVESTIMENTO O CASA VAC</div>
+          <div class="im-mt">43,76 m² · Bellinzona · 1 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 355.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_17056-20260203093931-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Esclusivo 3.5 locali con ampia terrazza e vista lago</div>
+          <div class="im-mt">168 m² · Bissone · 2 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 1.600.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_17204-20251217120902-1280-.jpeg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Nuovo Capannone 1000mq. fronte strada</div>
+          <div class="im-mt">1000 m² · Lugano · 7 vani</div>
+          <div class="im-foot"><div class="im-pr">CHF 4.300.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_19525-20260327082234-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Il Tuo Rifugio di Design Vista Lago: Luce, Spazio e Modernità</div>
+          <div class="im-mt">114 m² · Canobbio · 2 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 1.550.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_17553-20260122091007-1168-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Residenza di lusso "Blade", ampio appartamento con giardino</div>
+          <div class="im-mt">201 m² · Canobbio · 3 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 2.100.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_17635-20260125143528-1184-.png" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Vista lago, nuovo appartamento 2,5 con terrazzo</div>
+          <div class="im-mt">78 m² · Bissone · 1 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 670.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="it" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_18266-20260227111523-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Nuovo trilocale con giardino vicino al confine – piscina a sfioro</div>
+          <div class="im-mt">171 m² · Bizzarone · 2 camere</div>
+          <div class="im-foot"><div class="im-pr">EUR 273.250</div><div class="tag t-it">🇮🇹 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="it" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_18477-20260302201022-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Nuovo trilocale con giardino privato, piscina 150mq e box 50mq</div>
+          <div class="im-mt">95 m² · Bizzarone · 2 camere</div>
+          <div class="im-foot"><div class="im-pr">EUR 269.200</div><div class="tag t-it">🇮🇹 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="it" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_18509-20260526142119-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Nuovo trilocale con giardino privato, piscina 150mq e box 50mq</div>
+          <div class="im-mt">95 m² · Como · 2 camere</div>
+          <div class="im-foot"><div class="im-pr">EUR 269.200</div><div class="tag t-it">🇮🇹 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="it" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_18696-20260302200249-1280-.jpeg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Nuovo trilocale con terrazzo, piscina  di 150 mq</div>
+          <div class="im-mt">100,24 m² · Bizzarone · 2 camere</div>
+          <div class="im-foot"><div class="im-pr">EUR 276.500</div><div class="tag t-it">🇮🇹 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="it" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_18731-20260313085027-1280-.jpeg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Nuovo trilocale con terrazzo, piscina di 150 mq</div>
+          <div class="im-mt">100,24 m² · Uggiate con Ronago · 2 camere</div>
+          <div class="im-foot"><div class="im-pr">EUR 276.500</div><div class="tag t-it">🇮🇹 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="it" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_18780-20260526141801-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Nuovo trilocale con giardino privato, piscina 150mq e box 50mq</div>
+          <div class="im-mt">95 m² · Olgiate Comasco · 2 camere</div>
+          <div class="im-foot"><div class="im-pr">EUR 269.200</div><div class="tag t-it">🇮🇹 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_18952-20260316145804-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Attico Esclusivo con terrazzo panoramico e Vista sui Due Laghi</div>
+          <div class="im-mt">190 m² · Muzzano · 3 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 2.490.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_19016-20260316150056-1184-.png" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Splendido attico panoramico con ampio terrazzo</div>
+          <div class="im-mt">400 m² · Lugano · 5 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 3.000.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20472-20260506120857-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Il lusso dei due laghi: la tua nuova dimora</div>
+          <div class="im-mt">410 m² · Lugano · 5 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 3.950.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="it" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_19426-20260317132723-1280-.jpeg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Bizzarone - Residenza Panorama: Trilocale con terrazzo, piscina e vist</div>
+          <div class="im-mt">116 m² · Bizzarone · 2 camere</div>
+          <div class="im-foot"><div class="im-pr">EUR 330.600</div><div class="tag t-it">🇮🇹 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_19496-20260325113214-1280-.png" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Luminoso appartamento 2,5 con ampio terrazzo</div>
+          <div class="im-mt">55 m² · Balerna · 1 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 400.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_19482-20260324161237-1280-.png" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Luminoso 3,5 con ampi terrazzi</div>
+          <div class="im-mt">110 m² · Balerna · 2 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 700.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_19644-20260327190029-1280-.jpeg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Ampio Attico 4,5 locali con terrazzo vista lago</div>
+          <div class="im-mt">123 m² · Melano · 3 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 780.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_19566-20260327084004-1184-.png" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Ampio Appartamento 4,5 locali con terrazzo vista lago</div>
+          <div class="im-mt">123 m² · Lugano · 3 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 780.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_19588-20260327104606-395-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Investimento al 7%, ampio negozio-ufficio ristrutturato</div>
+          <div class="im-mt">60 m² · St. Moritz · 2 vani</div>
+          <div class="im-foot"><div class="im-pr">CHF 500.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="it" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_19865-20260407121403-1280-.jpeg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Villa unifamiliare con esposizione solare a sud tra Como e la Svizzera</div>
+          <div class="im-mt">266 m² · Montano Lucino · 3 camere</div>
+          <div class="im-foot"><div class="im-pr">EUR 695.000</div><div class="tag t-it">🇮🇹 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_19961-20260421182208-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Esclusiva casa indipendente con vista lago e piscina</div>
+          <div class="im-mt">176 m² · Viganello · 3 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 1.350.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="it" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_19882-20260408164710-1280-.jpeg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">PRIVACY, ELEGANZA E SAPORE MEDITERRANEO</div>
+          <div class="im-mt">266 m² · Como · 3 camere</div>
+          <div class="im-foot"><div class="im-pr">EUR 695.000</div><div class="tag t-it">🇮🇹 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/1/imm_19971-20260411124014-1280-.png" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Esclusiva casa indipendente con vista lago e piscina</div>
+          <div class="im-mt">176 m² · Lugano · 3 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 1.350.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="it" data-t="aff">
+        <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20022-20260420101957-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">ESCLUSIVA MASSERIA - AFFITTO VACANZIERO</div>
+          <div class="im-mt">400 m² · Carovigno · 7 vani</div>
+          <div class="im-foot"><div class="im-pr">EUR 16.000/mese</div><div class="tag t-it">🇮🇹 Affitto</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20078-20260420103036-1280-.jpeg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">CRYPTO FRIENDLY - 3.5 locali con terrazzo vista lago – grande potenzia</div>
+          <div class="im-mt">90 m² · Paradiso · 2 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 570.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20133-20260420105829-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Attico Esclusivo con terrazzo panoramico e Vista sui Due Laghi</div>
+          <div class="im-mt">190 m² · Lugano · 3 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 2.490.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20294-20260430115249-1280-.png" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Il Tuo Gioiello Pieds-dans-l'eau a Bissone, Rarità con Darsena Privata</div>
+          <div class="im-mt">139 m² · Bissone · 2 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 2.800.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20323-20260504121516-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">NUOVO APPARTAMENTO CON GIARDINO IN ZONA RISERVATA</div>
+          <div class="im-mt">84 m² · Cadempino · 2 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 750.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20351-20260504121833-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">NUOVO 4,5 LOCALI CON GIARDINO IN ZONA RISERVATA</div>
+          <div class="im-mt">112 m² · Cadempino · 3 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 1.053.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20384-20260504122018-1280-.png" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">NUOVA COSTRUZIONE A CADEMPINO</div>
+          <div class="im-mt">84 m² · Cadempino · 2 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 722.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20404-20260504122202-1280-.png" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">NUOVO 4,5 LOCALI CON AMPIO TERRAZZO</div>
+          <div class="im-mt">112 m² · Cadempino · 2 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 994.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20428-20260504122353-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">NUOVE VILLE CON GIARDINO IN ZONA RISERVATA</div>
+          <div class="im-mt">167 m² · Cadempino · 3 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 1.220.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20529-20260506174734-1280-.png" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Charme Storico e Soleggiato: La Tua Oasi di Pace a Coldrerio</div>
+          <div class="im-mt">100 m² · Coldrerio · 2 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 580.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20562-20260511181334-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Moderno 4,5 con grande terrazzo</div>
+          <div class="im-mt">134 m² · Balerna · 3 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 660.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="aff">
+        <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20616-20260518155734-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Appartamento arredato di 3,5 locali con terrazzo e vista lago</div>
+          <div class="im-mt">114 m² · Canobbio · 2 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 2.700/mese</div><div class="tag t-ch">🇨🇭 Affitto</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="aff">
+        <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20635-20260518160641-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">In zona Riservata e nella Natura  SIGNORILE VILLA con giardino e bosco</div>
+          <div class="im-mt">286 m² · Ponte Capriasca · 3 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 4.000/mese</div><div class="tag t-ch">🇨🇭 Affitto</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="aff">
+        <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20704-20260518182626-1195-.png" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Luminosa e ampia Villa di testa con vista lago e giardino - Rent to bu</div>
+          <div class="im-mt">280 m² · Vico Morcote · 4 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 6.500/mese</div><div class="tag t-ch">🇨🇭 Affitto</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="vend">
+        <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20740-20260518180134-1195-.png" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Ampia e Luminosa villa di testa con imperdibile vista lago - Rent to b</div>
+          <div class="im-mt">280 m² · Vico Morcote · 4 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 2.900.000</div><div class="tag t-ch">🇨🇭 Vendita</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="aff">
+        <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20748-20260518182335-1195-.png" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Luminosa e ampia Villa di testa con vista lago e giardino - Rent to bu</div>
+          <div class="im-mt">280 m² · Lugano · 4 camere</div>
+          <div class="im-foot"><div class="im-pr">CHF 6.500/mese</div><div class="tag t-ch">🇨🇭 Affitto</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="ch" data-t="aff">
+        <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20856-20260531132135-1280-.jpeg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Luxury Seascape Apartment: Vista Mozzafiato, Piscina & Relax</div>
+          <div class="im-mt">143 m² · Benidorm · 3 camere</div>
+          <div class="im-foot"><div class="im-pr">EUR 7.400/mese</div><div class="tag t-ch">🇨🇭 Affitto</div></div>
+        </div>
+      </div>
+      <div class="im" data-s="it" data-t="aff">
+        <img class="im-photo" src="https://img.miogest.com/25565/2/imm_20827-20260530170139-1280-.jpg" onerror="this.style.display='none'">
+        <div class="im-body">
+          <div class="im-nm">Splendida villa di lusso con piscina coperta e parco – vicino Svizzera</div>
+          <div class="im-mt">600 m² · Montano Lucino · 5 camere</div>
+          <div class="im-foot"><div class="im-pr">EUR 8.000/mese</div><div class="tag t-it">🇮🇹 Affitto</div></div>
+        </div>
+      </div>
     </div>
     <div style="height:6px;"></div>
   </div>
@@ -219,18 +828,18 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
   <div class="pg" id="pg-msg">
     <div style="font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:300;">Messaggi</div>
     <div class="mtabs">
-      <div class="mtab on" onclick="setMsgTab(this,'wa')">💬 WhatsApp (5)</div>
-      <div class="mtab" onclick="setMsgTab(this,'em')">✉️ Email (8)</div>
+      <div class="mtab on" onclick="setMsgTab(this,'wa')">💬 WhatsApp</div>
+      <div class="mtab" onclick="setMsgTab(this,'em')">✉️ Email</div>
     </div>
     <div class="mlist" id="mwa">
-      <div class="mi"><div class="mav">👨</div><div class="minfo"><div class="mwho">Sig. Ferrari</div><div class="mprev">Info su Villa Cernobbio...</div></div><div class="mmeta"><div class="mtime">09:14</div><div class="mbadge">2</div></div></div>
-      <div class="mi"><div class="mav">👩</div><div class="minfo"><div class="mwho">Cliente Lugano</div><div class="mprev">Disponibile sabato per visita?</div></div><div class="mmeta"><div class="mtime">08:52</div><div class="mbadge">1</div></div></div>
-      <div class="mi"><div class="mav">🏢</div><div class="minfo"><div class="mwho">Agenzia Partner</div><div class="mprev">Co-mandato immobile Verbier</div></div><div class="mmeta"><div class="mtime">Ieri</div><div class="mbadge">1</div></div></div>
+      <div class="mi"><div class="mav">👨</div><div class="minfo"><div class="mwho">Sig. Ferrari</div><div class="mprev">Info su Villa Montorfano...</div></div><div class="mmeta"><div class="mtime">09:14</div><div class="mbadge">2</div></div></div>
+      <div class="mi"><div class="mav">👩</div><div class="minfo"><div class="mwho">Cliente Lugano</div><div class="mprev">Disponibile sabato per visita Loft?</div></div><div class="mmeta"><div class="mtime">08:52</div><div class="mbadge">1</div></div></div>
+      <div class="mi"><div class="mav">🤵</div><div class="minfo"><div class="mwho">Simon Bindella</div><div class="mprev">Aggiornamento Chalet Morbio</div></div><div class="mmeta"><div class="mtime">Ieri</div></div></div>
     </div>
     <div class="mlist" id="mem" style="display:none;">
-      <div class="mi"><div class="mav">⚖️</div><div class="minfo"><div class="mwho">Notaio Lombardi</div><div class="mprev">Rogito giovedì 11 giugno</div></div><div class="mmeta"><div class="mtime">09:00</div><div class="mbadge">1</div></div></div>
-      <div class="mi"><div class="mav">🤵</div><div class="minfo"><div class="mwho">Thomas Hartmann</div><div class="mprev">Controproposta CHF 3.9M</div></div><div class="mmeta"><div class="mtime">08:30</div><div class="mbadge">1</div></div></div>
-      <div class="mi"><div class="mav">🌐</div><div class="minfo"><div class="mwho">Lead dal sito</div><div class="mprev">Villa lago Como budget 2M</div></div><div class="mmeta"><div class="mtime">07:15</div><div class="mbadge">1</div></div></div>
+      <div class="mi"><div class="mav">⚖️</div><div class="minfo"><div class="mwho">Notaio Lombardi</div><div class="mprev">Rogito Collina d'Oro — giovedì</div></div><div class="mmeta"><div class="mtime">09:00</div><div class="mbadge">1</div></div></div>
+      <div class="mi"><div class="mav">🌐</div><div class="minfo"><div class="mwho">Lead dal sito</div><div class="mprev">Interesse St. Moritz apartment</div></div><div class="mmeta"><div class="mtime">07:15</div><div class="mbadge">1</div></div></div>
+      <div class="mi"><div class="mav">🏦</div><div class="minfo"><div class="mwho">Banca Svizzera AG</div><div class="mprev">Perizia Cadempino completata</div></div><div class="mmeta"><div class="mtime">Ieri</div></div></div>
     </div>
     <div style="height:6px;"></div>
   </div>
@@ -251,12 +860,12 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
       <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;text-align:center;color:var(--gold);">Parla con Aurora</div>
       <div style="font-size:14px;color:var(--muted);text-align:center;line-height:1.7;">Tocca la sfera dorata in basso a destra<br>Aurora ti risponderà in italiano 🇮🇹</div>
       <div style="background:var(--dark2);border:1px solid rgba(201,169,110,0.2);border-radius:16px;padding:20px;width:100%;max-width:320px;">
-        <div style="font-size:12px;color:var(--muted);margin-bottom:12px;text-align:center;">FUNZIONALITÀ VOCALE</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:12px;text-align:center;">AURORA SA TUTTO SUI TUOI IMMOBILI</div>
         <div style="display:flex;flex-direction:column;gap:10px;">
           <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--soft);">🎙️ Parla e Aurora ti ascolta</div>
-          <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--soft);">🔊 Risposta vocale in italiano</div>
-          <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--soft);">🏡 Conosce tutti i tuoi immobili</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--soft);">🏡 Conosce tutti gli 8 immobili</div>
           <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--soft);">🇮🇹 🇨🇭 Italia e Svizzera</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--soft);">⚡ Aggiornata ogni mattina alle 7:00</div>
         </div>
       </div>
     </div>
@@ -271,7 +880,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
       <div class="sgroup">
         <div class="sgroup-title">Agente Aurora</div>
         <div class="srow"><div class="srow-l"><div class="srow-icon">🎙️</div><div><div class="srow-name">Voce</div><div class="srow-desc">Femminile italiana · ElevenLabs</div></div></div><div style="font-size:14px;color:var(--muted);">›</div></div>
-        <div class="srow"><div class="srow-l"><div class="srow-icon">⚡</div><div><div class="srow-name">Risposte automatiche</div></div></div><label class="toggle"><input type="checkbox" checked><div class="tslider"></div></label></div>
+        <div class="srow"><div class="srow-l"><div class="srow-icon">⚡</div><div><div class="srow-name">Aggiornamento Miogest</div><div class="srow-desc">Automatico ogni mattina alle 7:00</div></div></div><label class="toggle"><input type="checkbox" checked><div class="tslider"></div></label></div>
       </div>
       <div class="sgroup">
         <div class="sgroup-title">Aspetto</div>
@@ -286,17 +895,11 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
         </div>
       </div>
       <div class="sgroup">
-        <div class="sgroup-title">Notifiche</div>
-        <div class="srow"><div class="srow-l"><div class="srow-icon">💬</div><div><div class="srow-name">WhatsApp</div></div></div><label class="toggle"><input type="checkbox" checked><div class="tslider"></div></label></div>
-        <div class="srow"><div class="srow-l"><div class="srow-icon">✉️</div><div><div class="srow-name">Email</div></div></div><label class="toggle"><input type="checkbox" checked><div class="tslider"></div></label></div>
-        <div class="srow"><div class="srow-l"><div class="srow-icon">📅</div><div><div class="srow-name">Appuntamenti</div></div></div><label class="toggle"><input type="checkbox" checked><div class="tslider"></div></label></div>
-      </div>
-      <div class="sgroup">
         <div class="sgroup-title">Integrazioni</div>
-        <div class="srow"><div class="srow-l"><div class="srow-icon">🏛️</div><div><div class="srow-name">Miogest</div><div class="srow-desc" style="color:var(--ok)">● Connesso</div></div></div><div style="font-size:14px;color:var(--muted);">›</div></div>
-        <div class="srow"><div class="srow-l"><div class="srow-icon">💬</div><div><div class="srow-name">WhatsApp Business</div><div class="srow-desc" style="color:var(--ok)">● Connesso</div></div></div><div style="font-size:14px;color:var(--muted);">›</div></div>
-        <div class="srow"><div class="srow-l"><div class="srow-icon">✉️</div><div><div class="srow-name">Gmail</div><div class="srow-desc" style="color:var(--ok)">● Connesso</div></div></div><div style="font-size:14px;color:var(--muted);">›</div></div>
-        <div class="srow"><div class="srow-l"><div class="srow-icon">📁</div><div><div class="srow-name">Google Drive</div><div class="srow-desc" style="color:var(--ok)">● Connesso</div></div></div><div style="font-size:14px;color:var(--muted);">›</div></div>
+        <div class="srow"><div class="srow-l"><div class="srow-icon">🏛️</div><div><div class="srow-name">Miogest</div><div class="srow-desc" style="color:var(--ok)">● Feed XML attivo</div></div></div><div style="font-size:14px;color:var(--muted);">›</div></div>
+        <div class="srow"><div class="srow-l"><div class="srow-icon">💬</div><div><div class="srow-name">WhatsApp Business</div><div class="srow-desc" style="color:var(--ok)">● Attivo</div></div></div><div style="font-size:14px;color:var(--muted);">›</div></div>
+        <div class="srow"><div class="srow-l"><div class="srow-icon">✉️</div><div><div class="srow-name">Gmail</div><div class="srow-desc" style="color:var(--ok)">● Attivo</div></div></div><div style="font-size:14px;color:var(--muted);">›</div></div>
+        <div class="srow"><div class="srow-l"><div class="srow-icon">📁</div><div><div class="srow-name">Google Drive</div><div class="srow-desc" style="color:var(--ok)">● Collegato</div></div></div><div style="font-size:14px;color:var(--muted);">›</div></div>
       </div>
     </div>
     <div style="height:6px;"></div>
@@ -307,45 +910,18 @@ html,body{height:100%;width:100%;overflow:hidden;background:var(--dark);color:va
 <div class="bnav">
   <div class="bn on" onclick="setPage('home',this)"><div class="bn-ic">⌂</div><div class="bn-lb">Home</div></div>
   <div class="bn" onclick="setPage('immobili',this)"><div class="bn-ic">🏠</div><div class="bn-lb">Immobili</div></div>
-  <div class="bn" onclick="setPage('lead',this)"><div class="bn-ic">👥</div><div class="bn-lb">Lead</div><div class="bn-badge">12</div></div>
-  <div class="bn" onclick="setPage('msg',this)"><div class="bn-ic">💬</div><div class="bn-lb">Messaggi</div><div class="bn-badge">13</div></div>
+  <div class="bn" onclick="setPage('msg',this)"><div class="bn-ic">💬</div><div class="bn-lb">Messaggi</div></div>
   <div class="bn" onclick="setPage('aurora',this)"><div class="bn-ic">✦</div><div class="bn-lb">Aurora</div></div>
   <div class="bn" onclick="setPage('settings',this)"><div class="bn-ic">⚙️</div><div class="bn-lb">Settings</div></div>
 </div>
 </div>
 
 <script>
-function openAurora() {
-  window.open('https://elevenlabs.io/app/agents/agents/agent_0401kthppeytfpks4sbhen3xctrb/preview?branchId=agtbrch_4001kthppeyvfyz9j614y49qbq8j&include_draft=true', '_blank');
-}
-function setPage(id, el) {
-  document.querySelectorAll('.pg').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.bn').forEach(b => b.classList.remove('on'));
-  document.getElementById('pg-' + id).classList.add('active');
-  if (el) el.classList.add('on');
-}
-function setSec(s) {
-  document.getElementById('bIT').className = 'swb' + (s==='IT' ? ' it' : '');
-  document.getElementById('bCH').className = 'swb' + (s==='CH' ? ' ch' : '');
-}
-function setMsgTab(el, tab) {
-  document.querySelectorAll('.mtabs .mtab').forEach(t => t.classList.remove('on'));
-  el.classList.add('on');
-  document.getElementById('mwa').style.display = tab==='wa' ? 'flex' : 'none';
-  document.getElementById('mem').style.display = tab==='em' ? 'flex' : 'none';
-}
-function filterImm(el, f) {
-  document.querySelectorAll('#pg-immobili .mtab').forEach(t => t.classList.remove('on'));
-  el.classList.add('on');
-  document.querySelectorAll('#imm-list .im').forEach(i => {
-    i.style.display = (f==='all' || i.dataset.s===f) ? 'flex' : 'none';
-  });
-}
-function setColor(el, color) {
-  document.querySelectorAll('.col-opt').forEach(c => c.classList.remove('sel'));
-  el.classList.add('sel');
-  document.documentElement.style.setProperty('--gold', color);
-}
+function setPage(id,el){document.querySelectorAll('.pg').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.bn').forEach(b=>b.classList.remove('on'));document.getElementById('pg-'+id).classList.add('active');if(el)el.classList.add('on');}
+function setSec(s){document.getElementById('bIT').className='swb'+(s==='IT'?' it':'');document.getElementById('bCH').className='swb'+(s==='CH'?' ch':'');}
+function setMsgTab(el,tab){document.querySelectorAll('.mtabs .mtab').forEach(t=>t.classList.remove('on'));el.classList.add('on');document.getElementById('mwa').style.display=tab==='wa'?'flex':'none';document.getElementById('mem').style.display=tab==='em'?'flex':'none';}
+function filterImm(el,f){document.querySelectorAll('#pg-immobili .mtab').forEach(t=>t.classList.remove('on'));el.classList.add('on');document.querySelectorAll('#imm-list .im').forEach(i=>{let show=false;if(f==='all')show=true;else if(f==='it')show=i.dataset.s==='it';else if(f==='ch')show=i.dataset.s==='ch';else if(f==='vend')show=i.dataset.t==='vend';else if(f==='aff')show=i.dataset.t==='aff';i.style.display=show?'block':'none';});}
+function setColor(el,color){document.querySelectorAll('.col-opt').forEach(c=>c.classList.remove('sel'));el.classList.add('sel');document.documentElement.style.setProperty('--gold',color);}
 </script>
 </body>
 </html>
